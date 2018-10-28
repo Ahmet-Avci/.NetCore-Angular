@@ -1,0 +1,27 @@
+<h1>Hello, new my Page!</h1>
+<p>Welcome to your new single-page application, built with: .Net Core</p>
+
+<table class='table' *ngIf="authors">
+  <thead>
+    <tr>
+      <th>Kişi</th>
+      <th>Mail</th>
+      <th>Telefon</th>
+      <th>Ad</th>
+      <th>Soyad</th>
+      <th>İşlemler</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let author of authors">
+      <td>{{ author.createdBy }}</td>
+      <td>{{ author.mailAddress }}</td>
+      <td>{{ author.phoneNumber }}</td>
+      <td>{{ author.name }}</td>
+      <td>{{ author.surname }}</td>
+      <td>
+        <button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
