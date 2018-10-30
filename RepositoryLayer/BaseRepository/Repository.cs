@@ -1,59 +1,63 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DbLayer;
-using Microsoft.EntityFrameworkCore;
 
 namespace RepositoryLayer
 {
-    public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class
+    public abstract class Repository<T> : IRepository<T> where T : class
     {
-        public DbSet<TEntity> Table { get; set; }
-        private readonly DataContext dbContext;
 
-        public Repository(DataContext dbContext)
+        private readonly DataContext context;
+
+        public Repository(DataContext contextParam)
         {
-            this.dbContext = dbContext;
-            this.Table = dbContext.Set<TEntity>();
+            context = contextParam;
         }
 
-        public virtual bool BulkInsert(List<TEntity> modelList)
+        public virtual bool BulkInsert(List<T> modelList)
         {
+            var Table = context.Set<T>();
             Table.AddRange(modelList);
             return Save();
         }
 
-        public virtual bool Delete(TEntity model)
+        public virtual bool Delete(T model)
         {
+            var Table = context.Set<T>();
             Table.Remove(model);
             return Save();
         }
 
-        public virtual bool DeleteById(TId id)
+        public virtual bool DeleteById(int id)
         {
+            var Table = context.Set<T>();
             var result = Table.Find(id);
             Table.Remove(result);
             return Save();
         }
 
-        public virtual List<TEntity> GetAll()
+        public virtual List<T> GetAll()
         {
+            var Table = context.Set<T>();
             return Table.ToList();
         }
 
-        public virtual TEntity GetById(TId id)
+        public T GetById(int id)
         {
-            return Table.Find(id);
+            return context.Set<T>().Find(id);
         }
 
-        public virtual TEntity Insert(TEntity model)
+        public virtual T Insert(T model)
         {
+            var Table = context.Set<T>();
             var result = Table.Add(model);
             Save();
             return result.Entity;
         }
 
-        public virtual TEntity Update(TEntity model)
+        public virtual T Update(T model)
         {
+            var Table = context.Set<T>();
             var result = Table.Update(model);
             Save();
             return result.Entity;
@@ -63,7 +67,7 @@ namespace RepositoryLayer
         {
             try
             {
-                dbContext.SaveChanges();
+                context.SaveChanges();
                 return true;
             }
             catch

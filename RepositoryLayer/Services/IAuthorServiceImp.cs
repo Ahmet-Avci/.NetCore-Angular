@@ -1,4 +1,4 @@
-﻿using DbLayer;
+﻿using DbLayer.Entity;
 using RepositoryLayer;
 
 namespace ServiceLayer.Services

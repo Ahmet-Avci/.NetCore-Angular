@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DbLayer
 {
@@ -8,6 +9,7 @@ namespace DbLayer
     /// </summary>
     public class BaseEntity
     {
+        [Key]
         public int Id { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }

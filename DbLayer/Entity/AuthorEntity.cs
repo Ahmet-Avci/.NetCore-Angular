@@ -1,7 +1,7 @@
-﻿using DbLayer.Entity;
+﻿using System;
 using System.Collections.Generic;
 
-namespace DbLayer
+namespace DbLayer.Entity
 {
     /// <summary>
     /// Yazarlar ve kullanıcıları tutar

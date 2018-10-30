@@ -4,9 +4,9 @@ using RepositoryLayer;
 
 namespace ServiceLayer.Repository
 {
-    public class ArticleService : Repository<ArticleEntity, int>
+    public class ArticleService : Repository<ArticleEntity>
     {
-        public ArticleService(DataContext dbContext) : base(dbContext)
+        public ArticleService(DataContext contextParam) : base(contextParam)
         {
         }
     }

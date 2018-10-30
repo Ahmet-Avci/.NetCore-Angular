@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Repository;
+using Repository.Implementation;
+using Services.Implementation;
+using Services.Interface;
 
 namespace Authors
 {
@@ -23,11 +27,22 @@ namespace Authors
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<DataContext>(options =>
-            //{
-            //    options.UseSqlServer(Configuration.GetConnectionString("DbConnection"));
-            //    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-            //});
+            
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            });
+
+            var connection = @"Server=localhost\SQLEXPRESS;Database=AuthorDb;Trusted_Connection=True;";
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseSqlServer(connection);
+            });
+
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IAuthorService, AuthorService>();
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

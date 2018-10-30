@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using DbLayer;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DbLayer.Entity;
 using Microsoft.AspNetCore.Mvc;
+using Services.Interface;
 
 namespace Authors.Controllers
 {
@@ -9,32 +10,17 @@ namespace Authors.Controllers
     public class InformationController : Controller
     {
 
-        List<AuthorEntity> authors = new List<AuthorEntity>();
+        private readonly IAuthorService _authorService;
+
+        public InformationController(IAuthorService authorService)
+        {
+            _authorService = authorService;
+        }
 
         [HttpGet("[action]")]
         public List<AuthorEntity> GetAllAuthors()
         {
-            authors.Add(new AuthorEntity()
-            {
-                CreatedBy   = 1,
-                CreatedDate = DateTime.Now,
-                MailAddress = "ahmet.avci@gmail.com",
-                PhoneNumber = "05343883952",
-                Name        = "Ahmet",
-                Surname     = "Avcı"
-            });
-
-            authors.Add(new AuthorEntity()
-            {
-                CreatedBy = 2,
-                CreatedDate = DateTime.Now.AddDays(-1),
-                MailAddress = "baris.unlu@gmail.com",
-                PhoneNumber = "0111111111",
-                Name = "Barış",
-                Surname = "Ünlü"
-            });
-
-            return authors;
+            return _authorService.GetAll().ToList();
         }
     }
 }
