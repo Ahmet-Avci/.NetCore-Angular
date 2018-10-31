@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DbLayer\DataBaseContext.csproj" />
+    <ProjectReference Include="..\DtoLayer\DataTransferObject.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 

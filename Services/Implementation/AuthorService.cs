@@ -8,16 +8,16 @@ namespace Services.Implementation
 {
     public class AuthorService : IAuthorService
     {
-        private readonly IAuthorService _authorService;
+        private readonly IAuthorRepository _authorRepository;
 
-        public AuthorService(IAuthorService authorService)
+        public AuthorService(IAuthorRepository authorRepository)
         {
-            _authorService = authorService;
+            _authorRepository = authorRepository;
         }
 
         public List<AuthorEntity> GetAll()
         {
-            return _authorService.GetAll();
+            return _authorRepository.GetAll().ToList();
         }
     }
 }
