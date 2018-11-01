@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DbLayer.Entity;
+using DtoLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interface;
 
@@ -17,7 +17,7 @@ namespace Authors.Controllers
         }
 
         [HttpGet("[action]")]
-        public List<AuthorEntity> GetAllAuthors()
+        public List<AuthorDto> GetAllAuthors()
         {
             return _authorService.GetAll().ToList();
         }

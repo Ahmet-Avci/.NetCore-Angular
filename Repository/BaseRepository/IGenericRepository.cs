@@ -5,12 +5,12 @@ using System.Linq.Expressions;
 
 namespace Repository
 {
-    public interface IGenericRepository<T>
+    public interface IGenericRepository<T> where T : class
     {
         T Save(T entity);
-        T GetById(int id);
+        T GetById(long id);
         T Update(T entity);
-        bool DeleteById(int id);
+        bool DeleteById(long id);
         bool BulkInsert(List<T> entityList);
         bool BulkDelete(List<T> entityList);
         IQueryable<T> GetAll();

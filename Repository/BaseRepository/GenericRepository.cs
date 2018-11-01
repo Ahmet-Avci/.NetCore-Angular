@@ -12,6 +12,7 @@ namespace Repository
 
         private readonly DataContext _dbContext;
         private readonly DbSet<T> _dbSet;
+        
 
         protected GenericRepository(DataContext dbContext)
         {
@@ -31,7 +32,7 @@ namespace Repository
             return Save();
         }
 
-        public bool DeleteById(int id)
+        public bool DeleteById(long id)
         {
             var entity = GetById(id);
             _dbSet.Remove(entity);
@@ -48,7 +49,7 @@ namespace Repository
             return _dbSet.AsNoTracking();
         }
 
-        public T GetById(int id)
+        public T GetById(long id)
         {
             return _dbSet.Find(id);
         }

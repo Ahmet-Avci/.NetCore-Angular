@@ -1,10 +1,10 @@
-﻿using DbLayer.Entity;
+﻿using DtoLayer.Dto;
 using System.Collections.Generic;
 
 namespace Services.Interface
 {
     public interface IAuthorService 
     {
-        List<AuthorEntity> GetAll();
+        List<AuthorDto> GetAll();
     }
 }
