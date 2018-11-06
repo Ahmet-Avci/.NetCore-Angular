@@ -1,4 +1,5 @@
-﻿using DbLayer;
+﻿using AutoMapper;
+using DbLayer;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

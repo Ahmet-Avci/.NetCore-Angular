@@ -1,4 +1,5 @@
-﻿using DbLayer;
+﻿using AutoMapper;
+using DbLayer;
 using DbLayer.Entity;
 
 namespace Repository.Implementation

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataBaseContext.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181030200047_firstMig")]
-    partial class firstMig
+    [Migration("20181106213054_First_Migration")]
+    partial class First_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,39 @@ namespace DataBaseContext.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("DbLayer.Entity.ArticleAuditEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArticleId");
+
+                    b.Property<int?>("AuthorId");
+
+                    b.Property<int?>("CreatedBy");
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsFavorite");
+
+                    b.Property<bool>("IsLike");
+
+                    b.Property<bool>("IsRead");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("ReadedArticles");
+                });
 
             modelBuilder.Entity("DbLayer.Entity.ArticleEntity", b =>
                 {
@@ -39,6 +72,8 @@ namespace DataBaseContext.Migrations
 
                     b.Property<string>("ImagePath");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<DateTime?>("ModifiedDate");
 
                     b.HasKey("Id");
@@ -56,15 +91,21 @@ namespace DataBaseContext.Migrations
 
                     b.Property<int?>("ArticleId");
 
+                    b.Property<int>("AuthorType");
+
                     b.Property<int?>("CreatedBy");
 
                     b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("MailAddress");
 
                     b.Property<DateTime?>("ModifiedDate");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Password");
 
                     b.Property<string>("PhoneNumber");
 
@@ -73,6 +114,18 @@ namespace DataBaseContext.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Author");
+                });
+
+            modelBuilder.Entity("DbLayer.Entity.ArticleAuditEntity", b =>
+                {
+                    b.HasOne("DbLayer.Entity.ArticleEntity", "Article")
+                        .WithMany("ReadedArticle")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DbLayer.Entity.AuthorEntity", "Author")
+                        .WithMany("ReadedArticle")
+                        .HasForeignKey("AuthorId");
                 });
 
             modelBuilder.Entity("DbLayer.Entity.ArticleEntity", b =>

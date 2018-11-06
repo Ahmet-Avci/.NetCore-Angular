@@ -1,4 +1,6 @@
-﻿namespace DbLayer.Entity
+﻿using System.Collections.Generic;
+
+namespace DbLayer.Entity
 {
     /// <summary>
     /// Yazarların yazacağı yazılar ile ilgili bilgileri tutan sınıf
@@ -20,6 +22,14 @@
         /// </summary>
         public string ImagePath { get; set; }
 
+        /// <summary>
+        /// Eserin yazarının bulunduğu model
+        /// </summary>
         public virtual AuthorEntity Author { get; set; }
+
+        /// <summary>
+        /// Eser detaylarının bulunduğua model
+        /// </summary>
+        public virtual List<ArticleAuditEntity> ReadedArticle { get; set; }
     }
 }

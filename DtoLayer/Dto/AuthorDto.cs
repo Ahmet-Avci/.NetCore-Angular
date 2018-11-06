@@ -33,6 +33,16 @@ namespace DtoLayer.Dto
         /// </summary>
         public string MailAddress { get; set; }
 
+        /// <summary>
+        /// Kullanıcı şifresi
+        /// </summary>
+        public string Password { get; set; }
+
         public virtual List<ArticleDto> ArticleList { get; set; }
+
+        /// <summary>
+        /// Eser detaylarının bulunduğua model
+        /// </summary>
+        public virtual List<ArticleAuditDto> ReadedArticle { get; set; }
     }
 }

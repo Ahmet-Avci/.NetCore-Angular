@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DataBaseContext.Enums;
+using System.Collections.Generic;
 
 namespace DbLayer.Entity
 {
@@ -7,7 +8,6 @@ namespace DbLayer.Entity
     /// </summary>
     public class AuthorEntity : BaseEntity
     {
-
         /// <summary>
         /// Kullanıcıya ait eserin id'si
         /// </summary>
@@ -33,6 +33,24 @@ namespace DbLayer.Entity
         /// </summary>
         public string MailAddress { get; set; }
 
+        /// <summary>
+        /// Kullanıcının giriş yapacağı şifresi
+        /// </summary>
+        public string Password { get; set; }
+        
+        /// <summary>
+        /// İlgili kullanıcının tipi
+        /// </summary>
+        public AuthorType AuthorType { get; set; }
+
+        /// <summary>
+        /// Yazarın eserlerinin bulunduğu model
+        /// </summary>
         public virtual List<ArticleEntity> ArticleList { get; set; }
+
+        /// <summary>
+        /// Eser detaylarının bulunduğua model
+        /// </summary>
+        public virtual List<ArticleAuditEntity> ReadedArticle { get; set; }
     }
 }

@@ -23,5 +23,15 @@ namespace Services.Implementation
         {
             return _mapper.Map<List<AuthorEntity>,List<AuthorDto>>(_authorRepository.GetAll().ToList());
         }
+
+        /// <summary>
+        /// İlgili kullanıcıyının mail adresi ve şifresine göre kullanıcıyı getirir
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public AuthorDto GetUser(AuthorDto model)
+        {
+            return _mapper.Map<AuthorDto>(_authorRepository.Filter(x => x.MailAddress.Equals(model.MailAddress) && x.Password.Equals(model.Password) && !x.IsDeleted));
+        }
     }
 }

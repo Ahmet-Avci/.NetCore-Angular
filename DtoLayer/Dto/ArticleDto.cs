@@ -1,4 +1,6 @@
-﻿namespace DtoLayer.Dto
+﻿using System.Collections.Generic;
+
+namespace DtoLayer.Dto
 {
     public class ArticleDto : BaseDto
     {
@@ -18,5 +20,10 @@
         public string ImagePath { get; set; }
 
         public virtual AuthorDto Author { get; set; }
+
+        /// <summary>
+        /// Eser detaylarının bulunduğua model
+        /// </summary>
+        public virtual List<ArticleAuditDto> ReadedArticle { get; set; }
     }
 }

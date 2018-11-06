@@ -9,7 +9,7 @@ namespace Services.Implementation
         private readonly IArticleRepository _articleRepository;
         private readonly IMapper _mapper;
 
-        public ArticleService(IArticleRepository articleRepository,IMapper mapper)
+        public ArticleService(IArticleRepository articleRepository, IMapper mapper)
         {
             _articleRepository = articleRepository;
             _mapper = mapper;

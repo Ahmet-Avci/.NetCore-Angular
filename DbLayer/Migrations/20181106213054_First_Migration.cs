@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataBaseContext.Migrations
 {
-    public partial class firstMig : Migration
+    public partial class First_Migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,6 +14,7 @@ namespace DataBaseContext.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
@@ -21,7 +22,9 @@ namespace DataBaseContext.Migrations
                     Name = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    MailAddress = table.Column<string>(nullable: true)
+                    MailAddress = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    AuthorType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,6 +37,7 @@ namespace DataBaseContext.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
@@ -53,14 +57,60 @@ namespace DataBaseContext.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ReadedArticles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    CreatedBy = table.Column<int>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    ArticleId = table.Column<int>(nullable: false),
+                    IsRead = table.Column<bool>(nullable: false),
+                    IsLike = table.Column<bool>(nullable: false),
+                    IsFavorite = table.Column<bool>(nullable: false),
+                    AuthorId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReadedArticles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReadedArticles_Article_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Article",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReadedArticles_Author_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Author",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Article_AuthorId",
                 table: "Article",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReadedArticles_ArticleId",
+                table: "ReadedArticles",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReadedArticles_AuthorId",
+                table: "ReadedArticles",
                 column: "AuthorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ReadedArticles");
+
             migrationBuilder.DropTable(
                 name: "Article");
 

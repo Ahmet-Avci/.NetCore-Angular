@@ -9,6 +9,7 @@ namespace DbLayer
 
         public DbSet<ArticleEntity> Article { get; set; }
         public DbSet<AuthorEntity> Author { get; set; }
+        public DbSet<ArticleAuditEntity> ReadedArticles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

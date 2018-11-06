@@ -1,8 +1,11 @@
+using Authors.Helpers;
 using AutoMapper;
 using DataTransferObject.Mapper;
 using DbLayer;
+using DtoLayer.Dto;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +15,7 @@ using Repository;
 using Repository.Implementation;
 using Services.Implementation;
 using Services.Interface;
+using System;
 
 namespace Authors
 {
@@ -50,10 +54,14 @@ namespace Authors
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-
-            services.AddMvc();
-
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.Cookie.Name = ".AuthorsWorks.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(45);
+            });
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -66,37 +74,30 @@ namespace Authors
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
+            else {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
-            app.UseMvc(routes =>
-            {
+            app.UseSession();
+            app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
+            app.UseSpa(spa => {
                 spa.Options.SourcePath = "ClientApp";
-
                 if (env.IsDevelopment())
-                {
                     spa.UseAngularCliServer(npmScript: "start");
-                }
+            });
+
+            app.Run(async (context) => {
+                var user = context.Session.GetObject<AuthorDto>("CurrentUser");
+                await context.Response.WriteAsync($"{user}");
             });
         }
     }

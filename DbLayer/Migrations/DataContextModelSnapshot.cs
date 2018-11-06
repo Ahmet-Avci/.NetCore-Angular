@@ -19,6 +19,39 @@ namespace DataBaseContext.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DbLayer.Entity.ArticleAuditEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArticleId");
+
+                    b.Property<int?>("AuthorId");
+
+                    b.Property<int?>("CreatedBy");
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsFavorite");
+
+                    b.Property<bool>("IsLike");
+
+                    b.Property<bool>("IsRead");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("ReadedArticles");
+                });
+
             modelBuilder.Entity("DbLayer.Entity.ArticleEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -37,6 +70,8 @@ namespace DataBaseContext.Migrations
 
                     b.Property<string>("ImagePath");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<DateTime?>("ModifiedDate");
 
                     b.HasKey("Id");
@@ -54,15 +89,21 @@ namespace DataBaseContext.Migrations
 
                     b.Property<int?>("ArticleId");
 
+                    b.Property<int>("AuthorType");
+
                     b.Property<int?>("CreatedBy");
 
                     b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<string>("MailAddress");
 
                     b.Property<DateTime?>("ModifiedDate");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Password");
 
                     b.Property<string>("PhoneNumber");
 
@@ -73,10 +114,22 @@ namespace DataBaseContext.Migrations
                     b.ToTable("Author");
                 });
 
+            modelBuilder.Entity("DbLayer.Entity.ArticleAuditEntity", b =>
+                {
+                    b.HasOne("DbLayer.Entity.ArticleEntity", "Article")
+                        .WithMany("ReadedArticle")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DbLayer.Entity.AuthorEntity", "Author")
+                        .WithMany("ReadedArticle")
+                        .HasForeignKey("AuthorId");
+                });
+
             modelBuilder.Entity("DbLayer.Entity.ArticleEntity", b =>
                 {
                     b.HasOne("DbLayer.Entity.AuthorEntity", "Author")
-                        .WithMany()
+                        .WithMany("ArticleList")
                         .HasForeignKey("AuthorId");
                 });
 #pragma warning restore 612, 618
