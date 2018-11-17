@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTransferObject", "DtoLa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{3C8A29B8-E511-4FA3-BC51-02FD1598663A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{B2679926-2688-4370-95F5-8A70B7DB3538}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{B2679926-2688-4370-95F5-8A70B7DB3538}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

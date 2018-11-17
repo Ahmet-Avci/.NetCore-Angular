@@ -31,7 +31,8 @@ namespace Services.Implementation
         /// <returns></returns>
         public AuthorDto GetUser(AuthorDto model)
         {
-            return _mapper.Map<AuthorDto>(_authorRepository.Filter(x => x.MailAddress.Equals(model.MailAddress) && x.Password.Equals(model.Password) && !x.IsDeleted));
+            var authorEntity = _authorRepository.Filter(x => x.MailAddress.Equals(model.MailAddress) && x.Password.Equals(model.Password) && !x.IsDeleted).FirstOrDefault();
+            return authorEntity != null ? _mapper.Map<AuthorEntity, AuthorDto>(authorEntity) : new AuthorDto();
         }
     }
 }

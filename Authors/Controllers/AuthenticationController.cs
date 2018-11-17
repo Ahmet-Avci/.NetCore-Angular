@@ -27,10 +27,10 @@ namespace Authors.Controllers
 
             var user = _authorService.GetUser(model);
 
-            if (user != null)
+            if (user.Id > 0)
             {
                 HttpContext.Session.SetObject("LoginUser", user);
-                return RedirectToAction("Index", "Home");
+                return Json(new { isError = false, route = "" });
             }
             else
             {
@@ -38,6 +38,29 @@ namespace Authors.Controllers
             }
         }
 
+        public JsonResult SessionControl()
+        {
+            var result = HttpContext.Session.GetObject<AuthorDto>("LoginUser");
+            return Json(result != null ? result : new AuthorDto());
+        }
+
+        public JsonResult Logout()
+        {
+            try
+            {
+                HttpContext.Session.Remove("LoginUser");
+                return Json(true);
+            }
+            catch (System.Exception)
+            {
+                return Json(false);
+            }
+        }
+
+        public PartialViewResult LoginScreen(bool loginCheckbox)
+        {
+            return loginCheckbox ? PartialView("Pages/Authentication/_LoginScreenPartial.cshtml") : PartialView("Pages/Authentication/_RegisterScreenPartial.cshtml"); ;
+        }
 
     }
 }
