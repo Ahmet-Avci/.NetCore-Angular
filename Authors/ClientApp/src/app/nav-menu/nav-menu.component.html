@@ -13,29 +13,29 @@
         <h2 class="soft-text"><i class="glyphicon glyphicon-pencil"></i></h2><h5 class="soft-text" style="bottom:12px; position:relative"><b>MODERN KÖLELER</b></h5><br />
         <img class="profile-picture" src="https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1-744x744.jpg" />
         <br>
-        <button ui-sref="login" class="btn btn-primary btn-outline btn-rounded btn-sm logout-button" (click)="openModal()" href="#/login">{{currentState}}</button>
+        <button ui-sref="login" class="btn btn-primary btn-outline btn-rounded btn-sm logout-button"  [routerLink]='currentState == "Giriş Yap" ? ["/login"] : ["/logout"]' (click)='currentState == "Çıkış Yap" ? Logout() : "" '>{{currentState}}</button>
       </div>
     </div>
     <div class='clearfix'></div>
     <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
       <ul class='nav navbar-nav'>
         <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-          <a [routerLink]='["/"]' (click)='collapse()'>
+          <a [routerLink]='["/"]'>
             <span class='glyphicon glyphicon-home'></span> Ana Sayfa
           </a>
         </li>
         <li [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/counter"]' (click)='collapse()'>
+          <a [routerLink]='["/counter"]'>
             <span class='glyphicon glyphicon-education'></span> Yazılarım
           </a>
         </li>
         <li [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
+          <a [routerLink]='["/fetch-data"]'>
             <span class='glyphicon glyphicon-plus'></span> Yazı Ekle
           </a>
         </li>
         <li [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/information"]' (click)='collapse()'>
+          <a [routerLink]='["/information"]'>
             <span class='glyphicon glyphicon-heart'></span> Hakkımızda
           </a>
         </li>
@@ -52,20 +52,29 @@
       <div class="modal-content">
         <div class="modal-header">
           <div class="form-group">
+            <label class="rocker rocker-small pull-left" style="margin-top:-15px; margin-bottom:-15px; right:20px;">
+              <input type="checkbox" checked class="my-checkbox" (change)="LoginScreen()">
+              <span class="switch-left">Giriş</span>
+              <span class="switch-right">Kayıt</span>
+            </label>
             <h5 class="header-margin pull-left"><b>Giriş Ekranı</b></h5>
             <i class="glyphicon glyphicon-remove pull-right" (click)="onCloseHandled()"></i>
           </div>
         </div>
         <div class="modal-body">
-          
+          <div class="form-group">
+            <input placeholder="Mail adresinizi giriniz..." type="email" class="form-control" [(ngModel)]="inputMail" />
+          </div>
+          <div class="form-group">
+            <input placeholder="Şifrenizi giriniz..." type="password" class="form-control" [(ngModel)]="inputPassword" />
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-primary btn-block" (click)="Login()">Giriş</button>
+          </div>
         </div>
         <div class="modal-footer">
           <div class="form-group">
-            <label class="rocker rocker-small pull-left">
-              <input type="checkbox" class="my-checkbox" (change)="LoginScreen()">
-              <span class="switch-left">Giriş</span>
-              <span class="switch-right">Kayıt</span>
-            </label>
+            
           </div>
           </div>
         </div>

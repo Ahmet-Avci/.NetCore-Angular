@@ -38,12 +38,20 @@ namespace Authors.Controllers
             }
         }
 
+        /// <summary>
+        /// Giriş yapılıp yapılmadığını kontrol eden metod
+        /// </summary>
+        /// <returns></returns>
         public JsonResult SessionControl()
         {
             var result = HttpContext.Session.GetObject<AuthorDto>("LoginUser");
             return Json(result != null ? result : new AuthorDto());
         }
 
+        /// <summary>
+        /// Session'ı temizleyen - çıkış yapan metod
+        /// </summary>
+        /// <returns></returns>
         public JsonResult Logout()
         {
             try
@@ -60,6 +68,18 @@ namespace Authors.Controllers
         public PartialViewResult LoginScreen(bool loginCheckbox)
         {
             return loginCheckbox ? PartialView("Pages/Authentication/_LoginScreenPartial.cshtml") : PartialView("Pages/Authentication/_RegisterScreenPartial.cshtml"); ;
+        }
+
+        public JsonResult RegisterUser(AuthorDto model)
+        {
+            if (string.IsNullOrEmpty(model.MailAddress) || string.IsNullOrEmpty(model.Password))
+                return Json(new { isError = true, message = "Mail ve şifre alanları boş bırakılamaz." });
+
+            var result = _authorService.AddUser(model);
+
+            return result != null && result.Id > 0
+                ? Json(new { isError = false, message = "İşlem Başarılı." })
+                : Json(new { isError = true, message = "Kullanıcı Eklenemedi." });
         }
 
     }

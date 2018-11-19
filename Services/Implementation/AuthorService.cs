@@ -19,6 +19,12 @@ namespace Services.Implementation
             _mapper = mapper;
         }
 
+        public AuthorDto AddUser(AuthorDto model)
+        {
+            var value = _authorRepository.Save(_mapper.Map<AuthorDto, AuthorEntity>(model));
+            return _mapper.Map<AuthorEntity, AuthorDto>(value);
+        }
+
         public List<AuthorDto> GetAll()
         {
             return _mapper.Map<List<AuthorEntity>,List<AuthorDto>>(_authorRepository.GetAll().ToList());

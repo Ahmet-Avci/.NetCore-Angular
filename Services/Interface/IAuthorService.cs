@@ -7,5 +7,6 @@ namespace Services.Interface
     {
         List<AuthorDto> GetAll();
         AuthorDto GetUser(AuthorDto model);
+        AuthorDto AddUser(AuthorDto model);
     }
 }

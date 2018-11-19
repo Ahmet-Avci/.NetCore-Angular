@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="login-form">
+    <div class="main-div">
+      <div class="panel">
+        <p>Zincirlerinizden kurtulmak için lütfen e-mail adresi ve şifrenizi giriniz.</p>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" [(ngModel)]="user.Name" placeholder="Ad">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" [(ngModel)]="user.Surname" placeholder="Soyad">
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-control" [(ngModel)]="user.MailAddress" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" [(ngModel)]="user.Password" placeholder="Şifre">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" [(ngModel)]="user.PasswordRetry" placeholder="Şifrenizi tekrar giriniz">
+      </div>
+      <div class="form-group">
+        <input type="number" class="form-control" [(ngModel)]="user.PhoneNumber" placeholder="Telefon Numaranız">
+      </div>
+      <div class="forgot">
+        <a [routerLink]='["/login"]'>Zaten üye misin?</a>
+      </div>
+      <button type="submit" (click)="Register(user)" class="btn btn-primary">Kayıt Ol</button>
+    </div>
+  </div>
+</div>
