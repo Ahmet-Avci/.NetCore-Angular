@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Authors.Helpers
 {
-    public static class SessionManager
+    public static class SessionManager2
     {
         public static void SetObject<T>(this ISession session, string key, T value)
         {

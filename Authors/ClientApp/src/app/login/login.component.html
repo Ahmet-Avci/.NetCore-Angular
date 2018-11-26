@@ -6,7 +6,7 @@
         </div>
           <div class="form-group">
 
-            <input type="email" class="form-control" [(ngModel)]="inputMail" placeholder="Email">
+            <input type="email" class="form-control" [(ngModel)]="inputMailAddress" placeholder="Email">
           </div>
           <div class="form-group">
             <input type="password" class="form-control" [(ngModel)]="inputPassword" placeholder="Şifre">
@@ -16,7 +16,7 @@
             <br />
             <a [routerLink]='["/register"]'>Uye ol.</a>
           </div>
-          <button type="submit" (click)="Login()" class="btn btn-primary">Giriş</button>
+          <button type="submit" (click)="Login(inputMailAddress,inputPassword)" class="btn btn-primary">Giriş</button>
       </div>
     </div>
   </div>

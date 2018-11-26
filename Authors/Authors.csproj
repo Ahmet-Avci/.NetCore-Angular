@@ -33,8 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DbLayer\DataBaseContext.csproj" />
-    <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
@@ -42,6 +40,10 @@
     <TypeScriptCompile Include="ClientApp\src\app\information\information.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\register\register.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="File\TempFiles\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

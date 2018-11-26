@@ -25,6 +25,11 @@ namespace DtoLayer.Dto
         /// </summary>
         public bool IsFavorite { get; set; }
 
+        /// <summary>
+        /// İlgili eserin pasif/aktif bilgisini tutar
+        /// </summary>
+        public bool IsActive { get; set; }
+
         public virtual AuthorDto Author { get; set; }
         public virtual ArticleDto Article { get; set; }
     }

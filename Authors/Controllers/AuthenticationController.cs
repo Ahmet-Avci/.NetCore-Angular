@@ -30,7 +30,7 @@ namespace Authors.Controllers
             if (user.Id > 0)
             {
                 HttpContext.Session.SetObject("LoginUser", user);
-                return Json(new { isError = false, route = "" });
+                return Json(new { isError = false, message = user });
             }
             else
             {
@@ -78,9 +78,11 @@ namespace Authors.Controllers
             var result = _authorService.AddUser(model);
 
             return result != null && result.Id > 0
-                ? Json(new { isError = false, message = "İşlem Başarılı." })
+                ? Json(result)
                 : Json(new { isError = true, message = "Kullanıcı Eklenemedi." });
         }
+
+        
 
     }
 }

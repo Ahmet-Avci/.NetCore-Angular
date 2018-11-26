@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
 using Repository.Implementation;
+using Repository.Interface;
 using Services.Implementation;
 using Services.Interface;
 using System;
@@ -47,6 +48,11 @@ namespace Authors
 
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IArticleAuditRepository, ArticleAuditRepository>();
+            services.AddScoped<IArticleAuditService, ArticleAuditService>();
+
 
             var mappingConfig = new MapperConfiguration(mc =>
             {

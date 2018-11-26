@@ -12,7 +12,7 @@
       <div class="text-center">
         <h2 class="soft-text"><i class="glyphicon glyphicon-pencil"></i></h2><h5 class="soft-text" style="bottom:12px; position:relative"><b>MODERN KÖLELER</b></h5><br />
         <img class="profile-picture" src="https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1-744x744.jpg" />
-        <br>
+        <h5 class="soft-text">Hoşgeldin {{user.name}}</h5>
         <button ui-sref="login" class="btn btn-primary btn-outline btn-rounded btn-sm logout-button"  [routerLink]='currentState == "Giriş Yap" ? ["/login"] : ["/logout"]' (click)='currentState == "Çıkış Yap" ? Logout() : "" '>{{currentState}}</button>
       </div>
     </div>

@@ -1,11 +1,14 @@
 import { Component, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
+
+//export function Login(mailAddress, password);
 
 @Injectable()
 export class RegisterComponent {
@@ -16,6 +19,7 @@ export class RegisterComponent {
     this.http = http;
     this.user = new UserDto;
   }
+  
 
   Register() {
     if (this.user.Password == this.user.PasswordRetry) {
@@ -27,8 +31,9 @@ export class RegisterComponent {
       body = body.set('Surname', this.user.Surname);
       body = body.set('PhoneNumber', this.user.PhoneNumber);
       this.http.post<UserDto>('/Authentication/RegisterUser', body, { headers: myheader }).subscribe(result => {
-        if (!result.isError) {
-          window.location.href = "/";
+        if (result != null && result.id > 0) {
+          let loginTs = new LoginComponent(this.http);
+          loginTs.Login(result.mailAddress, result.password);
         } else {
           alert(result.message);
         }
@@ -48,5 +53,7 @@ export class UserDto {
   PhoneNumber: string;
   message: string;
   isError: boolean;
-  Id: number;
+  id: number;
+  mailAddress: string;
+  password: string;
 }
