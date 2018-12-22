@@ -14,6 +14,8 @@ namespace DataTransferObject.Mapper
             CreateMap<ArticleDto, ArticleEntity>();
             CreateMap<ArticleAuditEntity, ArticleAuditDto>();
             CreateMap<ArticleAuditDto, ArticleAuditEntity>();
+            CreateMap<CategoryEntity, CategoryDto>();
+            CreateMap<CategoryDto, CategoryEntity>();
         }
     }
 }

@@ -33,15 +33,15 @@ namespace DataBaseContext.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<bool>("IsFavorite");
-
-                    b.Property<bool>("IsLike");
-
-                    b.Property<bool>("IsRead");
+                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("ReadCount");
 
                     b.HasKey("Id");
 
@@ -58,7 +58,9 @@ namespace DataBaseContext.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AuthorId");
+                    b.Property<int?>("CategoryEntityId");
+
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Content");
 
@@ -72,11 +74,17 @@ namespace DataBaseContext.Migrations
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<bool>("IsShare");
+
+                    b.Property<int?>("ModifiedBy");
+
                     b.Property<DateTime?>("ModifiedDate");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("CategoryEntityId");
+
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("Article");
                 });
@@ -95,9 +103,13 @@ namespace DataBaseContext.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("MailAddress");
+
+                    b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
@@ -114,6 +126,35 @@ namespace DataBaseContext.Migrations
                     b.ToTable("Author");
                 });
 
+            modelBuilder.Entity("DbLayer.Entity.CategoryEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CreatedBy");
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Image");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("ParentId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("DbLayer.Entity.ArticleAuditEntity", b =>
                 {
                     b.HasOne("DbLayer.Entity.ArticleEntity", "Article")
@@ -128,9 +169,13 @@ namespace DataBaseContext.Migrations
 
             modelBuilder.Entity("DbLayer.Entity.ArticleEntity", b =>
                 {
+                    b.HasOne("DbLayer.Entity.CategoryEntity")
+                        .WithMany("Articles")
+                        .HasForeignKey("CategoryEntityId");
+
                     b.HasOne("DbLayer.Entity.AuthorEntity", "Author")
                         .WithMany("ArticleList")
-                        .HasForeignKey("AuthorId");
+                        .HasForeignKey("CreatedBy");
                 });
 #pragma warning restore 612, 618
         }

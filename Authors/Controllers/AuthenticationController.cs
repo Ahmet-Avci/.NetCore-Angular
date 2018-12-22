@@ -3,9 +3,11 @@ using DtoLayer.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interface;
+using System.Collections.Generic;
 
 namespace Authors.Controllers
 {
+    [Route("api/[controller]")]
     public class AuthenticationController : Controller
     {
         private readonly IAuthorService _authorService;
@@ -20,6 +22,7 @@ namespace Authors.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [HttpPost("[action]")]
         public ActionResult Login(AuthorDto model)
         {
             if (string.IsNullOrWhiteSpace(model.MailAddress) && string.IsNullOrWhiteSpace(model.Password))
@@ -42,6 +45,7 @@ namespace Authors.Controllers
         /// Giriş yapılıp yapılmadığını kontrol eden metod
         /// </summary>
         /// <returns></returns>
+        [HttpGet("[action]")]
         public JsonResult SessionControl()
         {
             var result = HttpContext.Session.GetObject<AuthorDto>("LoginUser");
@@ -52,6 +56,7 @@ namespace Authors.Controllers
         /// Session'ı temizleyen - çıkış yapan metod
         /// </summary>
         /// <returns></returns>
+        [HttpPost("[action]")]
         public JsonResult Logout()
         {
             try
@@ -65,11 +70,7 @@ namespace Authors.Controllers
             }
         }
 
-        public PartialViewResult LoginScreen(bool loginCheckbox)
-        {
-            return loginCheckbox ? PartialView("Pages/Authentication/_LoginScreenPartial.cshtml") : PartialView("Pages/Authentication/_RegisterScreenPartial.cshtml"); ;
-        }
-
+        [HttpPost("[action]")]
         public JsonResult RegisterUser(AuthorDto model)
         {
             if (string.IsNullOrEmpty(model.MailAddress) || string.IsNullOrEmpty(model.Password))
@@ -82,7 +83,14 @@ namespace Authors.Controllers
                 : Json(new { isError = true, message = "Kullanıcı Eklenemedi." });
         }
 
-        
+        [HttpPost("[action]")]
+        public List<AuthorDto> GetTopAuthorArticle(int authorCount)
+        {
+            if (authorCount <= 0)
+                return new List<AuthorDto>();
+
+            return _authorService.GetPopularAuthor(authorCount);
+        }
 
     }
 }

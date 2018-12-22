@@ -27,8 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\Admin\admin-component.ts" />
+    <None Remove="ClientApp\src\app\Category\category-component.ts" />
     <None Remove="ClientApp\src\app\information\information.component.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\Profile\profile.component.ts" />
+    <None Remove="ClientApp\src\app\read-article\read-article.component.ts" />
     <None Remove="ClientApp\src\app\register\register.component.ts" />
   </ItemGroup>
 
@@ -37,13 +41,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\Admin\admin-component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Category\category-component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\information\information.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Profile\profile.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\read-article\read-article.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\register\register.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="File\TempFiles\" />
+    <Folder Include="ClientApp\scripts\" />
+    <Folder Include="Images\ArticleImages\" />
+    <Folder Include="Images\UserImages\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

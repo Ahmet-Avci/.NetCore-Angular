@@ -1,0 +1,66 @@
+.or-primary {
+  color: #5bc0de;
+  text-align: center;
+  margin: -11px;
+}
+
+.or-success {
+  color: #449d44;
+  text-align: center;
+  margin: -11px;
+}
+
+.t3{
+  position:relative;
+  bottom:3px;
+}
+
+.pdgn-60{
+  padding-top:60px;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.pdgn-25 {
+  padding-top: 25px;
+}
+
+.card-img {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  z-index: 1;
+}
+
+.card-content {
+  background: #ffffff;
+  border: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+}
+
+.card-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+

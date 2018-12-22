@@ -8,5 +8,10 @@ namespace Services.Interface
         List<AuthorDto> GetAll();
         AuthorDto GetUser(AuthorDto model);
         AuthorDto AddUser(AuthorDto model);
+        List<AuthorDto> GetPopularAuthor(int authorCount);
+        List<AuthorDto> GetFilterAuthor(AuthorDto model);
+        bool SetPassifeAuthor(int userId);
+        bool SetActiveAuthor(int userId);
+        AuthorDto GetAuthorById(int authorId);
     }
 }

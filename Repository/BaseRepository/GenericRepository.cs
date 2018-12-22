@@ -33,7 +33,7 @@ namespace Repository
             return Save();
         }
 
-        public bool DeleteById(long id)
+        public bool DeleteById(int id)
         {
             var entity = GetById(id);
             _dbSet.Remove(entity);
@@ -50,7 +50,7 @@ namespace Repository
             return _dbSet.AsNoTracking();
         }
 
-        public T GetById(long id)
+        public T GetById(int id)
         {
             return _dbSet.Find(id);
         }

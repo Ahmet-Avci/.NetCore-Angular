@@ -37,7 +37,7 @@ namespace Authors
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             var connection = @"Server=localhost\SQLEXPRESS;Database=AuthorDb;Trusted_Connection=True;";
@@ -46,13 +46,17 @@ namespace Authors
                 options.UseSqlServer(connection);
             });
 
+            //Repositories Injection
             services.AddScoped<IAuthorRepository, AuthorRepository>();
-            services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
-            services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IArticleAuditRepository, ArticleAuditRepository>();
-            services.AddScoped<IArticleAuditService, ArticleAuditService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
+            //Services Injection
+            services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IArticleAuditService, ArticleAuditService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -106,5 +110,6 @@ namespace Authors
                 await context.Response.WriteAsync($"{user}");
             });
         }
+        
     }
 }

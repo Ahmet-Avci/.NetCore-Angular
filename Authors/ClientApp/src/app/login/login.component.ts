@@ -1,33 +1,34 @@
 import { Component, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './login.component.html',
   styleUrls: ['./login.css'],
 })
-  
+
 
 @Injectable()
 export class LoginComponent {
-  inputMail: string;
-  inputPassword: string;
-  user: UserDto;
-  public http: HttpClient;
+  http: HttpClient;
+  userId: number;
 
   public constructor(http: HttpClient) {
     this.http = http;
   }
+
 
   Login(inputMailAddress, inputPassword): UserDto {
     const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     let body = new HttpParams();
     body = body.set('MailAddress', inputMailAddress);
     body = body.set('Password', inputPassword);
-    this.http.post<UserDto>('/Authentication/Login', body, { headers: myheader }).subscribe(result => {
+    this.http.post<UserDto>('api/Authentication/Login', body, { headers: myheader }).subscribe(result => {
       if (!result.isError) {
-        window.location.href = "/";
-        return null;
+        document.getElementById("loginButton").setAttribute("ng-reflect-router-link", "/logout");
+        this.userId = result.id;
+        window.location.href = "";
       } else {
         alert(result.message);
         return null;
@@ -35,11 +36,14 @@ export class LoginComponent {
     });
     return null;
   }
+
 }
 
-interface UserDto {
+export class UserDto {
   MailAddress: string;
+  mailAddress: string;
   Password: string;
+  password: string;
   PasswordRetry: string;
   Name: string;
   Surname: string;

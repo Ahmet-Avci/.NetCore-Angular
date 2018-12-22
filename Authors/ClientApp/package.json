@@ -28,7 +28,8 @@
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "rxjs": "^5.5.6",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.19",
+    "jquery": "3.3.1"
   },
   "devDependencies": {
     "@angular/cli": "~1.7.0",
@@ -45,12 +46,13 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "node-sass": "^4.10.0",
     "protractor": "^5.4.1",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^7.1.0",
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
     "typescript": "~2.5.3"
   },
-  "optionalDependencies": {
-    "node-sass": "^4.9.0"
-  }
+  "optionalDependencies": {}
 }

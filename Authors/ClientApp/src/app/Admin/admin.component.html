@@ -1,0 +1,134 @@
+
+
+
+<div class="col-md-12">
+  <div class="alert alert-warning pdgn-25">
+    <p>Yeni bir Kategori eklemek için bu alanı kullanabilirsiniz...</p>
+  </div>
+  <div class="col-md-9">
+    <div class="form-group">
+      <input class="form-control" placeholder="Kategori Adı Giriniz..." [(ngModel)]="category.Name" />
+    </div>
+    <div class="form-group">
+      <input class="form-control" placeholder="Kategori Hakkında Açıklama Giriniz..." [(ngModel)]="category.Description" />
+    </div>
+    <div class="form-group">
+        <div class="input-group mb-3">
+          <span class="custom-file btn btn-success btn-file">
+            <input type="file" class="custom-file-input" value="Yazı için dosya ekle" id="importFile" (change)="onFileChange($event.target.files)">
+            <label class="custom-file-label" #labelImport for="importFile"><i class="glyphicon glyphicon-search"></i> Kategori Resmi Seç</label>
+          </span>
+        </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="form-group col-md-12">
+      <div class="card-content col-md-12">
+        <div class="card-img">
+          <img *ngIf="base64textString" src="data:image/png;base64,{{base64textString}}" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary btn-block" (click)="AddCategory(category)">Kategori Ekle</button>
+  </div>
+  <div class="form-group">
+    <table class="table table-striped" *ngIf="categoryList">
+      <thead>
+        <tr>
+          <th>Kategori Adı</th>
+          <th>Kategori Açıklaması</th>
+          <th>İşlem</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categoryList; let i = index" [class]="i % 2 == 0 ? 'warning' : ''">
+          <td>{{category.name}}</td>
+          <td>{{category.description}}</td>
+          <td>
+            <button class="btn btn-xs btn-danger" (click)="RemoveCategory(category.id)">Sil</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="col-md-12 pdgn-60">
+  <div class="alert alert-success pdgn-25">
+    <p>Yazar ya da eser ile ilgili isteniğiniz kıstası kullanarak filtreleme işlemini gerçekleştirebilirsiniz...</p>
+  </div>
+</div>
+<div class="col-md-12">
+  <div class="col-md-6">
+    <div class="form-group">
+      <input class="form-control" type="text" [(ngModel)]="author.Name" placeholder="Kullanıcı Adının Bildiğiniz Kadarını Giriniz..." />
+    </div>
+    <div class="col-md-12 form-group or-primary">
+      <p class="t3"><b>ya da</b></p>
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="number" [(ngModel)]="author.PhoneNumber" placeholder="Telefon Numarasını Giriniz..." />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-info btn-block" (click)="GetFilterAuthors(author)">Kullanıcıları Filtrele</button>
+    </div>
+    <div class="form-group" *ngIf="userList">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Kişi</th>
+            <th>İşlem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of userList; let i = index" [class]="i % 2 == 0 ? 'info' : ''">
+            <td>{{user.name}} {{user.surname}}</td>
+            <td>
+              <button class="btn btn-xs btn-primary pull-right" [routerLink]='["/profile",{authorId:user.id}]'>Profile Git</button>
+              <button class="btn btn-xs btn-danger pull-right" *ngIf="user.isActive" (click)="SetPassife(user.id)">Kişiyi Banla</button>
+              <button class="btn btn-xs btn-success pull-right" *ngIf="!user.isActive" (click)="SetActive(user.id)">Ban Kaldır</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr class="hidden-md hidden-lg" />
+  <div class="col-md-6">
+    <div class="form-group">
+      <input class="form-control" [(ngModel)]="article.Header" type="text" placeholder="Eser Adının Bildiğiniz Kadarını Giriniz..." />
+    </div>
+    <div class="col-md-12 form-group or-success">
+      <p class="t3"><b>ya da</b></p>
+    </div>
+    <div class="form-group">
+      <input class="form-control" [(ngModel)]="article.Content" type="text" placeholder="Eserin İçeriğinden Bir Parça Giriniz" />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-success btn-block" (click)="GetFilterArticles(article)">Eserleri Filtrele</button>
+    </div>
+    <div class="form-group" *ngIf="articleList">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Eser Adı</th>
+            <th>İşlem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let article of articleList; let i = index" [class]="i % 2 == 0 ? 'success' : ''">
+            <td>{{article.header}}</td>
+            <td>
+              <button class="btn btn-xs btn-primary pull-right" [routerLink]='["/read-article",{articleId:article.id}]'>Okumaya Git</button>
+              <button class="btn btn-xs btn-danger pull-right" *ngIf="article.isShare" id="{{article.id}}" (click)="StopShare(article.id)">Yayınlamayı Durdur</button>
+              <button class="btn btn-xs btn-success pull-right" *ngIf="!article.isShare" id="{{article.id}}" (click)="StartShare(article.id,this)">Yayına Al</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

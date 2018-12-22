@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Authors.Helpers
 {
-    public static class SessionManager2
+    public static class SessionManager
     {
         public static void SetObject<T>(this ISession session, string key, T value)
         {

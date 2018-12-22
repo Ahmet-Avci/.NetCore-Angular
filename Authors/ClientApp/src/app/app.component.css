@@ -4,3 +4,23 @@
     padding-top: 50px;
   }
 }
+
+.white-text{
+  color:white;
+}
+
+.blue-background {
+  background-color: #3ca2e0;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}
+
+.navbar-default .navbar-toggle {
+  background-color: #3ca2e0;
+}
+
+.soft-text {
+  color: rgba(255,255,255,.7);
+}

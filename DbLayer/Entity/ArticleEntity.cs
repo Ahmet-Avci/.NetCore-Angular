@@ -13,6 +13,11 @@ namespace DbLayer.Entity
         public string Content { get; set; }
 
         /// <summary>
+        /// Yazının bağlı olduğu kategori id'si
+        /// </summary>
+        public int CategoryId { get; set; }
+
+        /// <summary>
         /// Yazının Başlığı
         /// </summary>
         public string Header { get; set; }
@@ -21,6 +26,11 @@ namespace DbLayer.Entity
         /// Yazı ile ilgili resmin yolu
         /// </summary>
         public string ImagePath { get; set; }
+
+        /// <summary>
+        /// Eserin yayında olup olmadığına bakar
+        /// </summary>
+        public bool IsShare { get; set; }
 
         /// <summary>
         /// Eserin yazarının bulunduğu model

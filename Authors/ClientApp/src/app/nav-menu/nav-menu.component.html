@@ -2,18 +2,11 @@
 <div class='main-nav'>
   <div class='navbar navbar-inverse'>
     <div class='navbar-header'>
-      <!--<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
-          <span class='sr-only'>Toggle navigation</span>
-          <span class='icon-bar'></span>
-          <span class='icon-bar'></span>
-          <span class='icon-bar'></span>
-      </button>
-      <a class='navbar-brand' [routerLink]='["/"]'>Authors</a>-->
       <div class="text-center">
         <h2 class="soft-text"><i class="glyphicon glyphicon-pencil"></i></h2><h5 class="soft-text" style="bottom:12px; position:relative"><b>MODERN KÖLELER</b></h5><br />
         <img class="profile-picture" src="https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1-744x744.jpg" />
         <h5 class="soft-text">Hoşgeldin {{user.name}}</h5>
-        <button ui-sref="login" class="btn btn-primary btn-outline btn-rounded btn-sm logout-button"  [routerLink]='currentState == "Giriş Yap" ? ["/login"] : ["/logout"]' (click)='currentState == "Çıkış Yap" ? Logout() : "" '>{{currentState}}</button>
+        <button ui-sref="login" id="loginButton" class="btn btn-primary btn-outline btn-rounded btn-sm logout-button" [routerLink]='currentState == "Giriş Yap" ? ["/login"] : ["/logout"]' (click)='currentState == "Çıkış Yap" ? Logout() : "" '>{{currentState}}</button>
       </div>
     </div>
     <div class='clearfix'></div>
@@ -25,15 +18,25 @@
           </a>
         </li>
         <li [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/counter"]'>
+          <a [routerLink]='["/category"]'>
+            <span class="glyphicon glyphicon-tasks"></span> Kategoriler
+          </a>
+        </li>
+        <li [routerLinkActive]='["link-active"]' *ngIf="user.id">
+          <a [routerLink]='["/my-article"]'>
             <span class='glyphicon glyphicon-education'></span> Yazılarım
           </a>
         </li>
-        <li [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/fetch-data"]'>
+        <li [routerLinkActive]='["link-active"]' *ngIf="user.id">
+          <a [routerLink]='["/article"]'>
             <span class='glyphicon glyphicon-plus'></span> Yazı Ekle
           </a>
         </li>
+      <li [routerLinkActive]='["link-active"]' *ngIf="isAdmin">
+        <a [routerLink]='["/admin"]'>
+          <span class="glyphicon glyphicon-tower"></span> Yönetim Paneli
+        </a>
+      </li>
         <li [routerLinkActive]='["link-active"]'>
           <a [routerLink]='["/information"]'>
             <span class='glyphicon glyphicon-heart'></span> Hakkımızda

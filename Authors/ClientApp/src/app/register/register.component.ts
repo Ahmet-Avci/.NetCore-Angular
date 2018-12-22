@@ -12,14 +12,14 @@ import { LoginComponent } from '../login/login.component';
 
 @Injectable()
 export class RegisterComponent {
-  public http: HttpClient;
+  http: HttpClient;
   user: UserDto;
 
   public constructor(http: HttpClient) {
     this.http = http;
     this.user = new UserDto;
   }
-  
+
 
   Register() {
     if (this.user.Password == this.user.PasswordRetry) {
@@ -30,10 +30,10 @@ export class RegisterComponent {
       body = body.set('Name', this.user.Name);
       body = body.set('Surname', this.user.Surname);
       body = body.set('PhoneNumber', this.user.PhoneNumber);
-      this.http.post<UserDto>('/Authentication/RegisterUser', body, { headers: myheader }).subscribe(result => {
+      this.http.post<UserDto>('api/Authentication/RegisterUser', body, { headers: myheader }).subscribe(result => {
         if (result != null && result.id > 0) {
-          let loginTs = new LoginComponent(this.http);
-          loginTs.Login(result.mailAddress, result.password);
+          let loginComponent = new LoginComponent(this.http);
+          loginComponent.Login(result.mailAddress, result.password);
         } else {
           alert(result.message);
         }
@@ -46,7 +46,9 @@ export class RegisterComponent {
 
 export class UserDto {
   MailAddress: string;
+  mailAddress: string;
   Password: string;
+  password: string;
   PasswordRetry: string;
   Name: string;
   Surname: string;
@@ -54,6 +56,4 @@ export class UserDto {
   message: string;
   isError: boolean;
   id: number;
-  mailAddress: string;
-  password: string;
 }

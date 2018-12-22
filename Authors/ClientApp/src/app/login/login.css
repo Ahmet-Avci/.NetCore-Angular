@@ -37,8 +37,8 @@ body#LoginForm {
   background: #ffffff none repeat scroll 0 0;
   border-radius: 2px;
   margin: 10px auto 30px;
-  max-width: 38%;
-  padding: 50px 70px 70px 71px;
+  max-width: 70%;
+  padding: 50px 5px 0px 0px;
 }
 
 .login-form .form-group {

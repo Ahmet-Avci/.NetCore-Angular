@@ -44,6 +44,11 @@ namespace DbLayer.Entity
         public AuthorType AuthorType { get; set; }
 
         /// <summary>
+        /// Yazarın aktif olup olmadığını bakar(banlanıp banlanmadığına)
+        /// </summary>
+        public bool IsActive { get; set; }
+
+        /// <summary>
         /// Yazarın eserlerinin bulunduğu model
         /// </summary>
         public virtual List<ArticleEntity> ArticleList { get; set; }

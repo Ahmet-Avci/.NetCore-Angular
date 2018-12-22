@@ -19,8 +19,22 @@ namespace DtoLayer.Dto
         /// </summary>
         public string ImagePath { get; set; }
 
+        /// <summary>
+        /// İlgili eserin bağlı olduğu kategori
+        /// </summary>
+        public int CategoryId { get; set; }
+
+        /// <summary>
+        /// Eserin yayında olup olmadığına bakar
+        /// </summary>
+        public bool IsShare { get; set; }
+
         public virtual AuthorDto Author { get; set; }
 
+        //Dto Areas
+        public int ReadCount { get; set; }
+        public string AuthorName { get; set; }
+        public string AuthorSurname { get; set; }
         /// <summary>
         /// Eser detaylarının bulunduğua model
         /// </summary>
