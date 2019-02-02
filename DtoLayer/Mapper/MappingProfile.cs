@@ -8,12 +8,10 @@ namespace DataTransferObject.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<AuthorEntity,AuthorDto>();
+            CreateMap<AuthorEntity, AuthorDto>();
             CreateMap<AuthorDto, AuthorEntity>();
             CreateMap<ArticleEntity, ArticleDto>();
             CreateMap<ArticleDto, ArticleEntity>();
-            CreateMap<ArticleAuditEntity, ArticleAuditDto>();
-            CreateMap<ArticleAuditDto, ArticleAuditEntity>();
             CreateMap<CategoryEntity, CategoryDto>();
             CreateMap<CategoryDto, CategoryEntity>();
         }

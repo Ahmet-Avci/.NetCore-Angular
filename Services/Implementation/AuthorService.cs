@@ -5,7 +5,6 @@ using System.Text;
 using AutoMapper;
 using DbLayer.Entity;
 using DtoLayer.Dto;
-using Microsoft.EntityFrameworkCore;
 using Repository;
 using Repository.Interface;
 using Services.Interface;
@@ -16,15 +15,13 @@ namespace Services.Implementation
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IArticleRepository _articleRepository;
-        private readonly IArticleAuditRepository _articleAuditRepository;
         private readonly IMapper _mapper;
-        private static List<AuthorDto> HomePageData { get; set; }
 
-        public AuthorService(IAuthorRepository authorRepository, IArticleRepository articleRepository, IArticleAuditRepository articleAuditRepository, IMapper mapper)
+
+        public AuthorService(IAuthorRepository authorRepository, IArticleRepository articleRepository, IMapper mapper)
         {
             _authorRepository = authorRepository;
             _articleRepository = articleRepository;
-            _articleAuditRepository = articleAuditRepository;
             _mapper = mapper;
         }
 
@@ -41,53 +38,31 @@ namespace Services.Implementation
 
         public List<AuthorDto> GetPopularAuthor(int authorCount)
         {
-            if (HomePageData == null || (DateTime.Now.AddDays(7) - HomePageData.FirstOrDefault().ModifiedDate.Value).Days >= 7)
+            var authorsEntity = _authorRepository.GetAll().Join(_articleRepository.GetAll(),
+            author => author.Id,
+            article => article.CreatedBy,
+            (author, article) => new { author, article }
+            ).Where(x => x.article.CreatedBy == x.author.Id && x.author.AuthorType != DataBaseContext.Enums.AuthorType.admin).OrderByDescending(x => x.article.ReadCount).Select(x => x.author).Distinct().Take(authorCount).ToList();
+
+            List<int> authorsIds = authorsEntity.Select(x => x.Id).ToList();
+            var articlesEntity = _articleRepository.Filter(x => authorsIds.Contains(x.CreatedBy.Value)).OrderByDescending(x => x.ReadCount).Take(authorCount).ToList();
+
+            List<AuthorDto> authors = new List<AuthorDto>();
+            List<ArticleDto> articles = new List<ArticleDto>();
+
+            authorsEntity.ForEach(author =>
             {
-                var result = _authorRepository.GetAll().Join(_articleRepository.GetAll(),
-                    author => author.Id,
-                    article => article.CreatedBy,
-                    (author, article) => new { author, article }).Where(x => x.author.Id == x.article.CreatedBy).Join(_articleAuditRepository.GetAll(),
-                    authorArticle => authorArticle.article.Id,
-                    articleAudit => articleAudit.ArticleId,
-                    (authorArticle, articleAudit) => new { authorArticle, articleAudit }
-                    ).Where(x => x.articleAudit.ArticleId == x.authorArticle.article.Id).OrderByDescending(x => x.articleAudit.ReadCount).ToList();
-
-                var authorsEntity = result.Select(x => x.authorArticle.author).Distinct().Take(authorCount).ToList();
-                var articlesEntity = result.Select(x => x.authorArticle.article).ToList();
-                var articlesAuditEntity = result.Select(x => x.articleAudit).ToList();
-
-                List<AuthorDto> authors = new List<AuthorDto>();
-                List<ArticleDto> articles = new List<ArticleDto>();
-                List<ArticleAuditDto> articlesAudit = new List<ArticleAuditDto>();
-
-                authorsEntity.ForEach(x =>
+                author.ArticleList = new List<ArticleEntity>();
+                articlesEntity.Where(article => article.CreatedBy == author.Id).ToList().ForEach(article =>
                 {
-                    x.ArticleList = new List<ArticleEntity>();
-                    articlesEntity.Where(z => z.CreatedBy == x.Id).ToList().ForEach(z =>
-                      {
-                          if (articles.Where(art => art.CreatedBy == x.CreatedBy).Count() == 1)
-                              return;
-                          z.Content = z.Content.Length > 240 ? string.Concat(z.Content.Substring(0, 240), "...") : z.Content;
-                          z.ImagePath = string.IsNullOrWhiteSpace(z.ImagePath) ? "" : Encoding.UTF8.GetString(Convert.FromBase64String(z.ImagePath));
-                          articles.Add(_mapper.Map<ArticleEntity, ArticleDto>(z));
-                          z.ReadedArticle = new List<ArticleAuditEntity>();
-                          articlesAuditEntity.Where(y => y.ArticleId == z.Id).ToList().ForEach(y =>
-                          {
-                              articlesAudit.Add(_mapper.Map<ArticleAuditEntity, ArticleAuditDto>(y));
-                              z.ReadedArticle.Add(y);
-                          });
-                          x.ArticleList.Add(z);
-                      });
-                    x.ModifiedDate = DateTime.Now;
-                    authors.Add(_mapper.Map<AuthorEntity, AuthorDto>(x));
+                    article.Content = article.Content.Length > 240 ? string.Concat(article.Content.Substring(0, 240), "...") : article.Content;
+                    article.ImagePath = string.IsNullOrWhiteSpace(article.ImagePath) ? "" : Encoding.UTF8.GetString(Convert.FromBase64String(article.ImagePath));
+                    author.ArticleList.Add(article);
                 });
-                HomePageData = authors;
-                return HomePageData;
-            }
-            else
-            {
-                return HomePageData;
-            }
+                author.ModifiedDate = DateTime.Now;
+                authors.Add(_mapper.Map<AuthorDto>(author));
+            });
+            return authors;
         }
 
         /// <summary>
@@ -154,7 +129,11 @@ namespace Services.Implementation
         /// <returns></returns>
         public AuthorDto GetAuthorById(int authorId)
         {
-            return _mapper.Map<AuthorDto>(_authorRepository.GetById(authorId));
+            var author = _mapper.Map<AuthorDto>(_authorRepository.GetById(authorId));
+            var articles = _mapper.Map<List<ArticleDto>>(_articleRepository.Filter(x => x.CreatedBy == authorId).ToList());
+            author.ArticleCount = articles.Count;
+            author.TotalReadCount = articles.Sum(x => x.ReadCount);
+            return author;
         }
     }
 }

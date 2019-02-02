@@ -3,13 +3,16 @@ using DtoLayer.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interface;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Authors.Controllers
 {
     [Route("api/[controller]")]
     public class AuthenticationController : Controller
     {
+        private static List<AuthorDto> HomePageData { get; set; }
         private readonly IAuthorService _authorService;
 
         public AuthenticationController(IAuthorService authorService)
@@ -89,7 +92,16 @@ namespace Authors.Controllers
             if (authorCount <= 0)
                 return new List<AuthorDto>();
 
-            return _authorService.GetPopularAuthor(authorCount);
+            if (HomePageData == null || DateTime.Now.AddDays(-7) >= HomePageData.First().ModifiedDate.Value)
+            {
+                HomePageData = _authorService.GetPopularAuthor(authorCount);
+                return HomePageData;
+            }
+            else
+            {
+                return HomePageData;
+            }
+            
         }
 
     }

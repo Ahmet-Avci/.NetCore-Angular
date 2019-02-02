@@ -19,11 +19,6 @@ namespace DtoLayer.Dto
         /// </summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// Kategori resmi
-        /// </summary>
-        public string Image { get; set; }
-
         public List<ArticleDto> Articles { get; set; }
     }
 }

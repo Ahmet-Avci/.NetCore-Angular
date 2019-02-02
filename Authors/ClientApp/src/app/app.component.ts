@@ -13,6 +13,7 @@ export class AppComponent{
   http: HttpClient
   public user: UserDto;
   userId: number;
+  isAdmin: boolean;
   
   public constructor(http: HttpClient) {
     this.http = http;
@@ -20,6 +21,7 @@ export class AppComponent{
 
     this.http.get<UserDto>('api/Authentication/SessionControl').subscribe(result => {
       this.headState = result.id > 0 ? "Çıkış Yap" : "Giriş Yap";
+      this.isAdmin = result.authorType == UserType.admin.valueOf() ? true : false;
       this.user = result;
     }, error => console.error(error));
   }
@@ -45,7 +47,30 @@ export class UserDto {
   Name: string;
   Surname: string;
   PhoneNumber: string;
+  authorType: number;
   message: string;
   isError: boolean;
   id: number;
+}
+
+export enum UserType {
+  /// <summary>
+  /// Sadece giriş yapmadan yazıları okuyabilecek kişi tipi
+  /// </summary>
+  voyager = 0,
+
+  /// <summary>
+  /// Üyeliğe sahip ama yazı yazmak istemeyen kullanıcı tipi
+  /// </summary>
+  bookworm = 1,
+
+  /// <summary>
+  /// Yazı yazıp paylaşabilen kullanıcı tipi
+  /// </summary>
+  author = 2,
+
+  /// <summary>
+  /// Admin kullanıcı tipi
+  /// </summary>
+  admin = 3,
 }

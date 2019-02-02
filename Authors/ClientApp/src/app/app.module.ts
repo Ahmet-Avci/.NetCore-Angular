@@ -16,6 +16,7 @@ import { ReadArticleComponent } from './read-article/read-article.component';
 import { AdminComponent } from './Admin/admin-component';
 import { CategoryComponent } from './Category/category-component';
 import { ProfileComponent } from './Profile/profile.component';
+import { CategoryArticleComponent } from './Category-article/category-article.component';
 import { CommonModule } from '@angular/common';
 
 
@@ -32,7 +33,8 @@ import { CommonModule } from '@angular/common';
     ReadArticleComponent,
     AdminComponent,
     CategoryComponent,
-    ProfileComponent
+    ProfileComponent,
+    CategoryArticleComponent
     
   ],
   imports: [
@@ -51,7 +53,8 @@ import { CommonModule } from '@angular/common';
       { path: 'read-article', component: ReadArticleComponent },
       { path: 'admin', component: AdminComponent },
       { path: 'category', component: CategoryComponent },
-      { path: 'profile', component: ProfileComponent }
+      { path: 'profile', component: ProfileComponent },
+      { path: 'category-article', component: CategoryArticleComponent }
     ])
   ],
   providers: [],

@@ -7,6 +7,10 @@ using System.Collections.Generic;
 
 namespace Authors.Controllers
 {
+
+    /// <summary>
+    /// Eserlerle ilgili iþlemleri kontrol eden sýnýf
+    /// </summary>
     [Route("api/[controller]")]
     public class ArticleController : Controller
     {
@@ -57,12 +61,12 @@ namespace Authors.Controllers
             var result = _articleService.GetArticlesByAuthorId(user);
 
             return result == null || result.Id <= 0
-                ? Json(new { isError = true, message = "Bir hata oluþtu." })
+                ? Json(new { isError = true, message = "Henüz hiç eseriniz yok :(" })
                 : Json(result);
         }
 
         /// <summary>
-        /// 
+        /// Admin'in eklemiþ olduðu aktif eserleri getirir
         /// </summary>
         /// <param name="articleCount"></param>
         /// <returns></returns>
@@ -81,7 +85,7 @@ namespace Authors.Controllers
         }
 
         /// <summary>
-        /// Ýlgili eser id'yi ait eseri döndürür
+        /// Ýlgili eser id'yi ait eseri, eser okunma ekraný için döndürür
         /// </summary>
         /// <param name="articleId"></param>
         /// <returns></returns>
@@ -101,7 +105,25 @@ namespace Authors.Controllers
         }
 
         /// <summary>
-        /// Ýlgili parametreler ile uyaþan eserleri getirir
+        /// Ýlgili eseri döndürür
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        public IActionResult GetArticleByIdForEdit(int articleId)
+        {
+            if (articleId <= 0)
+                return NotFound("Lütfen giriþ bilgilerinizi kontrol ediniz...");
+
+            ArticleDto result = _articleService.GetArticleById(articleId);
+
+            return result != null && result.Id > 0
+                ? (IActionResult)Ok(result)
+                : NotFound("Eser getirilirken bir hata oluþtu");
+        }
+
+        /// <summary>
+        /// Ýlgili parametreler ile uyaþan eserleri getirir. Admin filtreleme ekraný için
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -119,7 +141,7 @@ namespace Authors.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Ýlgili eseri pasife alýr
         /// </summary>
         /// <param name="articleId"></param>
         /// <returns></returns>
@@ -137,7 +159,7 @@ namespace Authors.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Ýlgili eseri aktife alýr
         /// </summary>
         /// <param name="articleId"></param>
         /// <returns></returns>
@@ -154,6 +176,93 @@ namespace Authors.Controllers
                 : (IActionResult)Ok(result);
         }
 
+        /// <summary>
+        /// Kategori id'ye ait olan aktif ve paylaþýmdaki eserleri paging mantýðý ile getirir
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="skipCount"></param>
+        /// <param name="takeCount"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        public IActionResult GetArticleByCategoryId(int categoryId, int skipCount, int takeCount)
+        {
+            if (categoryId <= 0)
+                return BadRequest("Kategori seçimi sýrasýnda bir hata meydana geldi...");
+
+            List<ArticleDto> result = _articleService.GetArticlesByCategoryId(categoryId, skipCount, takeCount);
+
+            return result != null && result.Count > 0
+                ? (IActionResult)Ok(result)
+                : NotFound("Hata Olustu...");
+        }
+
+        /// <summary>
+        /// Ýlgili eseri paylaþýma alýr
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isShare"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        public IActionResult ShareArticle(int id, bool isShare)
+        {
+            ArticleDto articleDto = _articleService.SetShareStatus(id, isShare);
+
+            return articleDto != null && articleDto.IsShare
+                ? (IActionResult)Ok(articleDto)
+                : NotFound("Eser Yayýna Alýnýrken Hata Oluþtu...");
+        }
+
+        /// <summary>
+        /// Ýlgili eseri paylaþýmdan kaldýrýr
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isShare"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        public IActionResult UnShareArticle(int id, bool isShare)
+        {
+            ArticleDto articleDto = _articleService.SetShareStatus(id, isShare);
+
+            return articleDto != null && !articleDto.IsShare
+                ? (IActionResult)Ok(articleDto)
+                : NotFound("Eser Yayýndan Kaldýrýlýrken Hata Oluþtu...");
+        }
+
+        /// <summary>
+        /// Ýlgili eseri siler
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        public IActionResult DeleteArticle(int id)
+        {
+            if (id <= 0)
+                return NotFound("Giriþ Bilgileriniz Hatalý...");
+
+            var result = _articleService.RemoveArticleById(id);
+
+            return result
+                ? (IActionResult)Ok(result)
+                : NotFound("Eser Silinirken Bir Hata Oluþtu...");
+        }
+
+        /// <summary>
+        /// Ýlgili eseri günceller
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        public IActionResult UpdateArticle(ArticleDto model)
+        {
+            if (model == null || string.IsNullOrWhiteSpace(model.Content) || string.IsNullOrWhiteSpace(model.Header))
+                return NotFound("Giriþ Bilgileriniz Hatalý...");
+
+            ArticleDto result = _articleService.UpdateArticle(model);
+
+            return result != null
+                ? (IActionResult)Ok(result)
+                : NotFound("Eser güncellenirken bir hata ile karþýlaþýldý");
+        }
 
     }
 }

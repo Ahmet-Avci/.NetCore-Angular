@@ -34,13 +34,13 @@ namespace Authors.Controllers
         [HttpPost("[action]")]
         public IActionResult AddCategory(CategoryDto model)
         {
-            if (string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.Description) || string.IsNullOrWhiteSpace(model.Image))
+            if (string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.Description))
                 return Json(new { isError = true, message = "Lütfen gerekli alanları doldurunuz." });
 
             var user = HttpContext.Session.GetObject<AuthorDto>("LoginUser");
 
             if (user == null || user.Id < 0)
-                return BadRequest("Giriş yapmadan yazı ekleyemezsiniz :(");
+                return BadRequest("Giriş yapmadan kategori ekleyemezsiniz :(");
 
             model.CreatedBy = user.Id;
             CategoryDto categoryDto = _categoryService.AddCategory(model);

@@ -25,6 +25,11 @@ namespace DtoLayer.Dto
         public string Surname { get; set; }
 
         /// <summary>
+        /// Yazarın otobiyografisi
+        /// </summary>
+        public string Autobiography { get; set; }
+
+        /// <summary>
         /// Kullanıcı Telefon Numarası
         /// </summary>
         public string PhoneNumber { get; set; }
@@ -49,7 +54,10 @@ namespace DtoLayer.Dto
         /// </summary>
         public bool IsActive { get; set; }
 
-
+        /// <summary>
+        /// Profil resmini tutar
+        /// </summary>
+        public string Image { get; set; }
 
         //Only Dto fields
         public string Content { get; set; }
@@ -58,13 +66,10 @@ namespace DtoLayer.Dto
         public bool IsLike { get; set; }
         public bool IsFavorited { get; set; }
         public string ImagePath { get; set; }
+        public int ArticleCount { get; set; }
+        public int TotalReadCount { get; set; }
 
         public virtual List<ArticleDto> ArticleList { get; set; }
-
-        /// <summary>
-        /// Eser detaylarının bulunduğua model
-        /// </summary>
-        public virtual List<ArticleAuditDto> ReadedArticle { get; set; }
 
     }
 }

@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-12">
+    <!--<div class="article-area"></div>-->
+    <div class="col-md-4 pdgn-25" *ngFor="let value of articleList">
+      <div class="card-content">
+        <div class="card-img">
+          <img src="data:image/png;base64,{{value.imagePath}}" alt="">
+          <span>{{value.authorName}} {{value.authorSurname}}</span>
+        </div>
+        <div class="card-desc">
+          <h3>{{value.header}}</h3>
+          <p>{{value.content}}</p>
+          <a href="#" class="btn-card" title="Okunma Sayısı"><i class="glyphicon glyphicon-book"></i> <b>{{value.readCount}}</b></a>
+          <a [routerLink]='["/read-article",{articleId:value.id}]' class="btn-card" title="Tamamını Oku"><b>Oku</b></a>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-default btn-block t15" (click)="GetAllCategories()">Daha Fazla...</button>
+  </div>
+</div>

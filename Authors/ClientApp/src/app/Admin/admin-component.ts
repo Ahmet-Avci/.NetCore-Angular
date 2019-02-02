@@ -1,4 +1,4 @@
-import { Component, Injectable, ViewChild, ElementRef } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 @Component({
@@ -18,10 +18,6 @@ export class AdminComponent {
   category: CategoryDto;
   categoryList: CategoryDto[];
   private base64textString: String = "";
-
-  @ViewChild('labelImport')
-  labelImport: ElementRef;
-  fileToUpload: File = null;
 
   public constructor(http: HttpClient) {
     this.http = http;
@@ -47,7 +43,6 @@ export class AdminComponent {
     let body = new HttpParams();
     body = body.set("Name", this.category.Name == null ? "" : this.category.Name);
     body = body.set("Description", this.category.Description == null ? "" : this.category.Description);
-    body = body.set("Image", btoa(this.base64textString.toString()));
     this.http.post<CategoryDto>('api/Category/AddCategory', body, { headers: myheader }).subscribe(result => {
       if (result != null) {
         alert("Kayıt Eklendi...");
@@ -145,27 +140,6 @@ export class AdminComponent {
         }
       });
     }
-  }
-
-
-  //Resim İşlemleri
-  onFileChange(files: FileList) {
-    this.labelImport.nativeElement.innerText = Array.from(files)
-      .map(f => f.name)
-      .join(', ');
-    this.fileToUpload = files.item(0);
-
-    if (this.fileToUpload.name) {
-      var reader = new FileReader();
-      reader.onload = this._handleReaderLoaded.bind(this);
-      reader.readAsBinaryString(this.fileToUpload);
-    }
-
-  }
-
-  _handleReaderLoaded(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString = btoa(binaryString);
   }
 
 }

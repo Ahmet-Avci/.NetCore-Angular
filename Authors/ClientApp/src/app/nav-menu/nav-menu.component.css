@@ -11,8 +11,10 @@ li.link-active a:focus {
 }
 
 .profile-picture {
-  width: 100px;
   border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  box-shadow: 0px 0px 6px #c5e3f6;
 }
 
 .btn-primary {
@@ -61,7 +63,12 @@ li.link-active a:focus {
 .navbar-inverse {
   background-color: #3ca2e0;
   border-color: #080808;
+  overflow-y: auto;
 }
+
+  .navbar-inverse::-webkit-scrollbar {
+    display: none;
+  }
 
 /* Menüleri font rengini beyaz yapar */
   .navbar-inverse .navbar-nav > li > a{

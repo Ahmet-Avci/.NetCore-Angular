@@ -35,9 +35,5 @@ namespace DtoLayer.Dto
         public int ReadCount { get; set; }
         public string AuthorName { get; set; }
         public string AuthorSurname { get; set; }
-        /// <summary>
-        /// Eser detaylarının bulunduğua model
-        /// </summary>
-        public virtual List<ArticleAuditDto> ReadedArticle { get; set; }
     }
 }

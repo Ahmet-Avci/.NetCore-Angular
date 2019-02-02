@@ -19,11 +19,6 @@ namespace DbLayer.Entity
         /// </summary>
         public string Description { get; set; }
 
-        /// <summary>
-        /// Kategori resmi
-        /// </summary>
-        public string Image { get; set; }
-
         public List<ArticleEntity> Articles { get; set; }
 
     }

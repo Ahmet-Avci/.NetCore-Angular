@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\Admin\admin-component.ts" />
+    <None Remove="ClientApp\src\app\Category-article\category-article.component.ts" />
     <None Remove="ClientApp\src\app\Category\category-component.ts" />
     <None Remove="ClientApp\src\app\information\information.component.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
@@ -42,6 +43,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\Admin\admin-component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Category-article\category-article.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Category\category-component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\information\information.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />

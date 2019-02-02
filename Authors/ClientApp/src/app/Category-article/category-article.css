@@ -9,24 +9,6 @@ section {
   padding-top: 25px
 }
 
-.read-count {
-  top: 25px;
-  position: absolute;
-  top: 15%;
-  left: 95%;
-  background: #3ca2e0c7;
-  padding: 6px;
-  color: #fff;
-  font-size: 12px;
-  border-radius: 4px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 9px;
-  -o-border-radius: 9px;
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-}
-
 .details-card {
   background: #ecf0f1;
 }
@@ -50,32 +32,28 @@ section {
     display: block;
   }
 
-.width60 {
-  width: 20%;
-}
-
-.card-img span {
-  position: absolute;
-  top: 15%;
-  left: 12%;
-  background: #1ABC9C;
-  padding: 6px;
-  color: #fff;
-  font-size: 12px;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  transform: translate(-50%,-50%);
-}
-
-  .card-img span h4 {
+  .card-img span {
+    position: absolute;
+    top: 15%;
+    left: 12%;
+    background: #1ABC9C;
+    padding: 6px;
+    color: #fff;
     font-size: 12px;
-    margin: 0;
-    padding: 10px 5px;
-    line-height: 0;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    transform: translate(-50%,-50%);
   }
+
+    .card-img span h4 {
+      font-size: 12px;
+      margin: 0;
+      padding: 10px 5px;
+      line-height: 0;
+    }
 
 .card-desc {
   padding: 1.25rem;
@@ -135,26 +113,8 @@ a.btn-card {
   color: #fff;
 }
 
-
-
-.btn-file {
+.t15 {
+  top: 15px;
   position: relative;
-  overflow: hidden;
 }
-
-  .btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-  }
 /* End card section */

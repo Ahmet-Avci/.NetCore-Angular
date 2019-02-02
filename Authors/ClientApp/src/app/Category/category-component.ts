@@ -19,6 +19,7 @@ export class CategoryComponent {
     this.GetAllCategories();
   }
 
+  //Tüm kategorileri getirir
   GetAllCategories() {
     this.http.get<CategoryDto[]>("api/Category/GetAllCategory").subscribe(result => {
       if (result != null && result.length > 0) {

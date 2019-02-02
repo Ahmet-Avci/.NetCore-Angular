@@ -15,11 +15,27 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          <li [routerLinkActive]='["link-active"]'><a style="color:white" [routerLink]='["/"]'>Ana Sayfa</a></li>
-          <li *ngIf="user.id" [routerLinkActive]='["link-active"]'><a style="color:white" [routerLink]='["/my-article"]'>Yazılarım</a></li>
-          <li *ngIf="user.id" [routerLinkActive]='["link-active"]'><a style="color:white" [routerLink]='["/article"]'>Yazı Ekle</a></li>
-          <li [routerLinkActive]='["link-active"]'><a style="color:white" [routerLink]='["/information"]'>Hakkımızda</a></li>
-          <li [routerLinkActive]='["link-active"]'><a id="loginButton" style="color:white" [routerLink]='headState == "Giriş Yap" ? ["/login"] : ["/logout"]' (click)='headState == "Çıkış Yap" ? Logout() : "" '><i class="glyphicon glyphicon-log-in"></i> {{headState}}</a></li>
+          <li [routerLinkActive]='["link-active"]'>
+            <a style="color:white" [routerLink]='["/"]'>Ana Sayfa</a>
+          </li>
+          <li [routerLinkActive]='["link-active"]'>
+            <a style="color:white" [routerLink]='["/category"]'>Kategoriler</a>
+          </li>
+          <li *ngIf="user.id" [routerLinkActive]='["link-active"]'>
+            <a style="color:white" [routerLink]='["/my-article"]'>Yazılarım</a>
+          </li>
+          <li *ngIf="user.id" [routerLinkActive]='["link-active"]'>
+            <a style="color:white" [routerLink]='["/article"]'>Yazı Ekle</a>
+          </li>
+          <li *ngIf="isAdmin" [routerLinkActive]='["link-active"]'>
+            <a style="color:white" [routerLink]='["/admin"]'>Yönetim Paneli</a>
+          </li>
+          <li [routerLinkActive]='["link-active"]'>
+            <a style="color:white" [routerLink]='["/information"]'>Hakkımızda</a>
+          </li>
+          <li [routerLinkActive]='["link-active"]'>
+            <a id="loginButton" style="color:white" [routerLink]='headState == "Giriş Yap" ? ["/login"] : ["/logout"]' (click)='headState == "Çıkış Yap" ? Logout() : "" '><i class="glyphicon glyphicon-log-in"></i> {{headState}}</a>
+          </li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

@@ -9,7 +9,6 @@ namespace DbLayer
 
         public DbSet<ArticleEntity> Article { get; set; }
         public DbSet<AuthorEntity> Author { get; set; }
-        public DbSet<ArticleAuditEntity> ReadedArticles { get; set; }
 
         public DbSet<CategoryEntity> Category { get; set; }
 
@@ -23,11 +22,6 @@ namespace DbLayer
                 .HasMany(a => a.ArticleList)
                 .WithOne(a => a.Author)
                 .HasForeignKey(a => a.CreatedBy);
-
-            builder.Entity<ArticleEntity>()
-                .HasMany(a => a.ReadedArticle)
-                .WithOne(a => a.Article)
-                .HasForeignKey(a => a.ArticleId);
 
         }
 

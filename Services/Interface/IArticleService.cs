@@ -13,5 +13,10 @@ namespace Services.Interface
         List<ArticleDto> GetFilterArticle(ArticleDto model);
         bool SetPassifeArticle(int articleId);
         bool SetActiveArticle(int articleId);
+        List<ArticleDto> GetArticlesByCategoryId(int categoryId, int skipCount, int takeCount);
+        ArticleDto SetShareStatus(int id, bool isShare);
+        bool RemoveArticleById(int id);
+        ArticleDto GetArticleById(int articleId);
+        ArticleDto UpdateArticle(ArticleDto model);
     }
 }

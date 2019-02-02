@@ -3,17 +3,15 @@
     <div class="slider">
       <div *ngFor="let user of userList; let i = index">
         <div *ngFor="let article of user.articleList">
-          <div *ngFor="let articleAudit of article.readedArticle">
-            <input type="radio" name="slider" class="trigger" id="{{i}}" checked="checked" />
-            <div class="slide" (click)="readArticle(article.id)">
-              <figure class="slide-figure">
-                <img class="slide-img" src="data:image/png;base64,{{article.imagePath}}" />
-                <figcaption class="slide-caption3"><p class="slider-text header-info pull-right" title="Okunma Sayısı..."><i class="glyphicon glyphicon-book"><b> {{articleAudit.readCount}}</b></i></p></figcaption>
-                <figcaption class="slide-caption2"><p class="slider-text" style="background-color:transparent"><i><b>{{article.content}}</b></i></p></figcaption>
-                <figcaption class="slide-caption"><p class="slider-text"><b>{{article.header}}</b><i> - {{user.name}} {{user.surname}}</i></p></figcaption>
-              </figure><!-- .slide-figure -->
-            </div><!-- .slide -->
-          </div>
+          <input type="radio" name="slider" class="trigger" id="{{i}}" checked="checked" />
+          <div class="slide" (click)="readArticle(article.id)">
+            <figure class="slide-figure">
+              <img class="slide-img" src="data:image/png;base64,{{article.imagePath}}" />
+              <figcaption class="slide-caption3"><p class="slider-text header-info pull-right" title="Okunma Sayısı..."><i class="glyphicon glyphicon-book"><b> {{article.readCount}}</b></i></p></figcaption>
+              <figcaption class="slide-caption2"><p class="slider-text" style="background-color:transparent"><i><b>{{article.content}}</b></i></p></figcaption>
+              <figcaption class="slide-caption"><p class="slider-text"><b>{{article.header}}</b><i> - {{user.name}} {{user.surname}}</i></p></figcaption>
+            </figure><!-- .slide-figure -->
+          </div><!-- .slide -->
         </div>
       </div>
     </div><!-- .slider -->

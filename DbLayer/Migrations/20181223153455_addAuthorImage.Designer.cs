@@ -4,20 +4,55 @@ using DbLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataBaseContext.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20181223153455_addAuthorImage")]
+    partial class addAuthorImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("DbLayer.Entity.ArticleAuditEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ArticleId");
+
+                    b.Property<int?>("AuthorId");
+
+                    b.Property<int?>("CreatedBy");
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("ReadCount");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("ReadedArticles");
+                });
 
             modelBuilder.Entity("DbLayer.Entity.ArticleEntity", b =>
                 {
@@ -39,8 +74,6 @@ namespace DataBaseContext.Migrations
 
                     b.Property<string>("ImagePath");
 
-                    b.Property<bool>("IsActive");
-
                     b.Property<bool>("IsDeleted");
 
                     b.Property<bool>("IsShare");
@@ -48,8 +81,6 @@ namespace DataBaseContext.Migrations
                     b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<int>("ReadCount");
 
                     b.HasKey("Id");
 
@@ -128,6 +159,18 @@ namespace DataBaseContext.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("DbLayer.Entity.ArticleAuditEntity", b =>
+                {
+                    b.HasOne("DbLayer.Entity.ArticleEntity", "Article")
+                        .WithMany("ReadedArticle")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DbLayer.Entity.AuthorEntity", "Author")
+                        .WithMany("ReadedArticle")
+                        .HasForeignKey("AuthorId");
                 });
 
             modelBuilder.Entity("DbLayer.Entity.ArticleEntity", b =>

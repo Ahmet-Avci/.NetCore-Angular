@@ -33,13 +33,19 @@ namespace DbLayer.Entity
         public bool IsShare { get; set; }
 
         /// <summary>
+        /// İlgili eserin pasif/aktif bilgisini tutar
+        /// </summary>
+        public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Eserin okunma sayısı
+        /// </summary>
+        public int ReadCount { get; set; }
+
+        /// <summary>
         /// Eserin yazarının bulunduğu model
         /// </summary>
         public virtual AuthorEntity Author { get; set; }
-
-        /// <summary>
-        /// Eser detaylarının bulunduğua model
-        /// </summary>
-        public virtual List<ArticleAuditEntity> ReadedArticle { get; set; }
+        
     }
 }

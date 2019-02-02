@@ -5,14 +5,65 @@
         <div class="card-img">
           <img src="data:image/png;base64,{{value.imagePath}}" alt="">
           <span>{{user.name}}</span>
+          <p class="pull-left read-count" title="Okunma"><b>{{value.readCount}}</b></p>
         </div>
         <div class="card-desc">
           <h3>{{value.header}}</h3>
           <p>{{value.content}}</p>
-          <a href="#" class="btn-card" title="Okunma Sayısı"><i class="glyphicon glyphicon-book"></i> <b>{{value.readCount}}</b></a>
-          <a href="#" class="btn-card" title="Tamamını Oku"><b>Oku</b></a>
+          <a [routerLink]='["/read-article",{articleId:value.id}]' class="btn-card" title="Tamamını Oku"><i class="glyphicon glyphicon-search"></i></a>
+          <a class="btn-card" style="background-color:#1abc35;" title="Yayınla" (click)="Share(value.id)" *ngIf="!value.isShare"><i class="glyphicon glyphicon-ok-sign"></i></a>
+          <a class="btn-card" style="background-color:#bc471a;" title="Yayından Kaldır" (click)="UnShare(value.id)" *ngIf="value.isShare"><i class="glyphicon glyphicon-minus-sign"></i></a>
+          <a class="btn-card" style="background-color:#bc1a1a;" title="Sil" (click)="DeleteArticle(value.id)"><i class="glyphicon glyphicon-remove"></i></a>
+          <a class="btn-card" style="background-color:#bc6c1a;" title="Düzenle" (click)="GetArticleById(value.id)" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-edit"></i></a>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Eser Düzenleme Ekranı</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Eser Başlığı</label>
+          <input class="form-control" type="text" [(ngModel)]="article.header" />
+        </div>
+        <div class="form-group">
+          <label>Eser İçeriği</label>
+          <textarea rows="8" class="form-control" [(ngModel)]="article.content"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Mevcut Resim</label><br />
+          <img class="width60" src="data:image/png;base64,{{article.imagePath}}" alt="">
+        </div>
+        <div class="form-group">
+          <label>Yeni Resim</label><br />
+          <form novalidate [formGroup]="formImport">
+            <div class="input-group mb-3">
+              <span class="custom-file btn btn-success btn-file">
+                <input type="file" class="custom-file-input" formControlName="importFile" value="Yazı için dosya ekle" id="importFile" (change)="onFileChange($event.target.files)">
+                <label class="custom-file-label" #labelImport for="importFile"><i class="glyphicon glyphicon-plus"></i></label>
+              </span>
+            </div>
+          </form>
+          <img *ngIf="base64textString" class="width60" src="data:image/png;base64,{{base64textString}}" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-primary" (click)="UpdateArticle()">Güncelle</button>
+      </div>
+    </div>
+
   </div>
 </div>

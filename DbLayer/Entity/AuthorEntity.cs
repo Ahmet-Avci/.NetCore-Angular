@@ -22,7 +22,12 @@ namespace DbLayer.Entity
         /// Kullanıcı Soyadı
         /// </summary>
         public string Surname { get; set; }
-    
+
+        /// <summary>
+        /// Yazarın otobiyografisi
+        /// </summary>
+        public string Autobiography { get; set; }
+
         /// <summary>
         /// Kullanıcı Telefon Numarası
         /// </summary>
@@ -49,13 +54,13 @@ namespace DbLayer.Entity
         public bool IsActive { get; set; }
 
         /// <summary>
+        /// Profil resmini tutar
+        /// </summary>
+        public string Image { get; set; }
+
+        /// <summary>
         /// Yazarın eserlerinin bulunduğu model
         /// </summary>
         public virtual List<ArticleEntity> ArticleList { get; set; }
-
-        /// <summary>
-        /// Eser detaylarının bulunduğua model
-        /// </summary>
-        public virtual List<ArticleAuditEntity> ReadedArticle { get; set; }
     }
 }

@@ -49,13 +49,11 @@ namespace Authors
             //Repositories Injection
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
-            services.AddScoped<IArticleAuditRepository, ArticleAuditRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             //Services Injection
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IArticleService, ArticleService>();
-            services.AddScoped<IArticleAuditService, ArticleAuditService>();
             services.AddScoped<ICategoryService, CategoryService>();
 
             var mappingConfig = new MapperConfiguration(mc =>
