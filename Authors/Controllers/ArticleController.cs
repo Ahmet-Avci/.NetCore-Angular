@@ -65,24 +65,7 @@ namespace Authors.Controllers
                 : Json(result);
         }
 
-        /// <summary>
-        /// Admin'in eklemiþ olduðu aktif eserleri getirir
-        /// </summary>
-        /// <param name="articleCount"></param>
-        /// <returns></returns>
-        [HttpPost("[action]")]
-        public JsonResult GetArticleByAdmin(int articleCount)
-        {
-            if (articleCount <= 0)
-                return Json(new { isError = true, message = "Hata Oluþtu" });
-
-            List<ArticleDto> result = _articleService.GetArticleByAdmin(articleCount);
-
-            return result != null && result.Count > 0
-                ? Json(result)
-                : Json(new { isError = true, message = "Editörün seçtiði bir eser bulunamadý..." });
-
-        }
+        
 
         /// <summary>
         /// Ýlgili eser id'yi ait eseri, eser okunma ekraný için döndürür

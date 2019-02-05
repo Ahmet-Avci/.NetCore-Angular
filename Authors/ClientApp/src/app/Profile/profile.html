@@ -2,10 +2,12 @@
   <div class="col-lg-12 col-sm-12">
     <div class="card hovercard">
       <div class="card-background">
-        <img class="card-bkimg" alt="" src="data:image/png;base64,{{author.image}}">
+        <img class="card-bkimg" *ngIf="author.image != null" alt="" src="data:image/png;base64,{{author.image}}">
+        <img class="card-bkimg" *ngIf="author.image == null" alt="" src="./assets/pp.png">
       </div>
       <div class="useravatar">
-        <img alt="" src="data:image/png;base64,{{author.image}}">
+        <img class="card-bkimg" *ngIf="author.image != null" alt="" src="data:image/png;base64,{{author.image}}">
+        <img class="card-bkimg" *ngIf="author.image == null" alt="" src="./assets/pp.png">
       </div>
       <div class="card-info">
         <span class="card-title">{{author.name}} {{author.surname}}</span>
@@ -30,6 +32,12 @@
           <p><b>{{author.date}}</b></p>
         </button>
       </div>
+      <div class="btn-group">
+        <button type="button" class="btn btn-default">
+          <div class="hidden-xs">Seçenekler</div>
+          <p><i title="Düzenle" class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></i>&nbsp;&nbsp;&nbsp;<i title="Şifre Değiştir" class="glyphicon glyphicon-lock" data-toggle="modal" data-target="#passwordModal"></i></p>
+        </button>
+      </div>
     </div>
 
     <div class="well">
@@ -38,6 +46,92 @@
           <p>Yazar Hakkında:</p>
           <h4><b>{{author.autobiography}}</b></h4>
         </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Bilgilerini Düzenle</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Ad</label>
+          <input class="form-control" type="text" [(ngModel)]="author.name" />
+        </div>
+        <div class="form-group">
+          <label>Soyad</label>
+          <input class="form-control" type="text" [(ngModel)]="author.surname" />
+        </div>
+        <div class="form-group">
+          <label>Telefon</label>
+          <input class="form-control" type="number" [(ngModel)]="author.phoneNumber" />
+        </div>
+        <div class="form-group">
+          <label>Biyografi</label>
+          <textarea rows="4" class="form-control" [(ngModel)]="author.autobiography"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Mevcut Resim</label><br />
+          <img class="width60" src="data:image/png;base64,{{author.image}}" alt="">
+        </div>
+        <div class="form-group">
+          <label>Yeni Resim</label><br />
+          <form novalidate [formGroup]="formImport">
+            <div class="input-group mb-3">
+              <span class="custom-file btn btn-success btn-file">
+                <input type="file" class="custom-file-input" formControlName="importFile" value="Yeni profil resmi seç" id="importFile" (change)="onFileChange($event.target.files)">
+                <label class="custom-file-label" #labelImport for="importFile"><i class="glyphicon glyphicon-plus"></i></label>
+              </span>
+            </div>
+          </form>
+          <img *ngIf="base64textString" class="width60" src="data:image/png;base64,{{base64textString}}" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-primary" (click)="UpdateAuthor()">Güncelle</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Password Modal -->
+<div class="modal fade" id="passwordModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Şifre Değiştirme Ekranı</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Eski Şifreyi Gir</label>
+          <input class="form-control" type="password" id="oldPass"/>
+        </div>
+        <div class="form-group">
+          <label>Yeni Şifre</label>
+          <input class="form-control" type="password" id="newPass"/>
+        </div>
+        <div class="form-group">
+          <label>Yeni Şifre Tekrar</label>
+          <input class="form-control" type="password" id="retryPass"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="closeBtn" class="btn btn-default" data-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-primary" (click)="ChangePassword()">Güncelle</button>
       </div>
     </div>
 

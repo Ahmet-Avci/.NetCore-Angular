@@ -25,17 +25,32 @@ namespace Services.Implementation
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Yeni Kullanıcı Ekler
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public AuthorDto AddUser(AuthorDto model)
         {
+            model.IsActive = true;
             var value = _authorRepository.Save(_mapper.Map<AuthorDto, AuthorEntity>(model));
             return _mapper.Map<AuthorEntity, AuthorDto>(value);
         }
 
+        /// <summary>
+        /// Tüm kullanıcıları getirir
+        /// </summary>
+        /// <returns></returns>
         public List<AuthorDto> GetAll()
         {
             return _mapper.Map<List<AuthorEntity>, List<AuthorDto>>(_authorRepository.GetAll().ToList());
         }
 
+        /// <summary>
+        /// Parametredeki sayı kadar popüler yazar ve en popüler eserini getirir
+        /// </summary>
+        /// <param name="authorCount"></param>
+        /// <returns></returns>
         public List<AuthorDto> GetPopularAuthor(int authorCount)
         {
             var authorsEntity = _authorRepository.GetAll().Join(_articleRepository.GetAll(),
@@ -72,7 +87,7 @@ namespace Services.Implementation
         /// <returns></returns>
         public AuthorDto GetUser(AuthorDto model)
         {
-            var authorEntity = _authorRepository.Filter(x => x.MailAddress.Equals(model.MailAddress) && x.Password.Equals(model.Password) && !x.IsDeleted).FirstOrDefault();
+            var authorEntity = _authorRepository.Filter(x => x.MailAddress.Equals(model.MailAddress) && x.Password.Equals(model.Password) && !x.IsDeleted && x.IsActive).FirstOrDefault();
             return authorEntity != null ? _mapper.Map<AuthorEntity, AuthorDto>(authorEntity) : new AuthorDto();
         }
 
@@ -114,6 +129,11 @@ namespace Services.Implementation
             return updated.IsActive;
         }
 
+        /// <summary>
+        /// Yazarın banını kaldırır
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public bool SetActiveAuthor(int userId)
         {
             AuthorEntity author = _authorRepository.GetById(userId);
@@ -134,6 +154,47 @@ namespace Services.Implementation
             author.ArticleCount = articles.Count;
             author.TotalReadCount = articles.Sum(x => x.ReadCount);
             return author;
+        }
+
+        /// <summary>
+        /// İlgili yazar'ı günceller
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public AuthorDto EditAuthor(AuthorDto model)
+        {
+            var authorEntity = _authorRepository.GetById(model.Id);
+            authorEntity.Name = model.Name;
+            authorEntity.Surname = model.Surname;
+            authorEntity.PhoneNumber = model.PhoneNumber;
+            authorEntity.MailAddress = model.MailAddress;
+            authorEntity.Autobiography = model.Autobiography;
+            authorEntity.Image = !string.IsNullOrWhiteSpace(model.Image) ? model.Image : authorEntity.Image;
+            var statusEntiy = _authorRepository.Update(authorEntity);
+
+            return statusEntiy != null && statusEntiy.Id > 0
+                ? model
+                : new AuthorDto();
+        }
+
+        /// <summary>
+        /// İlgili kişinin şifresini değiştirir
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public AuthorDto ChangePasword(int id, string oldPassword, string password)
+        {
+            var authorEntity = _authorRepository.GetById(id);
+            if (authorEntity.Password.Equals(oldPassword))
+            {
+                authorEntity.Password = password;
+                return _mapper.Map<AuthorDto>(_authorRepository.Update(authorEntity));
+            }
+            else
+            {
+                return new AuthorDto();
+            }
+            
         }
     }
 }

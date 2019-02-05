@@ -4,7 +4,8 @@
     <div class='navbar-header'>
       <div class="text-center">
         <h2 class="soft-text"><i class="glyphicon glyphicon-pencil"></i></h2><h5 class="soft-text" style="bottom:12px; position:relative"><b>MODERN KÖLELER</b></h5><br />
-        <img class="profile-picture" src="data:image/jpeg;base64,{{user.image}}" [routerLink]='["/profile",{authorId:user.id}]' />
+        <img *ngIf="user.image != null" class="profile-picture" src="data:image/jpeg;base64,{{user.image}}" [routerLink]='["/profile",{authorId:user.id}]' />
+        <img *ngIf="user.image == null" class="profile-picture" src="./assets/pp.png" [routerLink]='["/profile",{authorId:user.id}]' />
         <h5 class="soft-text">Hoşgeldin {{user.name}}</h5>
         <button ui-sref="login" id="loginButton" class="btn btn-primary btn-outline btn-rounded btn-sm logout-button" [routerLink]='currentState == "Giriş Yap" ? ["/login"] : ["/logout"]' (click)='currentState == "Çıkış Yap" ? Logout() : "" '>{{currentState}}</button>
       </div>

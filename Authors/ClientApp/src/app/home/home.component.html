@@ -29,12 +29,13 @@
       <div class="card-content">
         <div class="card-img">
           <img src="data:image/png;base64,{{value.imagePath}}" alt="">
+          <span class="text-border-black col-xs-12" title="Yazar">Editorün Seçimi</span>
+          <p class="pull-left read-count" title="Okunma"><b class="text-border-black">{{value.readCount}}</b></p>
         </div>
         <div class="card-desc">
           <h3>{{value.header}}</h3>
           <p>{{value.content}}</p>
-          <a href="#" class="btn-card" title="Okunma Sayısı"><i class="glyphicon glyphicon-book"></i> <b>{{value.readCount}}</b></a>
-          <a href="#" class="btn-card" [routerLink]='["/read-article",{articleId:value.id}]' title="Tamamını Oku"><b>Oku</b></a>
+          <a href="#" class="btn-card btn-block" [routerLink]='["/read-article",{articleId:value.id}]' title="Tamamını Oku" style="    text-align: center;"><b>Oku</b></a>
         </div>
       </div>
     </div>

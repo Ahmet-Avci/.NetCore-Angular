@@ -1,6 +1,7 @@
 import { Component, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
+import { UserDto, ArticleDto } from '../app.component';
 
 @Component({
   selector: 'MyArticle-component',
@@ -144,31 +145,4 @@ export class MyArticleComponent {
     console.log(btoa(binaryString));
   }
 
-}
-
-export class ArticleDto {
-  content: string;
-  header: string;
-  imagePath: string;
-  message: string;
-  isError: boolean;
-  id: number;
-  orderNumber: number;
-  isActive: boolean;
-  isShare: boolean;
-}
-
-export class UserDto {
-  MailAddress: string;
-  mailAddress: string;
-  Password: string;
-  password: string;
-  PasswordRetry: string;
-  Name: string;
-  Surname: string;
-  PhoneNumber: string;
-  message: string;
-  isError: boolean;
-  id: number;
-  articleList: ArticleDto[];
 }

@@ -1,5 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
+import { UserDto } from '../app.component';
 
 
 @Component({
@@ -37,18 +38,4 @@ export class LoginComponent {
     return null;
   }
 
-}
-
-export class UserDto {
-  MailAddress: string;
-  mailAddress: string;
-  Password: string;
-  password: string;
-  PasswordRetry: string;
-  Name: string;
-  Surname: string;
-  PhoneNumber: string;
-  message: string;
-  isError: boolean;
-  id: number;
 }

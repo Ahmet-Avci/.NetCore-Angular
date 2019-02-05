@@ -45,12 +45,62 @@ export class UserDto {
   password: string;
   PasswordRetry: string;
   Name: string;
+  name: string;
   Surname: string;
+  surname: string;
   PhoneNumber: string;
+  phoneNumber: string;
   authorType: number;
+  Autobiography: string;
+  autobiography: string;
+  Image: string;
+  image: string;
+  totalReadCount: number;
+  articleCount: number;
+  createdDate: Date;
+  date: string;
+  isActive: boolean;
   message: string;
   isError: boolean;
   id: number;
+  authorName: string;
+  authorSurname: string;
+  oldPassword: string;
+  newPassword: string;
+  retryNewPassword: string;
+  articleList: ArticleDto[];
+}
+
+export class ArticleDto {
+  id: number;
+  Content: string;
+  content: string;
+  Header: string;
+  header: string;
+  ImagePath: string;
+  imagePath: string;
+  isShare: boolean;
+  readCount: number;
+  orderNumber: number;
+  isActive: boolean;
+  CategoryId: number;
+  categoryId: number;
+  authorName: string;
+  authorSurname: string;
+  message: string;
+  isError: boolean;
+}
+
+export class CategoryDto {
+  Name: string;
+  name: string;
+  Description: string;
+  description: string;
+  Image: string;
+  image: string;
+  id: number;
+  message: string;
+  isError: boolean;
 }
 
 export enum UserType {
@@ -74,3 +124,4 @@ export enum UserType {
   /// </summary>
   admin = 3,
 }
+

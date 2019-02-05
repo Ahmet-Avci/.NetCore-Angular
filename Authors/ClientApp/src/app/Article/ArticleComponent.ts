@@ -1,6 +1,7 @@
 import { Component, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
+import { ArticleDto, CategoryDto } from '../app.component';
 
 @Component({
   selector: 'Article',
@@ -70,24 +71,4 @@ export class ArticleComponent {
     console.log(btoa(binaryString));
   }
 
-}
-
-
-export class ArticleDto {
-  Content: string;
-  CategoryId: number;
-  Header: string;
-  ImagePath: string;
-  message: string;
-  isError: boolean;
-  id: number;
-}
-
-export class CategoryDto {
-  name: string;
-  description: string;
-  parentId: number;
-  isError: boolean;
-  message: string;
-  id: number;
 }

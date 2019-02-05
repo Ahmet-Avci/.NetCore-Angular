@@ -51,6 +51,34 @@ namespace Authors.Controllers
                 : NotFound("Kayit Bulunamadi");
         }
 
+        [HttpPost("[action]")]
+        public IActionResult EditAuthor(AuthorDto model)
+        {
+            if (model.Id <= 0 || string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.Surname))
+                return BadRequest("Lütfen gerekli alanları doldurunuz...");
+
+            AuthorDto author = _authorService.EditAuthor(model);
+
+            return author != null && author.Id > 0
+                ? (IActionResult)Ok(author)
+                : NotFound("Kayıt güncellenirken hata oluştu...");
+        }
+
+        /// <summary>
+        /// İlgili kişinin şifresini değiştirir
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        [HttpPost("[action]")]
+        public IActionResult ChangePassword(int id, string oldPassword, string password)
+        {
+            AuthorDto author = _authorService.ChangePasword(id, oldPassword, password);
+
+            return author != null && author.Id > 0
+                ? (IActionResult)Ok(author)
+                : NotFound("Şifre değiştirilemedi...");
+        }
+
         /// <summary>
         /// 
         /// </summary>

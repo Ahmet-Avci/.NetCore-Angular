@@ -5,13 +5,13 @@
       <div class="card-content">
         <div class="card-img">
           <img src="data:image/png;base64,{{value.imagePath}}" alt="">
-          <span>{{value.authorName}} {{value.authorSurname}}</span>
+          <span class="text-border-black col-xs-12" title="Yazar">{{value.authorName}} {{value.authorSurname}}</span>
+          <p class="pull-left read-count" title="Okunma"><b class="text-border-black">{{value.readCount}}</b></p>
         </div>
         <div class="card-desc">
           <h3>{{value.header}}</h3>
           <p>{{value.content}}</p>
-          <a href="#" class="btn-card" title="Okunma Sayısı"><i class="glyphicon glyphicon-book"></i> <b>{{value.readCount}}</b></a>
-          <a [routerLink]='["/read-article",{articleId:value.id}]' class="btn-card" title="Tamamını Oku"><b>Oku</b></a>
+          <a [routerLink]='["/read-article",{articleId:value.id}]' class="btn-card" title="Tamamını Oku"><i class="glyphicon glyphicon-search"></i></a>
         </div>
       </div>
     </div>

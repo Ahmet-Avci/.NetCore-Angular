@@ -13,5 +13,7 @@ namespace Services.Interface
         bool SetPassifeAuthor(int userId);
         bool SetActiveAuthor(int userId);
         AuthorDto GetAuthorById(int authorId);
+        AuthorDto EditAuthor(AuthorDto model);
+        AuthorDto ChangePasword(int id, string oldPassword, string password);
     }
 }

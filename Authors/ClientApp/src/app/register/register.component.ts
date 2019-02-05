@@ -2,6 +2,7 @@ import { Component, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LoginComponent } from '../login/login.component';
 import { FormGroup } from '@angular/forms';
+import { UserDto } from '../app.component';
 
 @Component({
   selector: 'app-home',
@@ -70,19 +71,4 @@ export class RegisterComponent {
     console.log(btoa(binaryString));
   }
 
-}
-
-export class UserDto {
-  MailAddress: string;
-  mailAddress: string;
-  Password: string;
-  password: string;
-  PasswordRetry: string;
-  Name: string;
-  Surname: string;
-  PhoneNumber: string;
-  message: string;
-  Image: string;
-  isError: boolean;
-  id: number;
 }

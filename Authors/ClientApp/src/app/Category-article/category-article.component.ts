@@ -2,6 +2,7 @@ import { Component, Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import * as $ from "jquery";
+import { ArticleDto } from '../app.component';
 
 @Component({
   selector: 'app-category-article',
@@ -54,19 +55,4 @@ export class CategoryArticleComponent {
       }
     });
   }
-}
-
-
-export class ArticleDto {
-  authorName: string;
-  authorSurname: string;
-  content: string;
-  header: string;
-  imagePath: string;
-  message: string;
-  isError: boolean;
-  id: number;
-  orderNumber: number;
-  isActive: boolean;
-  readCount: number;
 }

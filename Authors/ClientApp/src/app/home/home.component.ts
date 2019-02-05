@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { UserDto, ArticleDto } from '../app.component';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,7 @@ export class HomeComponent {
     const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     let body = new HttpParams();
     body = body.set("authorCount", this.authorCount.toString());
-    http.post<UserDto[]>('api/Authentication/GetTopAuthorArticle', body, { headers: myheader }).subscribe(result => {
+    http.post<UserDto[]>('api/Home/GetTopAuthorArticle', body, { headers: myheader }).subscribe(result => {
       this.userList = result;
     })
 
@@ -29,7 +30,7 @@ export class HomeComponent {
     const myheader2 = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     let body2 = new HttpParams();
     body2 = body2.set("articleCount", this.articleCount.toString());
-    http.post<ArticleDto[]>('api/Article/GetArticleByAdmin', body2, { headers: myheader2 }).subscribe(result => {
+    http.post<ArticleDto[]>('api/Home/GetArticleByAdmin', body2, { headers: myheader2 }).subscribe(result => {
       this.adminArticles = result;
       this.adminArticles.forEach(x => {
         x.imagePath = atob(x.imagePath);
@@ -39,27 +40,3 @@ export class HomeComponent {
   }
 }
 
-export class ArticleDto {
-  content: string;
-  header: string;
-  imagePath: string;
-  message: string;
-  isError: boolean;
-  isActive: boolean;
-  id: number;
-  readCount: number;
-}
-
-export class UserDto {
-  mailAddress: string;
-  password: string;
-  passwordRetry: string;
-  name: string;
-  surname: string;
-  phoneNumber: string;
-  message: string;
-  isError: boolean;
-  id: number;
-  articleCount: number;
-  articleList: ArticleDto[];
-}

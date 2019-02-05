@@ -1,5 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CategoryDto } from '../app.component';
 
 @Component({
   selector: 'app-category',
@@ -31,10 +32,3 @@ export class CategoryComponent {
   }
 }
 
-
-export class CategoryDto {
-  description: string;
-  image: string;
-  name: string;
-  id: number;
-}

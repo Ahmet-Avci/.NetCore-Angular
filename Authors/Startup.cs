@@ -40,6 +40,9 @@ namespace Authors
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //Cachle iþlemleri yapabilmek için eklendi
+            services.AddMemoryCache();
+
             var connection = @"Server=localhost\SQLEXPRESS;Database=AuthorDb;Trusted_Connection=True;";
             services.AddDbContext<DataContext>(options =>
             {

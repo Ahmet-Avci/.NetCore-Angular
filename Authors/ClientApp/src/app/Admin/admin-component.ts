@@ -1,5 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { CategoryDto, UserDto, ArticleDto } from '../app.component';
 
 @Component({
   selector: 'app-admin',
@@ -11,8 +12,8 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class AdminComponent {
   http: HttpClient;
-  author: AuthorDto;
-  userList: AuthorDto[];
+  author: UserDto;
+  userList: UserDto[];
   article: ArticleDto;
   articleList: ArticleDto[];
   category: CategoryDto;
@@ -21,7 +22,7 @@ export class AdminComponent {
 
   public constructor(http: HttpClient) {
     this.http = http;
-    this.author = new AuthorDto;
+    this.author = new UserDto;
     this.article = new ArticleDto;
     this.category = new CategoryDto;
     
@@ -69,7 +70,7 @@ export class AdminComponent {
     let body = new HttpParams();
     body = body.set("Name", this.author.Name == null ? "" : this.author.Name);
     body = body.set("PhoneNumber", this.author.PhoneNumber == null ? "" : this.author.PhoneNumber.toString());
-    this.http.post<AuthorDto[]>('api/Author/GetFilterAuthors', body, { headers: myheader }).subscribe(result => {
+    this.http.post<UserDto[]>('api/Author/GetFilterAuthors', body, { headers: myheader }).subscribe(result => {
       if (result != null) {
         this.userList = result;
       }
@@ -142,35 +143,6 @@ export class AdminComponent {
     }
   }
 
-}
-
-export class AuthorDto {
-  id: number;
-  Name: string;
-  PhoneNumber: number;
-  name: string;
-  surname: string;
-  phoneNumber;
-  mailAddress: string;
-  isError: boolean;
-  message: string;
-  isActive: boolean;
-}
-
-export class ArticleDto {
-  id: number;
-  Content: string;
-  Header: string;
-  header: string;
-  isShare: boolean;
-}
-
-export class CategoryDto {
-  Name: string;
-  Description: string;
-  Image: string;
-  name: string;
-  id: number;
 }
 
 export enum FilterType {
