@@ -30,9 +30,9 @@ section {
 }
 
 .card-content {
-  background: #ffffff;
+  background-color: transparent;
   border: 4px;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+  box-shadow: black 1px 1px 16px;
 }
 
 .card-img {
@@ -82,7 +82,7 @@ section {
 }
 
   .card-desc h3 {
-    color: #000000;
+    color: #747373;
     font-weight: 600;
     font-size: 1.5em;
     line-height: 1.3em;
@@ -92,7 +92,7 @@ section {
   }
 
   .card-desc p {
-    color: #747373;
+    color: #747373d6;
     font-size: 14px;
     font-weight: 400;
     font-size: 1em;

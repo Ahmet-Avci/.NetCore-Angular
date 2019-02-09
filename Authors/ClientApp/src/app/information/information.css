@@ -1,3 +1,19 @@
 .center{
   text-align:center;
 }
+
+.header {
+  padding: 10%;
+  background-color: transparent;
+  color: #6c6d6d;
+  font-size: 50px;
+}
+
+.footer {
+  background-color: transparent;
+  color: #6c6d6d;
+  width: 105.8%;
+  padding: 60px;
+  position: relative;
+  right: 3%;
+}

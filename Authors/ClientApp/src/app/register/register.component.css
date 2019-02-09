@@ -54,7 +54,7 @@ body#LoginForm {
 }
 
 .main-div {
-  background: #ffffff none repeat scroll 0 0;
+  background-color: transparent;
   border-radius: 2px;
   margin: 10px auto 30px;
   max-width: 70%;

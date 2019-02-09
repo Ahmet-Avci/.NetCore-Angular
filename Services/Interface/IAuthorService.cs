@@ -6,8 +6,8 @@ namespace Services.Interface
     public interface IAuthorService 
     {
         List<AuthorDto> GetAll();
-        AuthorDto GetUser(AuthorDto model);
-        AuthorDto AddUser(AuthorDto model);
+        AuthorDto GetUser(string MailAddress, string Password);
+        AuthorDto AddUser(AuthorDto model, string Password);
         List<AuthorDto> GetPopularAuthor(int authorCount);
         List<AuthorDto> GetFilterAuthor(AuthorDto model);
         bool SetPassifeAuthor(int userId);

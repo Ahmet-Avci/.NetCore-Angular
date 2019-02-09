@@ -2,7 +2,7 @@
 
 
 <div class="col-md-12">
-  <div class="alert alert-warning pdgn-25">
+  <div class="alert alert-info pdgn-25">
     <p>Yeni bir Kategori eklemek için bu alanı kullanabilirsiniz...</p>
   </div>
   <div class="col-md-9">
@@ -17,7 +17,7 @@
     <button class="btn btn-primary btn-block" (click)="AddCategory(category)">Kategori Ekle</button>
   </div>
   <div class="form-group">
-    <table class="table table-striped" *ngIf="categoryList">
+    <table class="table table-hover" *ngIf="categoryList">
       <thead>
         <tr>
           <th>Kategori Adı</th>
@@ -26,7 +26,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let category of categoryList; let i = index" [class]="i % 2 == 0 ? 'warning' : ''">
+        <tr *ngFor="let category of categoryList; let i = index" >
           <td>{{category.name}}</td>
           <td>{{category.description}}</td>
           <td>
@@ -39,7 +39,7 @@
 </div>
 
 <div class="col-md-12 pdgn-60">
-  <div class="alert alert-success pdgn-25">
+  <div class="alert alert-info pdgn-25">
     <p>Yazar ya da eser ile ilgili isteniğiniz kıstası kullanarak filtreleme işlemini gerçekleştirebilirsiniz...</p>
   </div>
 </div>
@@ -93,7 +93,7 @@
       <button class="btn btn-success btn-block" (click)="GetFilterArticles(article)">Eserleri Filtrele</button>
     </div>
     <div class="form-group" *ngIf="articleList">
-      <table class="table table-striped">
+      <table class="table table-hover">
         <thead>
           <tr>
             <th>Eser Adı</th>
@@ -101,7 +101,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let article of articleList; let i = index" [class]="i % 2 == 0 ? 'success' : ''">
+          <tr *ngFor="let article of articleList; let i = index">
             <td>{{article.header}}</td>
             <td>
               <button class="btn btn-xs btn-primary pull-right" [routerLink]='["/read-article",{articleId:article.id}]'>Okumaya Git</button>

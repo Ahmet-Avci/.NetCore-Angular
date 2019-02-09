@@ -42,7 +42,16 @@ namespace DtoLayer.Dto
         /// <summary>
         /// Kullanıcı şifresi
         /// </summary>
-        public string Password { get; set; }
+        public string Password {
+            get
+            {
+                return string.Empty;
+            }
+            set
+            {
+
+            }
+        }
 
         /// <summary>
         /// Kullanıcı tipini belirtir

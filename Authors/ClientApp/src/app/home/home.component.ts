@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { UserDto, ArticleDto } from '../app.component';
+import * as $ from "jquery";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+
+  ngOnInit(): void {
+      $("app-home").hide();
+  }
+
   http: HttpClient;
   public userList: UserDto[] = [];
   adminArticles: ArticleDto[] = [];
@@ -16,7 +22,7 @@ export class HomeComponent {
   articleCount = 4;
 
   public constructor(http: HttpClient) {
-
+    
 
     //Yazarlar farklı olmak koşuluyla en çok okunana 3 yazarın 3 eserini getirir
     const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
@@ -24,6 +30,7 @@ export class HomeComponent {
     body = body.set("authorCount", this.authorCount.toString());
     http.post<UserDto[]>('api/Home/GetTopAuthorArticle', body, { headers: myheader }).subscribe(result => {
       this.userList = result;
+      $("app-home").show(500);
     })
 
     //Sistem adminin eklemiş olduğu son 4 genel yazıyı getirir
@@ -38,5 +45,7 @@ export class HomeComponent {
       })
     })
   }
+
+  
 }
 

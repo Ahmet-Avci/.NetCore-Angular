@@ -22,12 +22,12 @@ namespace Authors.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        public ActionResult Login(AuthorDto model)
+        public ActionResult Login(string MailAddress, string Password)
         {
-            if (string.IsNullOrWhiteSpace(model.MailAddress) && string.IsNullOrWhiteSpace(model.Password))
+            if (string.IsNullOrWhiteSpace(MailAddress) && string.IsNullOrWhiteSpace(Password))
                 return Json(new { isError = true, message = "Lütfen gerekli bilgileri doldurunuz." });
 
-            var user = _authorService.GetUser(model);
+            var user = _authorService.GetUser(MailAddress, Password);
 
             if (user.Id > 0)
             {
@@ -70,12 +70,12 @@ namespace Authors.Controllers
         }
 
         [HttpPost("[action]")]
-        public JsonResult RegisterUser(AuthorDto model)
+        public JsonResult RegisterUser(AuthorDto model, string Password)
         {
-            if (string.IsNullOrEmpty(model.MailAddress) || string.IsNullOrEmpty(model.Password))
+            if (string.IsNullOrEmpty(model.MailAddress) || string.IsNullOrEmpty(Password))
                 return Json(new { isError = true, message = "Mail ve şifre alanları boş bırakılamaz." });
 
-            var result = _authorService.AddUser(model);
+            var result = _authorService.AddUser(model, Password);
 
             return result != null && result.Id > 0
                 ? Json(result)

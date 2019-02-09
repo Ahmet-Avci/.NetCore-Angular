@@ -30,10 +30,12 @@ namespace Services.Implementation
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public AuthorDto AddUser(AuthorDto model)
+        public AuthorDto AddUser(AuthorDto model, string Password)
         {
-            model.IsActive = true;
-            var value = _authorRepository.Save(_mapper.Map<AuthorDto, AuthorEntity>(model));
+            var authorEntity = _mapper.Map<AuthorEntity>(model);
+            authorEntity.IsActive = true;
+            authorEntity.Password = Password;
+            var value = _authorRepository.Save(authorEntity);
             return _mapper.Map<AuthorEntity, AuthorDto>(value);
         }
 
@@ -85,9 +87,9 @@ namespace Services.Implementation
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public AuthorDto GetUser(AuthorDto model)
+        public AuthorDto GetUser(string MailAddress, string Password)
         {
-            var authorEntity = _authorRepository.Filter(x => x.MailAddress.Equals(model.MailAddress) && x.Password.Equals(model.Password) && !x.IsDeleted && x.IsActive).FirstOrDefault();
+            var authorEntity = _authorRepository.Filter(x => x.MailAddress.Equals(MailAddress) && x.Password.Equals(Password) && !x.IsDeleted && x.IsActive).FirstOrDefault();
             return authorEntity != null ? _mapper.Map<AuthorEntity, AuthorDto>(authorEntity) : new AuthorDto();
         }
 

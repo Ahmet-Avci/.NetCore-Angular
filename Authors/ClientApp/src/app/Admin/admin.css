@@ -4,6 +4,10 @@
   margin: -11px;
 }
 
+tbody {
+  color: #7d6c6c;
+}
+
 .or-success {
   color: #449d44;
   text-align: center;

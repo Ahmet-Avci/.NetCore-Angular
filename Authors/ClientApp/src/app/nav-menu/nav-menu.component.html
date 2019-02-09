@@ -3,7 +3,7 @@
   <div class='navbar navbar-inverse'>
     <div class='navbar-header'>
       <div class="text-center">
-        <h2 class="soft-text"><i class="glyphicon glyphicon-pencil"></i></h2><h5 class="soft-text" style="bottom:12px; position:relative"><b>MODERN KÖLELER</b></h5><br />
+        <h2 class="soft-text"><i class="glyphicon glyphicon-pencil"></i></h2><h5 class="soft-text" style="bottom:12px; position:relative"><b>YERALTI NOTLARI</b></h5><br />
         <img *ngIf="user.image != null" class="profile-picture" src="data:image/jpeg;base64,{{user.image}}" [routerLink]='["/profile",{authorId:user.id}]' />
         <img *ngIf="user.image == null" class="profile-picture" src="./assets/pp.png" [routerLink]='["/profile",{authorId:user.id}]' />
         <h5 class="soft-text">Hoşgeldin {{user.name}}</h5>
@@ -33,11 +33,16 @@
             <span class='glyphicon glyphicon-plus'></span> Yazı Ekle
           </a>
         </li>
-      <li [routerLinkActive]='["link-active"]' *ngIf="isAdmin">
-        <a [routerLink]='["/admin"]'>
-          <span class="glyphicon glyphicon-tower"></span> Yönetim Paneli
-        </a>
-      </li>
+        <li [routerLinkActive]='["link-active"]' *ngIf="isAdmin">
+          <a [routerLink]='["/admin"]'>
+            <span class="glyphicon glyphicon-tower"></span> Yönetim Paneli
+          </a>
+        </li>
+        <li (click)="ChangeNightMode()">
+          <a>
+            <span class="glyphicon glyphicon-adjust"></span> Gece Modu
+          </a>
+        </li>
         <li [routerLinkActive]='["link-active"]'>
           <a [routerLink]='["/information"]'>
             <span class='glyphicon glyphicon-heart'></span> Hakkımızda

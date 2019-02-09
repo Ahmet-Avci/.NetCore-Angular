@@ -1,11 +1,11 @@
 <h1></h1>
-<div class="alert alert-success pdgn-25">
-  <h4><b>Bu sayfada, değerli bulduğunuz düşünce ve fikirlerinizi paylaşarak, insanlığın kültürel birikimine katkıda bulunabilirsiiz :)</b></h4>
+<div class="alert alert-info pdgn-25">
+  <h4><b>Kendi Eserini Oluşturmaya Başla!</b></h4>
 </div>
 <div class="col-sm-12" (click)="loadFile()">
   <div class="form-group">
     <select class="form-control" [(ngModel)]="article.CategoryId" >
-      <option>Kategori Seçiniz...</option>
+      <option >Kategori Seçiniz...</option>
       <option *ngFor="let category of categoryList" [ngValue]="category.id">{{category.name}}</option>
     </select>
   </div>

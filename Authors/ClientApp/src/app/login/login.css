@@ -34,7 +34,7 @@ body#LoginForm {
 }
 
 .main-div {
-  background: #ffffff none repeat scroll 0 0;
+  background-color: transparent;
   border-radius: 2px;
   margin: 10px auto 30px;
   max-width: 70%;
@@ -56,8 +56,8 @@ body#LoginForm {
 }
 
 .login-form .btn.btn-primary {
-  background: #f0ad4e none repeat scroll 0 0;
-  border-color: #f0ad4e;
+  background-color: #2294d2;
+  border: 0;
   color: #ffffff;
   font-size: 14px;
   width: 100%;

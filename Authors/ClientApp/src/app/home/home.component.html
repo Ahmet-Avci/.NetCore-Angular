@@ -6,9 +6,13 @@
           <input type="radio" name="slider" class="trigger" id="{{i}}" checked="checked" />
           <div class="slide" (click)="readArticle(article.id)">
             <figure class="slide-figure">
-              <img class="slide-img" src="data:image/png;base64,{{article.imagePath}}" />
-              <figcaption class="slide-caption3"><p class="slider-text header-info pull-right" title="Okunma Sayısı..."><i class="glyphicon glyphicon-book"><b> {{article.readCount}}</b></i></p></figcaption>
-              <figcaption class="slide-caption2"><p class="slider-text" style="background-color:transparent"><i><b>{{article.content}}</b></i></p></figcaption>
+              <img style="width:100%" class="slide-img" src="data:image/png;base64,{{article.imagePath}}" />
+              <!--<img class="slide-img" src="data:image/png;base64,{{article.imagePath}}" />-->
+              <figcaption class="slide-caption3">
+                <p class="slider-text header-info pull-right" [routerLink]='["/read-article",{articleId:article.id}]' title="Okumaya Git..."><i class="glyphicon glyphicon-search"></i></p>&nbsp;
+                <p class="slider-text header-info pull-right" title="Okunma Sayısı..."><i class="glyphicon glyphicon-book"><b> {{article.readCount}}</b></i></p>
+              </figcaption>
+              <figcaption class="slide-caption2 hidden-xs"><p class="slider-text" style="background-color:transparent"><i><b>{{article.content}}</b></i></p></figcaption>
               <figcaption class="slide-caption"><p class="slider-text"><b>{{article.header}}</b><i> - {{user.name}} {{user.surname}}</i></p></figcaption>
             </figure><!-- .slide-figure -->
           </div><!-- .slide -->
@@ -32,10 +36,10 @@
           <span class="text-border-black col-xs-12" title="Yazar">Editorün Seçimi</span>
           <p class="pull-left read-count" title="Okunma"><b class="text-border-black">{{value.readCount}}</b></p>
         </div>
-        <div class="card-desc">
+        <div class="card-desc" style="display: inline-grid;">
           <h3>{{value.header}}</h3>
           <p>{{value.content}}</p>
-          <a href="#" class="btn-card btn-block" [routerLink]='["/read-article",{articleId:value.id}]' title="Tamamını Oku" style="    text-align: center;"><b>Oku</b></a>
+          <a class="btn-card btn-block button-position" [routerLink]='["/read-article",{articleId:value.id}]' title="Tamamını Oku"><b>Oku</b></a>
         </div>
       </div>
     </div>

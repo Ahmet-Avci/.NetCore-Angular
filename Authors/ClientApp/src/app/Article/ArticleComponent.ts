@@ -1,7 +1,9 @@
-import { Component, Injectable, ViewChild, ElementRef } from '@angular/core';
+import { Component, Injectable, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { ArticleDto, CategoryDto } from '../app.component';
+import * as $ from "jquery";
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'Article',
@@ -10,7 +12,13 @@ import { ArticleDto, CategoryDto } from '../app.component';
 })
 
 @Injectable()
-export class ArticleComponent {
+export class ArticleComponent implements OnInit {
+  ngOnInit(): void {
+    setTimeout(function () {
+      $("select option:first").attr("selected", "selected")
+    }, 250);
+      
+    }
   public http: HttpClient;
   article: ArticleDto;
   categoryList: CategoryDto[];
