@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataTransferObject.Dto;
 using DtoLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -25,13 +26,9 @@ namespace Authors.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]
-        public List<ArticleDto> GetAllArticle()
+        public IActionResult GetAllArticle()
         {
-            List<ArticleDto> result = _articleService.GetAllArticles();
-
-            return result != null && result.Count > 0
-                ? result
-                : new List<ArticleDto>();
+            return Ok(_articleService.GetAllArticles());
         }
 
         /// <summary>
@@ -40,23 +37,22 @@ namespace Authors.Controllers
         /// <param name="authorCount"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        public List<AuthorDto> GetTopAuthorArticle(int authorCount)
+        public IActionResult GetTopAuthorArticle(int authorCount)
         {
             if (authorCount <= 0)
-                return new List<AuthorDto>();
+                return Json(new { isNull = true, message = "Ana sayfa'da bir hata oluştu. Lütfen site yöneticisine başvurun. :(" });
 
-
-            if (_cache.TryGetValue("TopAuthor", out List<AuthorDto> authors))
+            if (_cache.TryGetValue("TopAuthor", out Result<List<AuthorDto>> authors))
             {
-                return authors;
+                return Ok(authors);
             }
             else
             {
                 var cacheEntry = _authorService.GetPopularAuthor(authorCount);
-                var cacheEntryOption = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1));
+                var cacheEntryOption = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(6));
                 _cache.Set("TopAuthor", cacheEntry, cacheEntryOption);
 
-                return cacheEntry;
+                return Ok(cacheEntry);
             }
         }
 
@@ -66,30 +62,24 @@ namespace Authors.Controllers
         /// <param name="articleCount"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        public List<ArticleDto> GetArticleByAdmin(int articleCount)
+        public IActionResult GetArticleByAdmin(int articleCount)
         {
             if (articleCount <= 0)
-                new ArticleDto();
+                return Json(new { isNull = true, message = "Ana sayfa'da bir hata oluştu. Lütfen site yöneticisine başvurun. :(" });
 
-            if (_cache.TryGetValue("AdminArticles", out List<ArticleDto> articles))
+            if (_cache.TryGetValue("AdminArticles", out Result<List<ArticleDto>> articles))
             {
-                return articles;
+                return Ok(articles);
             }
             else
             {
                 var cacheEntry = _articleService.GetArticleByAdmin(articleCount);
-                var cacheEntryOption = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1));
+                var cacheEntryOption = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(6));
                 _cache.Set("AdminArticles", cacheEntry, cacheEntryOption);
 
-                return cacheEntry;
+                return Ok(cacheEntry);
             }
-
-            //List<ArticleDto> result = _articleService.GetArticleByAdmin(articleCount);
-
-            //return result != null && result.Count > 0
-            //    ? Json(result)
-            //    : Json(new { isError = true, message = "Editörün seçtiği bir eser bulunamadı..." });
-
+            
         }
     }
 }

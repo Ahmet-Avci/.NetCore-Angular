@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { CategoryDto, UserDto, ArticleDto } from '../app.component';
+import { AppComponent, CategoryDto, UserDto, ArticleDto } from '../app.component';
 
 @Component({
   selector: 'app-admin',
@@ -12,12 +12,13 @@ import { CategoryDto, UserDto, ArticleDto } from '../app.component';
 @Injectable()
 export class AdminComponent {
   http: HttpClient;
-  author: UserDto;
-  userList: UserDto[];
-  article: ArticleDto;
-  articleList: ArticleDto[];
   category: CategoryDto;
   categoryList: CategoryDto[];
+  author: UserDto;
+  userList: UserDto[];
+  articleList: ArticleDto[];
+  article: ArticleDto;
+  message: any;
   private base64textString: String = "";
 
   public constructor(http: HttpClient) {
@@ -25,16 +26,17 @@ export class AdminComponent {
     this.author = new UserDto;
     this.article = new ArticleDto;
     this.category = new CategoryDto;
-    
+    this.message = AppComponent.prototype;
+
     this.GetAllCategory();
   }
 
   GetAllCategory() {
-    this.http.get<CategoryDto[]>("api/Category/GetAllCategory").subscribe(result => {
-      if (result != null && result.length > 0) {
-        this.categoryList = result
+    this.http.get<any>("api/Category/GetAllCategory").subscribe(result => {
+      if (!result.isNull) {
+        this.categoryList = result.data;
       } else {
-        alert("Hata Oluştu");
+        this.message.Show("error", result.message);
       }
     });
   }
@@ -44,10 +46,12 @@ export class AdminComponent {
     let body = new HttpParams();
     body = body.set("Name", this.category.Name == null ? "" : this.category.Name);
     body = body.set("Description", this.category.Description == null ? "" : this.category.Description);
-    this.http.post<CategoryDto>('api/Category/AddCategory', body, { headers: myheader }).subscribe(result => {
-      if (result != null) {
-        alert("Kayıt Eklendi...");
+    this.http.post<any>('api/Category/AddCategory', body, { headers: myheader }).subscribe(result => {
+      if (!result.isNull) {
+        this.message.Show("success", "İşlem Başarılı...");
         this.GetAllCategory();
+      } else {
+        this.message.Show("error", result.message);
       }
     });
   }
@@ -57,9 +61,12 @@ export class AdminComponent {
       const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
       let body = new HttpParams();
       body = body.set("categoryId", categoryId.toString());
-      this.http.post<boolean>('api/Category/RemoveCategory', body, { headers: myheader }).subscribe(result => {
-        if (result) {
+      this.http.post<any>('api/Category/RemoveCategory', body, { headers: myheader }).subscribe(result => {
+        if (result.data) {
           this.GetAllCategory();
+          this.message.Show("success", "İşlem Başarılı...");
+        } else {
+          this.message.Show("error", result.message);
         }
       });
     }
@@ -70,9 +77,13 @@ export class AdminComponent {
     let body = new HttpParams();
     body = body.set("Name", this.author.Name == null ? "" : this.author.Name);
     body = body.set("PhoneNumber", this.author.PhoneNumber == null ? "" : this.author.PhoneNumber.toString());
-    this.http.post<UserDto[]>('api/Author/GetFilterAuthors', body, { headers: myheader }).subscribe(result => {
-      if (result != null) {
-        this.userList = result;
+    this.http.post<any>('api/Author/GetFilterAuthors', body, { headers: myheader }).subscribe(result => {
+      if (!result.isNull) {
+        this.userList = result.data;
+        this.message.Show("success", "İşlem Başarılı...");
+      } else {
+        this.message.Show("error", result.message);
+        $(".info:first").closest("tbody").remove()
       }
     });
   }
@@ -82,9 +93,13 @@ export class AdminComponent {
     let body = new HttpParams();
     body = body.set("Header", this.article.Header == null ? "" : this.article.Header);
     body = body.set("Content", this.article.Content == null ? "" : this.article.Content);
-    this.http.post<ArticleDto[]>('api/Article/GetFilterArticle', body, { headers: myheader }).subscribe(result => {
-      if (result != null) {
-        this.articleList = result;
+    this.http.post<any>('api/Article/GetFilterArticle', body, { headers: myheader }).subscribe(result => {
+      if (!result.isNull) {
+        this.articleList = result.data;
+        this.message.Show("success", "İşlem Başarılı...");
+      } else {
+        this.message.Show("error", result.message);
+        $(".success:first").closest("tbody").remove()
       }
     });
   }
@@ -94,10 +109,12 @@ export class AdminComponent {
       const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
       let body = new HttpParams();
       body = body.set("userId", userId.toString());
-      this.http.post<boolean>('api/Author/SetPassifeAuthor', body, { headers: myheader }).subscribe(result => {
-        console.log(result);
-        if (!result) {
+      this.http.post<any>('api/Author/SetPassifeAuthor', body, { headers: myheader }).subscribe(result => {
+        if (!result.data) {
           this.GetFilterAuthors()
+          this.message.Show("success", "İşlem Başarılı...");
+        } else {
+          this.message.Show("error", result.message);
         }
       });
     }
@@ -108,10 +125,12 @@ export class AdminComponent {
       const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
       let body = new HttpParams();
       body = body.set("userId", userId.toString());
-      this.http.post<boolean>('api/Author/SetActiveAuthor', body, { headers: myheader }).subscribe(result => {
-        console.log(result);
-        if (result) {
+      this.http.post<any>('api/Author/SetActiveAuthor', body, { headers: myheader }).subscribe(result => {
+        if (result.data) {
           this.GetFilterAuthors()
+          this.message.Show("success", "İşlem Başarılı...");
+        } else {
+          this.message.Show("error", result.message);
         }
       });
     }
@@ -122,9 +141,12 @@ export class AdminComponent {
       const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
       let body = new HttpParams();
       body = body.set("articleId", articleId.toString());
-      this.http.post<boolean>('api/Article/SetPassifeArticle', body, { headers: myheader }).subscribe(result => {
-        if (!result) {
+      this.http.post<any>('api/Article/SetPassifeArticle', body, { headers: myheader }).subscribe(result => {
+        if (!result.data) {
           this.GetFilterArticles()
+          this.message.Show("success", "İşlem Başarılı...");
+        } else {
+          this.message.Show("error", result.message);
         }
       });
     }
@@ -135,9 +157,12 @@ export class AdminComponent {
       const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
       let body = new HttpParams();
       body = body.set("articleId", articleId.toString());
-      this.http.post<boolean>('api/Article/SetActiveArticle', body, { headers: myheader }).subscribe(result => {
+      this.http.post<any>('api/Article/SetActiveArticle', body, { headers: myheader }).subscribe(result => {
         if (result) {
           this.GetFilterArticles()
+          this.message.Show("success", "İşlem Başarılı...");
+        } else {
+          this.message.Show("error", result.message);
         }
       });
     }

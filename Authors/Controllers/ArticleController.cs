@@ -28,22 +28,18 @@ namespace Authors.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        public JsonResult AddArticle(ArticleDto model)
+        public IActionResult AddArticle(ArticleDto model)
         {
             if (string.IsNullOrEmpty(model.Content) || string.IsNullOrEmpty(model.Header))
-                return Json(new { isError = true, message = "Lütfen gerekli alanlarý doldurunuz." });
+                return Json(new { isNull = true, message = "Lütfen gerekli alanlarý doldurunuz." });
 
             var user = HttpContext.Session.GetObject<AuthorDto>("LoginUser");
 
             if (user == null || user.Id < 0)
-                return Json(new { isError = true, message = "Giriþ yapmadan yazý ekleyemezsiniz :(" });
+                return Json(new { isNull = true, message = "Giriþ yapmadan yazý ekleyemezsiniz :(" });
 
             model.CreatedBy = user.Id;
-            var articleDto = _articleService.AddArticle(model);
-
-            return articleDto != null && articleDto.Id > 0
-                ? Json(articleDto)
-                : Json(new ArticleDto());
+            return Ok(_articleService.AddArticle(model));
         }
 
         /// <summary>
@@ -51,21 +47,17 @@ namespace Authors.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("[action]")]
-        public JsonResult GetArticlesByAuthorId()
+        public IActionResult GetArticlesByAuthorId()
         {
             var user = HttpContext.Session.GetObject<AuthorDto>("LoginUser");
 
             if (user == null || user.Id <= 0)
-                return Json(new { isError = true, message = "Lütfen giriþ yapýnýz.." });
+                return Json(new { isNull = true, message = "Giriþ yapmadan bu sayfaya eriþemezsiniz :(" });
 
-            var result = _articleService.GetArticlesByAuthorId(user);
-
-            return result == null || result.Id <= 0
-                ? Json(new { isError = true, message = "Henüz hiç eseriniz yok :(" })
-                : Json(result);
+            return Ok(_articleService.GetArticlesByAuthorId(user));
         }
 
-        
+
 
         /// <summary>
         /// Ýlgili eser id'yi ait eseri, eser okunma ekraný için döndürür
@@ -73,18 +65,14 @@ namespace Authors.Controllers
         /// <param name="articleId"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        public JsonResult GetArticleById(int articleId)
+        public IActionResult GetArticleById(int articleId)
         {
             if (articleId <= 0)
-                return Json(new { isError = true, message = "Hata Oluþtu" });
+                return Json(new { isNull = true, message = "Beklenmedik bir hata oluþtu :(" });
 
             var user = HttpContext.Session.GetObject<AuthorDto>("LoginUser");
             int userId = user == null ? -1 : user.Id;
-            ArticleDto article = _articleService.GetArticleWithAuthor(articleId, userId);
-
-            return article != null && article.Id > 0
-                ? Json(article)
-                : Json(new { isError = true, message = "Ýlgili eser getirilirken hata oluþtu" });
+            return Ok(_articleService.GetArticleWithAuthor(articleId, userId));
         }
 
         /// <summary>
@@ -96,13 +84,9 @@ namespace Authors.Controllers
         public IActionResult GetArticleByIdForEdit(int articleId)
         {
             if (articleId <= 0)
-                return NotFound("Lütfen giriþ bilgilerinizi kontrol ediniz...");
+                return Json(new { isNull = true, message = "Lütfen giriþ bilgilerinizi kontrol ediniz." });
 
-            ArticleDto result = _articleService.GetArticleById(articleId);
-
-            return result != null && result.Id > 0
-                ? (IActionResult)Ok(result)
-                : NotFound("Eser getirilirken bir hata oluþtu");
+            return Ok(_articleService.GetArticleById(articleId));
         }
 
         /// <summary>
@@ -114,13 +98,9 @@ namespace Authors.Controllers
         public IActionResult GetFilterArticle(ArticleDto model)
         {
             if (model == null || (string.IsNullOrWhiteSpace(model.Header) && string.IsNullOrWhiteSpace(model.Content)))
-                return BadRequest("Lütfen gerekli bilgileri doldurunuz...");
+                return Json(new { isNull = true, message = "Lütfen gerekli bilgileri doldurunuz." });
 
-            List<ArticleDto> result = _articleService.GetFilterArticle(model);
-
-            return result == null || result.Count <= 0
-                ? NotFound("Kayýt Bulunamadý...")
-                : (IActionResult)Ok(result);
+            return Ok(_articleService.GetFilterArticle(model));
         }
 
         /// <summary>
@@ -132,13 +112,9 @@ namespace Authors.Controllers
         public IActionResult SetPassifeArticle(int articleId)
         {
             if (articleId <= 0)
-                return BadRequest("Eser seçimi sýrasýnda hata meydana geldi...");
+                return Json(new { isNull = true, message = "Eser seçimi sýrasýnda bir hata meydana geldi :(" });
 
-            bool result = _articleService.SetPassifeArticle(articleId);
-
-            return result
-                ? NotFound("Hata Oluþtu...")
-                : (IActionResult)Ok(result);
+            return Ok(_articleService.SetPassifeArticle(articleId));
         }
 
         /// <summary>
@@ -150,13 +126,9 @@ namespace Authors.Controllers
         public IActionResult SetActiveArticle(int articleId)
         {
             if (articleId <= 0)
-                return BadRequest("Eser seçimi sýrasýnda hata meydana geldi...");
+                return Json(new { isNull = true, message = "Eser seçimi sýrasýnda bir hata meydana geldi :(" });
 
-            bool result = _articleService.SetActiveArticle(articleId);
-
-            return !result
-                ? NotFound("Hata Oluþtu...")
-                : (IActionResult)Ok(result);
+            return Ok(_articleService.SetActiveArticle(articleId));
         }
 
         /// <summary>
@@ -170,13 +142,9 @@ namespace Authors.Controllers
         public IActionResult GetArticleByCategoryId(int categoryId, int skipCount, int takeCount)
         {
             if (categoryId <= 0)
-                return BadRequest("Kategori seçimi sýrasýnda bir hata meydana geldi...");
+                return Json(new { isNull = true, message = "Kategori seçimi sýrasýnda bir hata meydana geldi :(" });
 
-            List<ArticleDto> result = _articleService.GetArticlesByCategoryId(categoryId, skipCount, takeCount);
-
-            return result != null && result.Count > 0
-                ? (IActionResult)Ok(result)
-                : NotFound("Hata Olustu...");
+            return Ok(_articleService.GetArticlesByCategoryId(categoryId, skipCount, takeCount));
         }
 
         /// <summary>
@@ -188,11 +156,7 @@ namespace Authors.Controllers
         [HttpPost("[action]")]
         public IActionResult ShareArticle(int id, bool isShare)
         {
-            ArticleDto articleDto = _articleService.SetShareStatus(id, isShare);
-
-            return articleDto != null && articleDto.IsShare
-                ? (IActionResult)Ok(articleDto)
-                : NotFound("Eser Yayýna Alýnýrken Hata Oluþtu...");
+            return Ok(_articleService.SetShareStatus(id, isShare));
         }
 
         /// <summary>
@@ -204,11 +168,7 @@ namespace Authors.Controllers
         [HttpPost("[action]")]
         public IActionResult UnShareArticle(int id, bool isShare)
         {
-            ArticleDto articleDto = _articleService.SetShareStatus(id, isShare);
-
-            return articleDto != null && !articleDto.IsShare
-                ? (IActionResult)Ok(articleDto)
-                : NotFound("Eser Yayýndan Kaldýrýlýrken Hata Oluþtu...");
+            return Ok(_articleService.SetShareStatus(id, isShare));
         }
 
         /// <summary>
@@ -220,13 +180,9 @@ namespace Authors.Controllers
         public IActionResult DeleteArticle(int id)
         {
             if (id <= 0)
-                return NotFound("Giriþ Bilgileriniz Hatalý...");
+                return Json(new { isNull = true, message = "Beklenmedik bir hata oluþtu :(" });
 
-            var result = _articleService.RemoveArticleById(id);
-
-            return result
-                ? (IActionResult)Ok(result)
-                : NotFound("Eser Silinirken Bir Hata Oluþtu...");
+            return Ok(_articleService.RemoveArticleById(id));
         }
 
         /// <summary>
@@ -238,13 +194,9 @@ namespace Authors.Controllers
         public IActionResult UpdateArticle(ArticleDto model)
         {
             if (model == null || string.IsNullOrWhiteSpace(model.Content) || string.IsNullOrWhiteSpace(model.Header))
-                return NotFound("Giriþ Bilgileriniz Hatalý...");
+                return Json(new { isNull = true, message = "Hata oluþtu. Girdiðiniz bilgiler eksik olabilir :(" });
 
-            ArticleDto result = _articleService.UpdateArticle(model);
-
-            return result != null
-                ? (IActionResult)Ok(result)
-                : NotFound("Eser güncellenirken bir hata ile karþýlaþýldý");
+            return Ok(_articleService.UpdateArticle(model));
         }
 
     }

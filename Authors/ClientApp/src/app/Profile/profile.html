@@ -35,7 +35,8 @@
       <div class="btn-group">
         <button type="button" class="btn btn-default">
           <div class="hidden-xs">Seçenekler</div>
-          <p><i title="Düzenle" class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></i>&nbsp;&nbsp;&nbsp;<i title="Şifre Değiştir" class="glyphicon glyphicon-lock" data-toggle="modal" data-target="#passwordModal"></i></p>
+          <p *ngIf="editable"><i title="Düzenle" class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></i>&nbsp;&nbsp;&nbsp;<i title="Şifre Değiştir" class="glyphicon glyphicon-lock" data-toggle="modal" data-target="#passwordModal"></i></p>
+          <p *ngIf="!editable"><i title="Yazar Bilgisi" class="glyphicon glyphicon-education"></i></p>
         </button>
       </div>
     </div>

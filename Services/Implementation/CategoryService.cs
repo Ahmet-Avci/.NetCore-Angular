@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using DataTransferObject.Dto;
 using DbLayer.Entity;
 using DtoLayer.Dto;
 using Repository.Interface;
@@ -24,30 +25,34 @@ namespace Services.Implementation
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public CategoryDto AddCategory(CategoryDto model)
+        public Result<CategoryDto> AddCategory(CategoryDto model)
         {
-            return _mapper.Map<CategoryDto>(_categoryRepository.Save(_mapper.Map<CategoryEntity>(model)));    
+            return new Result<CategoryDto>(_mapper.Map<CategoryDto>(_categoryRepository.Save(_mapper.Map<CategoryEntity>(model))));    
         }
 
         /// <summary>
         /// Tüm kategorileri döndüren metod
         /// </summary>
         /// <returns>Liste tipinde categorydto döner</returns>
-        public List<CategoryDto> GetAll()
+        public Result<List<CategoryDto>> GetAll()
         {
-            return _mapper.Map<List<CategoryEntity>,List<CategoryDto>>(_categoryRepository.Filter(x=> !x.IsDeleted).ToList());
+            var result = _mapper.Map<List<CategoryEntity>, List<CategoryDto>>(_categoryRepository.Filter(x => !x.IsDeleted).ToList());
+
+            return result != null && result.Count > 0
+                ? new Result<List<CategoryDto>>(result)
+                : new Result<List<CategoryDto>>();
         }
 
         /// <summary>
-        /// İlgili kategoriyi siler
+        /// İlgili kategoriyi siler işlem başarılıysa true değer dönrürür
         /// </summary>
         /// <param name="categoryId"></param>
         /// <returns></returns>
-        public bool RemoveCategory(int categoryId)
+        public Result<bool> RemoveCategory(int categoryId)
         {
             CategoryEntity categoryEntity = _categoryRepository.GetById(categoryId);
             categoryEntity.IsDeleted = true;
-            return _categoryRepository.Update(categoryEntity).IsDeleted;
+            return new Result<bool>(_categoryRepository.Update(categoryEntity).IsDeleted);
         }
     }
 }

@@ -7,6 +7,11 @@
   padding-top: 25px;
 }
 
+input {
+  background-color: transparent;
+  color: #555;
+}
+
 .card-img {
   position: relative;
   overflow: hidden;

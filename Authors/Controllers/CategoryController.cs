@@ -2,7 +2,6 @@
 using DtoLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interface;
-using System.Collections.Generic;
 
 namespace Authors.Controllers
 {
@@ -19,11 +18,7 @@ namespace Authors.Controllers
         [HttpGet("[action]")]
         public IActionResult GetAllCategory()
         {
-            List<CategoryDto> result = _categoryService.GetAll();
-
-            return result != null && result.Count > 0
-                ? (IActionResult)Ok(result)
-                : NotFound("Kayit Bulunamadi...");
+            return Ok(_categoryService.GetAll());
         }
 
         /// <summary>
@@ -35,19 +30,15 @@ namespace Authors.Controllers
         public IActionResult AddCategory(CategoryDto model)
         {
             if (string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.Description))
-                return Json(new { isError = true, message = "Lütfen gerekli alanları doldurunuz." });
+                return Json(new { isNull = true, message = "Lütfen gerekli alanları doldurunuz." });
 
             var user = HttpContext.Session.GetObject<AuthorDto>("LoginUser");
 
             if (user == null || user.Id < 0)
-                return BadRequest("Giriş yapmadan kategori ekleyemezsiniz :(");
+                return Json(new { isNull = true, message = "Giriş yapmadan kategori ekleyemezsiniz :(" });
 
             model.CreatedBy = user.Id;
-            CategoryDto categoryDto = _categoryService.AddCategory(model);
-
-            return categoryDto != null && categoryDto.Id > 0
-                ? (IActionResult)Ok(categoryDto)
-                : NotFound("Kayit Bulunamadi...");
+            return Ok(_categoryService.AddCategory(model));
         }
 
         /// <summary>
@@ -59,13 +50,9 @@ namespace Authors.Controllers
         public IActionResult RemoveCategory(int categoryId)
         {
             if (categoryId <= 0)
-                return BadRequest("Lütfen kategori seçiniz...");
+                return Json(new { isNull = true, message = "Lütfen kategori seçiniz..." });
 
-            bool isDeleted = _categoryService.RemoveCategory(categoryId);
-
-            return isDeleted
-                ? (IActionResult)Ok(isDeleted)
-                : NotFound("Kayıt Silinemedi");
+            return Ok(_categoryService.RemoveCategory(categoryId));
         }
     }
 }

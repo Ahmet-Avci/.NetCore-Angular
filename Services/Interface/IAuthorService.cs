@@ -1,19 +1,20 @@
-﻿using DtoLayer.Dto;
+﻿using DataTransferObject.Dto;
+using DtoLayer.Dto;
 using System.Collections.Generic;
 
 namespace Services.Interface
 {
     public interface IAuthorService 
     {
-        List<AuthorDto> GetAll();
-        AuthorDto GetUser(string MailAddress, string Password);
-        AuthorDto AddUser(AuthorDto model, string Password);
-        List<AuthorDto> GetPopularAuthor(int authorCount);
-        List<AuthorDto> GetFilterAuthor(AuthorDto model);
-        bool SetPassifeAuthor(int userId);
-        bool SetActiveAuthor(int userId);
-        AuthorDto GetAuthorById(int authorId);
-        AuthorDto EditAuthor(AuthorDto model);
-        AuthorDto ChangePasword(int id, string oldPassword, string password);
+        Result<List<AuthorDto>> GetAll();
+        Result<AuthorDto> GetUser(string MailAddress, string Password);
+        Result<AuthorDto> AddUser(AuthorDto model, string Password);
+        Result<List<AuthorDto>> GetPopularAuthor(int authorCount);
+        Result<List<AuthorDto>> GetFilterAuthor(AuthorDto model);
+        Result<bool> SetPassifeAuthor(int userId);
+        Result<bool> SetActiveAuthor(int userId);
+        Result<AuthorDto> GetAuthorById(int authorId);
+        Result<AuthorDto> EditAuthor(AuthorDto model);
+        Result<AuthorDto> ChangePasword(int id, string oldPassword, string password);
     }
 }

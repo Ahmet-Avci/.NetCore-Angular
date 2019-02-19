@@ -1,8 +1,12 @@
 ﻿using Authors.Helpers;
 using DtoLayer.Dto;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interface;
+using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Authors.Controllers
 {
@@ -22,21 +26,21 @@ namespace Authors.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
-        public ActionResult Login(string MailAddress, string Password)
+        public IActionResult Login(string MailAddress, string Password)
         {
-            if (string.IsNullOrWhiteSpace(MailAddress) && string.IsNullOrWhiteSpace(Password))
-                return Json(new { isError = true, message = "Lütfen gerekli bilgileri doldurunuz." });
+            if (string.IsNullOrWhiteSpace(MailAddress) || string.IsNullOrWhiteSpace(Password))
+                return Json(new { isNull = true, message = "Lütfen gerekli bilgileri doldurunuz." });
+            
+            var result = _authorService.GetUser(MailAddress, Password);
 
-            var user = _authorService.GetUser(MailAddress, Password);
-
-            if (user.Id > 0)
+            if (!result.IsNull && result.Data.Id > 0)
             {
-                HttpContext.Session.SetObject("LoginUser", user);
-                return Json(new { isError = false, message = user });
+                HttpContext.Session.SetObject("LoginUser", result.Data);
+                return Ok(result);
             }
             else
             {
-                return Json(new { isError = true, message = "Giriş Bilgileriniz Hatalı." });
+                return Json(new { isNull = true, message = "Giriş Bilgileriniz Hatalı." });
             }
         }
 
@@ -45,7 +49,7 @@ namespace Authors.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("[action]")]
-        public JsonResult SessionControl()
+        public IActionResult SessionControl()
         {
             var result = HttpContext.Session.GetObject<AuthorDto>("LoginUser");
             return Json(result != null ? result : new AuthorDto());
@@ -70,16 +74,19 @@ namespace Authors.Controllers
         }
 
         [HttpPost("[action]")]
-        public JsonResult RegisterUser(AuthorDto model, string Password)
+        public IActionResult RegisterUser(AuthorDto model, string Password)
         {
             if (string.IsNullOrEmpty(model.MailAddress) || string.IsNullOrEmpty(Password))
-                return Json(new { isError = true, message = "Mail ve şifre alanları boş bırakılamaz." });
+                return Json(new { isNull = true, message = "Mail ve şifre alanları boş bırakılamaz." });
 
-            var result = _authorService.AddUser(model, Password);
+            string hashed = string.Empty;
+            using (var sha = SHA1.Create())
+            {
+                var hashedBytes = sha.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(model.MailAddress.Substring(0, 4), Password)));
+                hashed = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
 
-            return result != null && result.Id > 0
-                ? Json(result)
-                : Json(new { isError = true, message = "Kullanıcı Eklenemedi." });
+            return Ok(_authorService.AddUser(model, hashed));
         }
     }
 }

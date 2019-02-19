@@ -6,11 +6,22 @@ body#LoginForm {
   padding: 10px;
 }
 
+input {
+  background-color: transparent;
+  color: #555;
+}
+
 .card-img {
   position: relative;
   overflow: hidden;
   border-radius: 0;
   z-index: 1;
+}
+
+.btn-success {
+  background-color: transparent;
+  border-color: #337ab7;
+  color: #555;
 }
 
 .card-content {

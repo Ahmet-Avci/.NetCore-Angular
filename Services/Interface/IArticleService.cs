@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
+using DataTransferObject.Dto;
 using DtoLayer.Dto;
 
 namespace Services.Interface
 {
     public interface IArticleService
     {
-        ArticleDto AddArticle(ArticleDto model);
-        AuthorDto GetArticlesByAuthorId(AuthorDto author);
-        List<ArticleDto> GetAllArticles();
-        List<ArticleDto> GetArticleByAdmin(int articleCount);
-        ArticleDto GetArticleWithAuthor(int articleId, int authorId);
-        List<ArticleDto> GetFilterArticle(ArticleDto model);
-        bool SetPassifeArticle(int articleId);
-        bool SetActiveArticle(int articleId);
-        List<ArticleDto> GetArticlesByCategoryId(int categoryId, int skipCount, int takeCount);
-        ArticleDto SetShareStatus(int id, bool isShare);
-        bool RemoveArticleById(int id);
-        ArticleDto GetArticleById(int articleId);
-        ArticleDto UpdateArticle(ArticleDto model);
+        Result<ArticleDto> AddArticle(ArticleDto model);
+        Result<AuthorDto> GetArticlesByAuthorId(AuthorDto author);
+        Result<List<ArticleDto>> GetAllArticles();
+        Result<List<ArticleDto>> GetArticleByAdmin(int articleCount);
+        Result<ArticleDto> GetArticleWithAuthor(int articleId, int authorId);
+        Result<List<ArticleDto>> GetFilterArticle(ArticleDto model);
+        Result<bool> SetPassifeArticle(int articleId);
+        Result<bool> SetActiveArticle(int articleId);
+        Result<List<ArticleDto>> GetArticlesByCategoryId(int categoryId, int skipCount, int takeCount);
+        Result<ArticleDto> SetShareStatus(int id, bool isShare);
+        Result<bool> RemoveArticleById(int id);
+        Result<ArticleDto> GetArticleById(int articleId);
+        Result<ArticleDto> UpdateArticle(ArticleDto model);
     }
 }

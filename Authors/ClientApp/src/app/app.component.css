@@ -24,3 +24,8 @@
 .soft-text {
   color: rgba(255,255,255,.7);
 }
+
+input.form-control{
+  background-color:transparent;
+  color:#fff;
+}

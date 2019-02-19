@@ -7,24 +7,23 @@
           <div class="slide" (click)="readArticle(article.id)">
             <figure class="slide-figure">
               <img style="width:100%" class="slide-img" src="data:image/png;base64,{{article.imagePath}}" />
-              <!--<img class="slide-img" src="data:image/png;base64,{{article.imagePath}}" />-->
               <figcaption class="slide-caption3">
                 <p class="slider-text header-info pull-right" [routerLink]='["/read-article",{articleId:article.id}]' title="Okumaya Git..."><i class="glyphicon glyphicon-search"></i></p>&nbsp;
                 <p class="slider-text header-info pull-right" title="Okunma Sayısı..."><i class="glyphicon glyphicon-book"><b> {{article.readCount}}</b></i></p>
               </figcaption>
               <figcaption class="slide-caption2 hidden-xs"><p class="slider-text" style="background-color:transparent"><i><b>{{article.content}}</b></i></p></figcaption>
               <figcaption class="slide-caption"><p class="slider-text"><b>{{article.header}}</b><i> - {{user.name}} {{user.surname}}</i></p></figcaption>
-            </figure><!-- .slide-figure -->
-          </div><!-- .slide -->
+            </figure>
+          </div>
         </div>
       </div>
-    </div><!-- .slider -->
+    </div>
     <ul class="slider-nav">
-      <li class="slider-nav__item"><label class="slider-nav__label" for="0">1</label></li>
-      <li class="slider-nav__item"><label class="slider-nav__label" for="1">2</label></li>
-      <li class="slider-nav__item"><label class="slider-nav__label" for="2">3</label></li>
-    </ul><!-- .slider-nav -->
-  </div><!-- .slider-wrapper -->
+      <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="0">1</label></li>
+      <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="1">2</label></li>
+      <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="2">3</label></li>
+    </ul>
+  </div>
 </div>
 
 <div class="row">

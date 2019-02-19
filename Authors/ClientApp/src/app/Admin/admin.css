@@ -4,6 +4,11 @@
   margin: -11px;
 }
 
+input {
+  background-color: transparent;
+  color: #555;
+}
+
 tbody {
   color: #7d6c6c;
 }

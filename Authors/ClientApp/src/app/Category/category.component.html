@@ -1,8 +1,8 @@
 <h1> </h1>
 
-<div class="col-xs-12" *ngFor="let category of categoryList; let i = index">
+<div class="col-xs-4" *ngFor="let category of categoryList; let i = index">
   <button [routerLink]='["/category-article",{categoryId:category.id}]' type="button" class="btn btn-block btn-default btn-sm">
-    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    <!--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
     <p><b>{{category.name}}</b></p>
   </button><br />
 </div>

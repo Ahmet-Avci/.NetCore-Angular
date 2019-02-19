@@ -2,7 +2,7 @@ import { Component, Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import * as $ from "jquery";
-import { ArticleDto } from '../app.component';
+import { ArticleDto, AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-category-article',
@@ -15,12 +15,14 @@ import { ArticleDto } from '../app.component';
 export class CategoryArticleComponent {
   http: HttpClient;
   articleList: ArticleDto[];
-  takeCount = 3;
+  message: AppComponent;
+  takeCount = 6;
   skipCount = 0;
   categoryId = 0;
 
   public constructor(http: HttpClient, @Inject(DOCUMENT) private document: Document) {
     this.http = http;
+    this.message = AppComponent.prototype;
     this.categoryId = Number(this.document.location.href.substr(this.document.location.href.indexOf("=") + 1));
 
     this.GetAllCategories();
@@ -33,11 +35,10 @@ export class CategoryArticleComponent {
     body = body.set("categoryId", this.categoryId.toString());
     body = body.set("takeCount", this.takeCount.toString());
     body = body.set("skipCount", this.skipCount.toString());
-    this.http.post<ArticleDto[]>("api/Article/GetArticleByCategoryId", body, { headers: myheader }).subscribe(result => {
-      if (result != null && result.length > 0) {
+    this.http.post<any>("api/Article/GetArticleByCategoryId", body, { headers: myheader }).subscribe(result => {
+      if (!result.isNull) {
         var articleData = [];
-        
-        result.forEach(x => {
+        result.data.forEach(x => {
           x.imagePath = atob(x.imagePath);
           articleData.push(x);
         })
@@ -47,11 +48,10 @@ export class CategoryArticleComponent {
             articleData.unshift(this.articleList[i]);
           }
         }
-        
         this.articleList = articleData;
-        this.skipCount += result.length;
+        this.skipCount += result.data.length;
       } else {
-        alert("Hata Oluştu");
+        this.message.Show("info", "İlgili kategorideki tüm eserler bu kadar :(");
       }
     });
   }

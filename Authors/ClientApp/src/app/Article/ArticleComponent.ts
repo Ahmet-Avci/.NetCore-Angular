@@ -1,9 +1,8 @@
 import { Component, Injectable, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
-import { ArticleDto, CategoryDto } from '../app.component';
+import { ArticleDto, CategoryDto, AppComponent } from '../app.component';
 import * as $ from "jquery";
-import { setTimeout } from 'timers';
 
 @Component({
   selector: 'Article',
@@ -16,12 +15,12 @@ export class ArticleComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(function () {
       $("select option:first").attr("selected", "selected")
-    }, 250);
-      
-    }
+    }, 500)
+  }
   public http: HttpClient;
   article: ArticleDto;
   categoryList: CategoryDto[];
+  message: AppComponent;
   private base64textString: String = "";
 
   @ViewChild('labelImport')
@@ -32,12 +31,13 @@ export class ArticleComponent implements OnInit {
   public constructor(http: HttpClient) {
     this.http = http;
     this.article = new ArticleDto;
+    this.message = AppComponent.prototype;
 
-    http.get<CategoryDto[]>("api/Category/GetAllCategory").subscribe(result => {
-      if (result != null && result.length > 0) {
-        this.categoryList = result
+    http.get<any>("api/Category/GetAllCategory").subscribe(result => {
+      if (!result.isNull) {
+        this.categoryList = result.data;
       } else {
-        alert("Hata Oluştu");
+        this.message.Show("error", result.message);
       }
     });
 
@@ -50,11 +50,12 @@ export class ArticleComponent implements OnInit {
     body = body.set('Content', this.article.Content);
     body = body.set('ImagePath', btoa(this.base64textString.toString()));
     body = body.set('CategoryId', this.article.CategoryId.toString());
-    this.http.post<ArticleDto>('api/Article/AddArticle', body, { headers: myheader }).subscribe(result => {
-      if (result != null && result.id > 0) {
-        alert("işlem başarılı")
+    this.http.post<any>('api/Article/AddArticle', body, { headers: myheader }).subscribe(result => {
+      if (!result.isNull) {
+        this.message.Show("success", "Eseriniz başarıyla eklendi.");
+        $("a[href='/my-article'] span").click()
       } else {
-        alert(result.message);
+        this.message.Show("error", result.message);
       }
     });
   }

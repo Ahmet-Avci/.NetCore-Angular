@@ -1,7 +1,7 @@
-import { Component, Injectable, ViewChild, ElementRef } from '@angular/core';
+import { Component, Injectable, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
-import { UserDto, ArticleDto } from '../app.component';
+import { UserDto, ArticleDto, AppComponent } from '../app.component';
 
 @Component({
   selector: 'MyArticle-component',
@@ -10,10 +10,16 @@ import { UserDto, ArticleDto } from '../app.component';
 })
 
 @Injectable()
-export class MyArticleComponent {
+export class MyArticleComponent implements OnInit {
+
+    ngOnInit(): void {
+        throw new Error("Method not implemented.");
+    }
+
   user: UserDto;
   article: ArticleDto;
   http: HttpClient;
+  message: AppComponent;
   private base64textString: String = "";
 
   @ViewChild('labelImport')
@@ -25,18 +31,19 @@ export class MyArticleComponent {
     this.http = http;
     this.user = new UserDto;
     this.article = new ArticleDto;
+    this.message = AppComponent.prototype;
 
     const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     let body = new HttpParams();
-    http.post<UserDto>('api/Article/GetArticlesByAuthorId', body, { headers: myheader }).subscribe(result => {
-      if (!result.isError && result != null) {
-        this.user = result;
+    http.post<any>('api/Article/GetArticlesByAuthorId', body, { headers: myheader }).subscribe(result => {
+      if (!result.isNull) {
+        this.user = result.data;
         this.user.articleList.forEach(x => {
           x.imagePath = atob(x.imagePath);
           x.content = x.content.length <= 180 ? x.content : x.content.substr(0, 180) + "...";
         });
       } else {
-        alert(result.message);
+        this.message.Show("error", result.message);
       }
     });
   }
@@ -46,15 +53,16 @@ export class MyArticleComponent {
     let body = new HttpParams();
     body = body.set("id", id.toString());
     body = body.set("isShare", true.toString());
-    this.http.post<ArticleDto>('api/Article/ShareArticle', body, { headers: myheader }).subscribe(result => {
-      if (!result.isError && result != null) {
+    this.http.post<any>('api/Article/ShareArticle', body, { headers: myheader }).subscribe(result => {
+      if (!result.isNull) {
         var index = this.user.articleList.findIndex(x => x.id == id);
         this.user.articleList.splice(index, 1)
-        result.imagePath = atob(result.imagePath);
-        result.content = result.content.length <= 180 ? result.content : result.content.substr(0, 180) + "...";
-        this.user.articleList.unshift(result);
+        result.data.imagePath = atob(result.data.imagePath);
+        result.data.content = result.data.content.length <= 180 ? result.data.content : result.data.content.substr(0, 180) + "...";
+        this.user.articleList.unshift(result.data);
+        this.message.Show("success", "Eser yayına alındı.");
       } else {
-        alert(result.message);
+        this.message.Show("error", result.message);
       }
     });
   }
@@ -64,15 +72,16 @@ export class MyArticleComponent {
     let body = new HttpParams();
     body = body.set("id", id.toString());
     body = body.set("isShare", false.toString());
-    this.http.post<ArticleDto>('api/Article/UnShareArticle', body, { headers: myheader }).subscribe(result => {
-      if (!result.isError && result != null) {
+    this.http.post<any>('api/Article/UnShareArticle', body, { headers: myheader }).subscribe(result => {
+      if (!result.isNull) {
         var index = this.user.articleList.findIndex(x => x.id == id);
         this.user.articleList.splice(index, 1)
-        result.imagePath = atob(result.imagePath);
-        result.content = result.content.length <= 180 ? result.content : result.content.substr(0, 180) + "...";
-        this.user.articleList.unshift(result);
+        result.data.imagePath = atob(result.data.imagePath);
+        result.data.content = result.data.content.length <= 180 ? result.data.content : result.data.content.substr(0, 180) + "...";
+        this.user.articleList.unshift(result.data);
+        this.message.Show("success", "Eser yayından kaldırıldı.");
       } else {
-        alert(result.message);
+        this.message.Show("error", result.message);
       }
     });
   }
@@ -82,12 +91,13 @@ export class MyArticleComponent {
     let body = new HttpParams();
     body = body.set("id", id.toString());
     if (confirm("Eseri silmek istediğinize emin misiniz? Bu işlemi geri almak için site yöneticis ile görüşmeniz gerekecektir.")) {
-      this.http.post<boolean>('api/Article/DeleteArticle', body, { headers: myheader }).subscribe(result => {
-        if (result) {
+      this.http.post<any>('api/Article/DeleteArticle', body, { headers: myheader }).subscribe(result => {
+        if (result.data) {
           var index = this.user.articleList.findIndex(x => x.id == id);
           this.user.articleList.splice(index, 1)
+          this.message.Show("success", "Eser Silindi.");
         } else {
-          alert("Eser silinirken bir hata ile karşılaşıldı...");
+          this.message.Show("error", result.message);
         }
       });
     }
@@ -97,12 +107,12 @@ export class MyArticleComponent {
     const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     let body = new HttpParams();
     body = body.set("articleId", id.toString());
-    this.http.post<ArticleDto>('api/Article/GetArticleByIdForEdit', body, { headers: myheader }).subscribe(result => {
-      if (result != null) {
-        result.imagePath = atob(result.imagePath);
-        this.article = result;
+    this.http.post<any>('api/Article/GetArticleByIdForEdit', body, { headers: myheader }).subscribe(result => {
+      if (!result.isNull) {
+        result.data.imagePath = atob(result.data.imagePath);
+        this.article = result.data;
       } else {
-        alert("Eser getirilirken bir hata ile karşılaşıldı...");
+        this.message.Show("error", result.message);
       }
     });
   }
@@ -114,14 +124,16 @@ export class MyArticleComponent {
     body = body.set("Content", this.article.content);
     body = body.set("Header", this.article.header);
     body = body.set("ImagePath", btoa(this.base64textString.toString()));
-    this.http.post<ArticleDto>('api/Article/UpdateArticle', body, { headers: myheader }).subscribe(result => {
-      if (result != null) {
-        result.content = result.content.length <= 180 ? result.content : result.content.substr(0, 180) + "...";
-        result.imagePath = atob(result.imagePath);
-        var index = this.user.articleList.findIndex(x => x.id == result.id);
-        this.user.articleList[index] = result;
+    this.http.post<any>('api/Article/UpdateArticle', body, { headers: myheader }).subscribe(result => {
+      if (!result.isNull) {
+        result.data.content = result.data.content.length <= 180 ? result.data.content : result.data.content.substr(0, 180) + "...";
+        result.data.imagePath = atob(result.data.imagePath);
+        var index = this.user.articleList.findIndex(x => x.id == result.data.id);
+        this.user.articleList[index] = result.data;
+        this.message.Show("success", "Eser başarıyla güncellendi.");
+        $("#myModal").modal("hide")
       } else {
-        alert("Eser güncellenirken bir hata ile karşılaşıldı...");
+        this.message.Show("error", result.message);
       }
     });
   }
@@ -142,7 +154,6 @@ export class MyArticleComponent {
   _handleReaderLoaded(readerEvt) {
     var binaryString = readerEvt.target.result;
     this.base64textString = btoa(binaryString);
-    console.log(btoa(binaryString));
   }
 
 }

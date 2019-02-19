@@ -19,7 +19,7 @@ namespace Authors.Controllers
         [HttpGet("[action]")]
         public List<AuthorDto> GetAllAuthors()
         {
-            return _authorService.GetAll().ToList();
+            return _authorService.GetAll().Data.ToList();
         }
     }
 }

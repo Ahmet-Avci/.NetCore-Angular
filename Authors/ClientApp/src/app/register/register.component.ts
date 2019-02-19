@@ -1,8 +1,7 @@
 import { Component, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LoginComponent } from '../login/login.component';
-import { FormGroup } from '@angular/forms';
-import { UserDto } from '../app.component';
+import { UserDto, AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-home',
@@ -16,16 +15,17 @@ import { UserDto } from '../app.component';
 export class RegisterComponent {
   http: HttpClient;
   user: UserDto;
+  message: AppComponent;
   private base64textString: String = "";
 
   @ViewChild('labelImport')
   labelImport: ElementRef;
-  formImport: FormGroup;
   fileToUpload: File = null;
 
   public constructor(http: HttpClient) {
     this.http = http;
     this.user = new UserDto;
+    this.message = AppComponent.prototype;
   }
 
 
@@ -39,16 +39,17 @@ export class RegisterComponent {
       body = body.set('Surname', this.user.Surname);
       body = body.set('PhoneNumber', this.user.PhoneNumber);
       body = body.set("Image", btoa(this.base64textString.toString()));
-      this.http.post<UserDto>('api/Authentication/RegisterUser', body, { headers: myheader }).subscribe(result => {
-        if (result != null && result.id > 0) {
+      this.http.post<any>('api/Authentication/RegisterUser', body, { headers: myheader }).subscribe(result => {
+        if (!result.isNull) {
           let loginComponent = new LoginComponent(this.http);
-          loginComponent.Login(result.mailAddress, result.password);
+          loginComponent.Login(this.user.MailAddress, this.user.Password);
+          this.message.Show("success", "Hoşgeldin" + " " + result.data.authorName + " :)");
         } else {
-          alert(result.message);
+          this.message.Show("error", "Kayıt işlemi başarısız. Lütfen bilgilerinizi kontrol ediniz.");
         }
       });
     } else {
-      alert("Şifreler aynı değil!");
+      this.message.Show("error", "Giriş Başarısız");
     }
   }
 
@@ -68,7 +69,6 @@ export class RegisterComponent {
   _handleReaderLoaded(readerEvt) {
     var binaryString = readerEvt.target.result;
     this.base64textString = btoa(binaryString);
-    console.log(btoa(binaryString));
   }
 
 }

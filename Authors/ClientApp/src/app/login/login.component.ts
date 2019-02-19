@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
-import { UserDto } from '../app.component';
+import { UserDto, AppComponent } from '../app.component';
 
 
 @Component({
@@ -13,10 +13,12 @@ import { UserDto } from '../app.component';
 @Injectable()
 export class LoginComponent {
   http: HttpClient;
+  message: AppComponent;
   userId: number;
 
   public constructor(http: HttpClient) {
     this.http = http;
+    this.message = AppComponent.prototype;
   }
 
 
@@ -26,13 +28,12 @@ export class LoginComponent {
     body = body.set('MailAddress', inputMailAddress);
     body = body.set('Password', inputPassword);
     this.http.post<UserDto>('api/Authentication/Login', body, { headers: myheader }).subscribe(result => {
-      if (!result.isError) {
+      if (!result.isNull) {
         document.getElementById("loginButton").setAttribute("ng-reflect-router-link", "/logout");
         this.userId = result.id;
         window.location.href = "";
       } else {
-        alert(result.message);
-        return null;
+        this.message.Show("error", result.message);
       }
     });
     return null;

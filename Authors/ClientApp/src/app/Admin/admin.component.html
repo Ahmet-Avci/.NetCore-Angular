@@ -101,7 +101,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let article of articleList; let i = index">
+          <tr *ngFor="let article of articleList; let i = index" [class]="i % 2 == 0 ? 'success' : ''">
             <td>{{article.header}}</td>
             <td>
               <button class="btn btn-xs btn-primary pull-right" [routerLink]='["/read-article",{articleId:article.id}]'>Okumaya Git</button>
