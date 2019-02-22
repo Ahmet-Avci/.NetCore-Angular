@@ -2,6 +2,7 @@ import { Component, Injectable, ViewChild, ElementRef, OnInit } from '@angular/c
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { ArticleDto, CategoryDto, AppComponent } from '../app.component';
+import { CKEditorComponent } from 'ng2-ckeditor';
 import * as $ from "jquery";
 
 @Component({
@@ -22,6 +23,8 @@ export class ArticleComponent implements OnInit {
   categoryList: CategoryDto[];
   message: AppComponent;
   private base64textString: String = "";
+  
+  @ViewChild(CKEditorComponent) ckEditor: CKEditorComponent;
 
   @ViewChild('labelImport')
   labelImport: ElementRef;
@@ -31,6 +34,7 @@ export class ArticleComponent implements OnInit {
   public constructor(http: HttpClient) {
     this.http = http;
     this.article = new ArticleDto;
+    
     this.message = AppComponent.prototype;
 
     http.get<any>("api/Category/GetAllCategory").subscribe(result => {
@@ -58,6 +62,30 @@ export class ArticleComponent implements OnInit {
         this.message.Show("error", result.message);
       }
     });
+  }
+
+  ngAfterViewChecked() {
+    let editor = this.ckEditor.instance;
+    editor.config.height = '400';
+    editor.config.uiColor = '#15202b00';
+    editor.config.toolbarGroups = [
+      { name: 'document', groups: ['mode', 'document', 'doctools'] },
+      { name: 'clipboard', groups: ['clipboard', 'undo'] },
+      { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
+      { name: 'forms', groups: ['forms'] },
+      '/',
+      { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+      { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
+      { name: 'links', groups: ['links'] },
+      { name: 'insert', groups: ['insert'] },
+      '/',
+      { name: 'styles', groups: ['styles'] },
+      { name: 'colors', groups: ['colors'] },
+      { name: 'tools', groups: ['tools'] },
+      { name: 'others', groups: ['others'] },
+      { name: 'about', groups: ['about'] }
+    ];
+    editor.config.removeButtons = 'NewPage,Templates,Cut,Copy,Paste,Replace,SelectAll,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,NumberedList,Outdent,Indent,Blockquote,CreateDiv,BidiLtr,BidiRtl,Flash,Table,Styles,Format,About';
   }
 
   onFileChange(files: FileList) {

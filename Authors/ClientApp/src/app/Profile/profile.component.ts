@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import { FormGroup } from '@angular/forms';
 import { UserDto, AppComponent } from '../app.component';
+import * as $ from "jquery";
 
 
 @Component({

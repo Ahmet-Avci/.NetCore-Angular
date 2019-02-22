@@ -103,7 +103,6 @@ namespace Services.Implementation
         /// <returns></returns>
         public Result<AuthorDto> GetUser(string MailAddress, string Password)
         {
-            return null;
             string hashed = string.Empty;
             using (var sha = SHA1.Create())
             {

@@ -9,12 +9,12 @@
         </div>
         <div class="card-desc">
           <h3>{{value.header}}</h3>
-          <p>{{value.content}}</p>
+          <p [innerHTML]="value.content"></p>
           <a [routerLink]='["/read-article",{articleId:value.id}]' class="btn-card" title="Tamamını Oku"><i class="glyphicon glyphicon-search"></i></a>
-          <a class="btn-card" style="background-color:#1abc35;" title="Yayınla" (click)="Share(value.id)" *ngIf="!value.isShare"><i class="glyphicon glyphicon-ok-sign"></i></a>
-          <a class="btn-card" style="background-color:#bc471a;" title="Yayından Kaldır" (click)="UnShare(value.id)" *ngIf="value.isShare"><i class="glyphicon glyphicon-minus-sign"></i></a>
-          <a class="btn-card" style="background-color:#bc1a1a;" title="Sil" (click)="DeleteArticle(value.id)"><i class="glyphicon glyphicon-remove"></i></a>
-          <a class="btn-card" style="background-color:#bc6c1a;" title="Düzenle" (click)="GetArticleById(value.id)" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-edit"></i></a>
+          <a class="btn-card" title="Yayınla" (click)="Share(value.id)" *ngIf="!value.isShare"><i class="glyphicon glyphicon-ok-sign"></i></a>
+          <a class="btn-card" title="Yayından Kaldır" (click)="UnShare(value.id)" *ngIf="value.isShare"><i class="glyphicon glyphicon-minus-sign"></i></a>
+          <a class="btn-card" title="Sil" (click)="DeleteArticle(value.id)"><i class="glyphicon glyphicon-remove"></i></a>
+          <a class="btn-card" title="Düzenle" (click)="GetArticleById(value.id)" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-edit"></i></a>
         </div>
       </div>
     </div>
@@ -40,7 +40,8 @@
         </div>
         <div class="form-group">
           <label>Eser İçeriği</label>
-          <textarea rows="8" class="form-control" [(ngModel)]="article.content"></textarea>
+          <ckeditor [(ngModel)]="article.content"></ckeditor>
+          <!--<textarea rows="8" class="form-control" [(ngModel)]="article.content"></textarea>-->
         </div>
         <div class="form-group">
           <label>Mevcut Resim</label><br />

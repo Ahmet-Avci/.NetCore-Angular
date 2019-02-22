@@ -7,7 +7,16 @@
   padding-top: 25px;
 }
 
+.cke_top {
+  border-bottom: 1px solid transparent;
+}
+
 input {
+  background-color: transparent;
+  color: #555;
+}
+
+select {
   background-color: transparent;
   color: #555;
 }
@@ -29,6 +38,12 @@ input {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.btn-success {
+  background-color: transparent;
+  border-color: #337ab7;
+  color: #555;
 }
 
 .btn-file input[type=file] {

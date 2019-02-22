@@ -28,7 +28,7 @@ export class ReadArticleComponent {
     body = body.set("articleId", this.articleId.toString());
     this.http.post<any>('api/Article/GetArticleById', body, { headers: myheader }).subscribe(result => {
       if (!result.isNull) {
-        result.imagePath = atob(result.data.imagePath);
+        result.data.imagePath = atob(result.data.imagePath);
         this.article = result.data;
       } else {
         this.message.Show("error", result.message);

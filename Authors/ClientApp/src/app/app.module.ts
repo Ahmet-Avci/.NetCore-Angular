@@ -18,6 +18,7 @@ import { CategoryComponent } from './Category/category-component';
 import { ProfileComponent } from './Profile/profile.component';
 import { CategoryArticleComponent } from './Category-article/category-article.component';
 import { CommonModule } from '@angular/common';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    CKEditorModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'my-article', component: MyArticleComponent },

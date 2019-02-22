@@ -6,8 +6,7 @@
         <figcaption class="slide-caption"><p class="slider-text"><b>{{article.header}} - {{article.authorName}} {{article.authorSurname}}</b></p></figcaption>
       </figure>
     </div>
-    <div class="col-md-12 content-text">
-      <p><b>{{article.content}}</b></p>
+    <div [innerHTML]="article.content" class="col-md-12 content-text">
     </div>
   </div>
 </div>

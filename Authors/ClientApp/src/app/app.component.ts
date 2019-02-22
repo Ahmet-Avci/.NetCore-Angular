@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import * as $ from "jquery";
+import * as toastr from "toastr";
 
 
 @Component({
@@ -38,7 +38,7 @@ export class AppComponent{
   }
 
   public Show(type: string, message: string) {
-    $(toastr[type](message));
+    toastr[type](message)
   }
 
 }

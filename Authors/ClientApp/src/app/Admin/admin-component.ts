@@ -1,6 +1,7 @@
 import { Component, Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { AppComponent, CategoryDto, UserDto, ArticleDto } from '../app.component';
+import * as $ from "jquery";
 
 @Component({
   selector: 'app-admin',
