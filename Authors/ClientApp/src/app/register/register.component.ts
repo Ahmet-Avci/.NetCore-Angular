@@ -43,7 +43,7 @@ export class RegisterComponent {
         if (!result.isNull) {
           let loginComponent = new LoginComponent(this.http);
           loginComponent.Login(this.user.MailAddress, this.user.Password);
-          this.message.Show("success", "Hoşgeldin" + " " + result.data.authorName + " :)");
+          this.message.Show("success", "Hoşgeldin" + " " + result.data.name + " :)");
         } else {
           this.message.Show("error", "Kayıt işlemi başarısız. Lütfen bilgilerinizi kontrol ediniz.");
         }

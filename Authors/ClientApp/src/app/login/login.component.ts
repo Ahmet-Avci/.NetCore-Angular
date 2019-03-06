@@ -1,7 +1,7 @@
 import { Component, Injectable } from '@angular/core';
 import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
 import { UserDto, AppComponent } from '../app.component';
-
+import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 
 @Component({
   selector: 'app-home',
@@ -14,11 +14,13 @@ import { UserDto, AppComponent } from '../app.component';
 export class LoginComponent {
   http: HttpClient;
   message: AppComponent;
+  navMenu: NavMenuComponent;
   userId: number;
 
   public constructor(http: HttpClient) {
     this.http = http;
     this.message = AppComponent.prototype;
+    this.navMenu = NavMenuComponent.prototype;
   }
 
 

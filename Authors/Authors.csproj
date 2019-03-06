@@ -55,8 +55,6 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\scripts\" />
-    <Folder Include="Images\ArticleImages\" />
-    <Folder Include="Images\UserImages\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

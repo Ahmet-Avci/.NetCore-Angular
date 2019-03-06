@@ -1,6 +1,6 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { AppComponent, CategoryDto, UserDto, ArticleDto } from '../app.component';
+import { AppComponent, CategoryDto, UserDto, ArticleDto, UserType } from '../app.component';
 import * as $ from "jquery";
 
 @Component({
@@ -11,7 +11,19 @@ import * as $ from "jquery";
 
 
 @Injectable()
-export class AdminComponent {
+export class AdminComponent implements OnInit {
+
+  ngOnInit(): void {
+    $("app-admin").fadeOut(0);
+    this.http.get<any>('api/Authentication/SessionControl').subscribe(result => {
+      if (result.authorType != UserType.admin.valueOf()) {
+        window.location.href = "";
+      } else {
+        $("app-admin").fadeIn(250);
+      }
+    });
+  }
+
   http: HttpClient;
   category: CategoryDto;
   categoryList: CategoryDto[];
@@ -28,6 +40,8 @@ export class AdminComponent {
     this.article = new ArticleDto;
     this.category = new CategoryDto;
     this.message = AppComponent.prototype;
+
+
 
     this.GetAllCategory();
   }

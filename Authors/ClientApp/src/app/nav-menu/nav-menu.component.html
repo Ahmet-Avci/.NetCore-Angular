@@ -1,5 +1,4 @@
-
-<div class='main-nav'>
+<div class='main-nav hidden-sm hidden-xs'>
   <div class='navbar navbar-inverse'>
     <div class='navbar-header'>
       <div class="text-center">
@@ -7,7 +6,8 @@
         <img *ngIf="user.image != null" class="profile-picture" src="data:image/jpeg;base64,{{user.image}}" [routerLink]='["/profile",{authorId:user.id}]' />
         <img *ngIf="user.image == null" class="profile-picture" src="./assets/pp.png" [routerLink]='["/profile",{authorId:user.id}]' />
         <h5 class="soft-text">Hoşgeldin {{user.name}}</h5>
-        <button ui-sref="login" id="loginButton" class="btn btn-primary btn-outline btn-rounded btn-sm logout-button" [routerLink]='currentState == "Giriş Yap" ? ["/login"] : ["/logout"]' (click)='currentState == "Çıkış Yap" ? Logout() : "" '>{{currentState}}</button>
+        <button *ngIf='currentState == "Giriş Yap"' data-toggle="modal" data-target="#loginModal" ui-sref="login" id="loginButton" class="btn btn-primary btn-outline btn-rounded btn-sm logout-button" (click)='currentState == "Çıkış Yap" ? Logout() : "" '>{{currentState}}</button>
+        <button *ngIf='currentState != "Giriş Yap"' ui-sref="login" id="loginButton" class="btn btn-primary btn-outline btn-rounded btn-sm logout-button" (click)="Logout()">{{currentState}}<i></i></button>
       </div>
     </div>
     <div class='clearfix'></div>
@@ -51,45 +51,88 @@
       </ul>
     </div>
   </div>
+</div>
 
 
 
+<div class="modal fade" id="loginModal" role="dialog">
+  <div class="modal-dialog modal-xs">
 
-  <div class="backdrop" [ngStyle]="{'display':display}"></div>
-  <div class="modal" tabindex="-1" role="document" [ngStyle]="{'display':display}">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="form-group">
-            <label class="rocker rocker-small pull-left" style="margin-top:-15px; margin-bottom:-15px; right:20px;">
-              <input type="checkbox" checked class="my-checkbox" (change)="LoginScreen()">
-              <span class="switch-left">Giriş</span>
-              <span class="switch-right">Kayıt</span>
-            </label>
-            <h5 class="header-margin pull-left"><b>Giriş Ekranı</b></h5>
-            <i class="glyphicon glyphicon-remove pull-right" (click)="onCloseHandled()"></i>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">YERALTINA GIRIS</h4>
+      </div>
+      <div class="modal-body" style="height: 565px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#login">Giriş Yap</a></li>
+          <li><a data-toggle="tab" href="#register">Üye Ol</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="login" class="tab-pane fade in active">
+            <!--Login Area-->
+            <div class="login-form">
+              <div class="main-div">
+                <div class="form-group">
+                  <input type="email" class="form-control" [(ngModel)]="inputMailAddress" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" [(ngModel)]="inputPassword" placeholder="Şifre">
+                </div>
+                <div class="forgot">
+                  <a>Sifreni mi unuttun?</a>
+                </div>
+                <button type="submit" (click)="Login(inputMailAddress,inputPassword)" class="btn btn-primary">Giriş</button>
+              </div>
+            </div>
+          </div>
+          <div id="register" class="tab-pane fade">
+            <!--Register Area-->
+            <div class="article-form">
+              <div class="main-div">
+                <div class="form-group" style="text-align:center;margin:-40px;">
+                  <img *ngIf="base64textString" class="card-image" src="data:image/png;base64,{{base64textString}}" />
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" [(ngModel)]="user.Name" placeholder="Ad">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" [(ngModel)]="user.Surname" placeholder="Soyad">
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" [(ngModel)]="user.MailAddress" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" [(ngModel)]="user.Password" placeholder="Şifre">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" [(ngModel)]="user.PasswordRetry" placeholder="Şifrenizi tekrar giriniz">
+                </div>
+                <div class="form-group">
+                  <input type="number" class="form-control" [(ngModel)]="user.PhoneNumber" placeholder="Telefon Numaranız">
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-6">
+                    <form novalidate [formGroup]="formImport">
+                      <div class="input-group mb-3">
+                        <span class="custom-file btn btn-success btn-file">
+                          <input type="file" class="custom-file-input" formControlName="importFile" value="Yazı için dosya ekle" id="importFile" (change)="onFileChange($event.target.files)">
+                          <label class="custom-file-label" #labelImport for="importFile"><i class="glyphicon glyphicon-search"></i> Profil Resmi Ekle</label>
+                        </span>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="forgot col-sm-12">
+                  <br />
+                  <button type="submit" (click)="Register(user)" class="btn btn-block btn-primary">Kayıt Ol</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <input placeholder="Mail adresinizi giriniz..." type="email" class="form-control" [(ngModel)]="inputMail" />
-          </div>
-          <div class="form-group">
-            <input placeholder="Şifrenizi giriniz..." type="password" class="form-control" [(ngModel)]="inputPassword" />
-          </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-primary btn-block" (click)="Login()">Giriş</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="form-group">
-            
-          </div>
-          </div>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal !-->
-
-
-
+      </div>
+    </div>
+  </div>
+</div>
