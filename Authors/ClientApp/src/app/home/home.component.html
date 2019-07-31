@@ -38,6 +38,7 @@
         <div class="card-desc" style="display: inline-grid;">
           <h3>{{value.header}}</h3>
           <p [innerHTML]="value.content"></p>
+          <p class="info-ground">Tahmini okuma süresi {{value.readTime}} dakika</p>
           <a class="btn-card btn-block button-position" [routerLink]='["/read-article",{articleId:value.id}]' title="Tamamını Oku"><b>Oku</b></a>
         </div>
       </div>

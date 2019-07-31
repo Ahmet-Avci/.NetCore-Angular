@@ -171,6 +171,7 @@ export class ArticleDto {
   authorSurname: string;
   message: string;
   isError: boolean;
+  readTime: string;
 }
 
 export class CategoryDto {

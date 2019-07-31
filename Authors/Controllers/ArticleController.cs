@@ -1,3 +1,4 @@
+using Authors.Extensions;
 using Authors.Helpers;
 using DtoLayer.Dto;
 using Microsoft.AspNetCore.Http;
@@ -12,7 +13,7 @@ namespace Authors.Controllers
     /// Eserlerle ilgili iþlemleri kontrol eden sýnýf
     /// </summary>
     [Route("api/[controller]")]
-    public class ArticleController : Controller
+    public class ArticleController : SpeacialController
     {
         private readonly IArticleService _articleService;
 
@@ -28,6 +29,7 @@ namespace Authors.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("[action]")]
+        [LoginControlAttribute]
         public IActionResult AddArticle(ArticleDto model)
         {
             if (string.IsNullOrEmpty(model.Content) || string.IsNullOrEmpty(model.Header))

@@ -1,7 +1,5 @@
 ﻿using Authors.Helpers;
 using DtoLayer.Dto;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interface;
 using System;
@@ -30,7 +28,9 @@ namespace Authors.Controllers
         {
             if (string.IsNullOrWhiteSpace(MailAddress) || string.IsNullOrWhiteSpace(Password))
                 return Json(new { isNull = true, message = "Lütfen gerekli bilgileri doldurunuz." });
-            
+
+            HttpContext.Session.GetObject<AuthorDto>("LoginUser");
+
             var result = _authorService.GetUser(MailAddress, Password);
 
             if (!result.IsNull && result.Data.Id > 0)

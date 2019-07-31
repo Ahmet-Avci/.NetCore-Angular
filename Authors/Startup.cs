@@ -17,6 +17,7 @@ using Repository.Interface;
 using Services.Implementation;
 using Services.Interface;
 using System;
+using System.Diagnostics;
 
 namespace Authors
 {
@@ -71,7 +72,7 @@ namespace Authors
             services.AddDistributedMemoryCache();
             services.AddSession(options => {
                 options.Cookie.Name = ".AuthorsWorks.Session";
-                options.IdleTimeout = TimeSpan.FromMinutes(45);
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
             });
 
             // In production, the Angular files will be served from this directory

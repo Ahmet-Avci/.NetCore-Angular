@@ -11,6 +11,13 @@ img {
   text-shadow: 0px 0px 1px #000000;
 }
 
+.info-ground {
+  background-color: #ececec;
+  border-radius: 6px;
+  padding-top: 4px;
+  padding-left: 4px;
+}
+
 .read-count {
   top: 25px;
   position: absolute;
@@ -274,7 +281,6 @@ section {
     line-height: 1.5;
     margin: 0px;
     margin-bottom: 20px;
-    padding: 0;
     font-family: 'Raleway', sans-serif;
   }
 

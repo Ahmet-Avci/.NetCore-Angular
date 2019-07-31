@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
 using DataTransferObject.Dto;
 using DbLayer.Entity;
@@ -62,23 +63,21 @@ namespace Services.Implementation
         /// </summary>
         /// <param name="authorCount"></param>
         /// <returns></returns>
-        public Result<List<AuthorDto>> GetPopularAuthor(int authorCount)
+        public async Task<Result<List<AuthorDto>>> GetPopularAuthor(int authorCount)
         {
-            
-
-            var authorsEntity = _authorRepository.GetAll().Join(_articleRepository.GetAll(),
+            var authorsEntity = Task.Run(() => _authorRepository.GetAll().Join(_articleRepository.GetAll(),
             author => author.Id,
             article => article.CreatedBy,
             (author, article) => new { author, article }
-            ).Where(x => x.author.AuthorType != DataBaseContext.Enums.AuthorType.admin).Distinct().OrderByDescending(x => x.article.ReadCount).Take(authorCount).ToList();
+            ).Where(x => x.author.AuthorType != DataBaseContext.Enums.AuthorType.admin).Distinct().OrderByDescending(x => x.article.ReadCount).Take(authorCount).ToList());
 
-            List<int> authorsIds = authorsEntity.Select(x => x.author.Id).ToList();
+            List<int> authorsIds = authorsEntity.Result.Select(x => x.author.Id).ToList();
             var articlesEntity = _articleRepository.Filter(x => authorsIds.Contains(x.CreatedBy.Value)).OrderByDescending(x => x.ReadCount).Take(authorCount).ToList();
 
             List<AuthorDto> authors = new List<AuthorDto>();
             List<ArticleDto> articles = new List<ArticleDto>();
 
-            authorsEntity.Select(x=>x.author).ToList().ForEach(author =>
+            authorsEntity.Result.Select(x=>x.author).ToList().ForEach(author =>
             {
                 author.ArticleList = new List<ArticleEntity>();
                 articlesEntity.Where(article => article.CreatedBy == author.Id).ToList().ForEach(article =>

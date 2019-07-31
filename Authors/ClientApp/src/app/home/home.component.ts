@@ -13,16 +13,14 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     $(".screen-box").hide();
     $(".row:first").hide();
-
   }
 
   http: HttpClient;
   public userList: UserDto[] = [];
   adminArticles: ArticleDto[] = [];
+  readTime = "";
   user: UserDto;
   message: AppComponent;
-  authorCount = 3;
-  articleCount = 4;
 
   public constructor(http: HttpClient) {
 
@@ -30,17 +28,14 @@ export class HomeComponent implements OnInit {
 
 
     //Yazarlar farklı olmak koşuluyla en çok okunana 3 yazarın 3 eserini getirir
-    const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-    let body = new HttpParams();
-    body = body.set("authorCount", this.authorCount.toString());
-    http.post<any>('api/Home/GetTopAuthorArticle', body, { headers: myheader }).subscribe(result => {
+    http.get<any>('api/Home/GetTopAuthorArticle').subscribe(result => {
       if (!result.isNull) {
         this.userList = result.data;
         setTimeout(function () {
           $(".slider-nav__item label:first").click();
         }, 50)
-        $(".screen-box").fadeIn();
-        $(".row:first").fadeIn();
+        $(".screen-box").fadeIn(300);
+        $(".row:first").fadeIn(1000);
       } else {
         this.message.Show("error", result.message);
       }
@@ -49,13 +44,13 @@ export class HomeComponent implements OnInit {
     //Sistem adminin eklemiş olduğu son 4 genel yazıyı getirir
     const myheader2 = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     let body2 = new HttpParams();
-    body2 = body2.set("articleCount", this.articleCount.toString());
-    http.post<any>('api/Home/GetArticleByAdmin', body2, { headers: myheader2 }).subscribe(result => {
+    http.get<any>('api/Home/GetArticleByAdmin').subscribe(result => {
       if (!result.isNull) {
         this.adminArticles = result.data;
         this.adminArticles.forEach(x => {
           x.imagePath = atob(x.imagePath);
-          x.content = x.content.length <= 155 ? x.content : x.content.substr(0, 155) + "...";
+          x.readTime = ((x.content.length / 30) / 60).toString().substring(0, 3);
+          x.content = x.content.length <= 120 ? x.content : x.content.substr(0, 120) + "...";
         })
       } else {
         this.message.Show("error", result.message);
@@ -66,9 +61,7 @@ export class HomeComponent implements OnInit {
   animation() {
 
     $("body .slider-wrapper").fadeOut(0);
-    $("body .card-content").fadeOut(0);
     $("body .slider-wrapper").fadeIn(1000); 
-    $("body .card-content").fadeIn(1300);
   }
 
 }

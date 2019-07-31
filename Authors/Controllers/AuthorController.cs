@@ -1,8 +1,6 @@
 ﻿using DtoLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interface;
-using System;
-using System.Collections.Generic;
 
 namespace Authors.Controllers
 {

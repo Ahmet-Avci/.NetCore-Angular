@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DataTransferObject.Dto;
 using DtoLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -36,8 +37,8 @@ namespace Authors.Controllers
         /// </summary>
         /// <param name="authorCount"></param>
         /// <returns></returns>
-        [HttpPost("[action]")]
-        public IActionResult GetTopAuthorArticle(int authorCount)
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetTopAuthorArticle(int authorCount = 3)
         {
             if (authorCount <= 0)
                 return Json(new { isNull = true, message = "Ana sayfa'da bir hata oluştu. Lütfen site yöneticisine başvurun. :(" });
@@ -48,7 +49,7 @@ namespace Authors.Controllers
             }
             else
             {
-                var cacheEntry = _authorService.GetPopularAuthor(authorCount);
+                var cacheEntry = await _authorService.GetPopularAuthor(authorCount);
                 var cacheEntryOption = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(6));
                 _cache.Set("TopAuthor", cacheEntry, cacheEntryOption);
 
@@ -61,8 +62,8 @@ namespace Authors.Controllers
         /// </summary>
         /// <param name="articleCount"></param>
         /// <returns></returns>
-        [HttpPost("[action]")]
-        public IActionResult GetArticleByAdmin(int articleCount)
+        [HttpGet("[action]")]
+        public IActionResult GetArticleByAdmin(int articleCount = 4)
         {
             if (articleCount <= 0)
                 return Json(new { isNull = true, message = "Ana sayfa'da bir hata oluştu. Lütfen site yöneticisine başvurun. :(" });
