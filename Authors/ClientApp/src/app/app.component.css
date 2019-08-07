@@ -5,8 +5,13 @@
   }
 }
 
-.white-text{
-  color:white;
+.body-content {
+  padding: 0px;
+  margin: 0px;
+}
+
+.white-text {
+  color: white;
 }
 
 .card-image {

@@ -11,8 +11,14 @@ import * as $ from "jquery";
 export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
-    $(".screen-box").hide();
-    $(".row:first").hide();
+    //$(".screen-box").hide();
+    //$(".row:first").hide();
+
+    $("#immersive_slider").ready(function () {
+      $("#immersive_slider").immersive_slider({
+        container: ".main"
+      });
+    })
   }
 
   http: HttpClient;
@@ -21,6 +27,7 @@ export class HomeComponent implements OnInit {
   readTime = "";
   user: UserDto;
   message: AppComponent;
+  isLoad: boolean = false;
 
   public constructor(http: HttpClient) {
 
@@ -36,6 +43,13 @@ export class HomeComponent implements OnInit {
         }, 50)
         $(".screen-box").fadeIn(300);
         $(".row:first").fadeIn(1000);
+
+        $(document).ready(function () {
+          $("#immersive_slider").immersive_slider({
+            container: ".main"
+          });
+        })
+
       } else {
         this.message.Show("error", result.message);
       }
@@ -56,6 +70,7 @@ export class HomeComponent implements OnInit {
         this.message.Show("error", result.message);
       }
     })
+
   }
 
   animation() {

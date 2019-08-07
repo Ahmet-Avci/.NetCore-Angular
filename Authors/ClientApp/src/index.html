@@ -90,3 +90,19 @@
 </html>
 
 
+<script type="text/javascript">
+  $("#immersive_slider").ready(function () {
+    $("#immersive_slider").immersive_slider({
+      container: ".main"
+    });
+  })
+
+  $(".navbar-nav").on("click", function () {
+    $("#immersive_slider").ready(function () {
+      $("#immersive_slider").immersive_slider({
+        container: ".main"
+      });
+    })
+  })
+</script>
+
