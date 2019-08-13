@@ -91,17 +91,26 @@
 
 
 <script type="text/javascript">
-  $("#immersive_slider").ready(function () {
-    $("#immersive_slider").immersive_slider({
-      container: ".main"
-    });
+    $("#immersive_slider").ready(function () {
+      $("#immersive_slider").hide()
+      setTimeout(function () {
+        $("#immersive_slider").immersive_slider({
+          container: ".main"
+        });
+        $("#immersive_slider").show(500)
+      },750)
+    
   })
 
   $(".navbar-nav").on("click", function () {
     $("#immersive_slider").ready(function () {
-      $("#immersive_slider").immersive_slider({
-        container: ".main"
-      });
+      $("#immersive_slider").hide()
+      setTimeout(function () {
+        $("#immersive_slider").immersive_slider({
+          container: ".main"
+        });
+        $("#immersive_slider").show(500)
+      }, 750)
     })
   })
 </script>

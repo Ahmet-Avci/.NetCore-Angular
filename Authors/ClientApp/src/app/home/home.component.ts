@@ -13,12 +13,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     //$(".screen-box").hide();
     //$(".row:first").hide();
-
-    $("#immersive_slider").ready(function () {
-      $("#immersive_slider").immersive_slider({
-        container: ".main"
-      });
-    })
   }
 
   http: HttpClient;
@@ -38,17 +32,8 @@ export class HomeComponent implements OnInit {
     http.get<any>('api/Home/GetTopAuthorArticle').subscribe(result => {
       if (!result.isNull) {
         this.userList = result.data;
-        setTimeout(function () {
-          $(".slider-nav__item label:first").click();
-        }, 50)
         $(".screen-box").fadeIn(300);
         $(".row:first").fadeIn(1000);
-
-        $(document).ready(function () {
-          $("#immersive_slider").immersive_slider({
-            container: ".main"
-          });
-        })
 
       } else {
         this.message.Show("error", result.message);

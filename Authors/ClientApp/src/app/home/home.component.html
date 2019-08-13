@@ -1,4 +1,4 @@
-<div class="main">
+<!--<div class="main">
   <div class="page_container">
     <div id="immersive_slider">
       <div class="slide" data-blurred="img/slide1_blurred.jpg">
@@ -44,35 +44,61 @@
       <a href="#" class="is-next">&raquo;</a>
     </div>
   </div>
+</div>-->
 
 
-
-  <!--<div class="slider-wrapper col-md-12">
-    <div class="slider">
+<div class="main">
+  <div class="page_container">
+    <div id="immersive_slider">
       <div *ngFor="let user of userList; let i = index">
         <div *ngFor="let article of user.articleList">
-          <input type="radio" name="slider" class="trigger" id="{{i}}" checked="checked" />
-          <div class="slide" (click)="readArticle(article.id)">
-            <figure class="slide-figure">
-              <img style="width:100%" class="slide-img" src="data:image/png;base64,{{article.imagePath}}" />
-              <figcaption class="slide-caption3">
-                <p class="slider-text header-info pull-right" [routerLink]='["/read-article",{articleId:article.id}]' title="Okumaya Git..."><i class="glyphicon glyphicon-search"></i></p>&nbsp;
-                <p class="slider-text header-info pull-right" title="Okunma Sayısı..."><i class="glyphicon glyphicon-book"><b> {{article.readCount}}</b></i></p>
-              </figcaption>
-              <figcaption class="slide-caption2 hidden-xs"><p class="slider-text" style="background-color:transparent"><i><b [innerHTML]="article.content"></b></i></p></figcaption>
-              <figcaption class="slide-caption"><p class="slider-text"><b>{{article.header}}</b><i> - {{user.name}} {{user.surname}}</i></p></figcaption>
-            </figure>
+          <div class="slide" data-blurred="img/slide_blurred.jpg">
+            <div class="content">
+              <h2><a href="#" target="_blank">{{article.header}}</a></h2>
+              <p>
+                {{article.content}}
+              </p>
+            </div>
+            <div class="image">
+              <a href="http://www.thepetedesign.com" target="_blank">
+                <img src="data:image/png;base64,{{article.imagePath}}" alt="Slider 1">
+              </a>
+            </div>
           </div>
+        </div>
+        <a href="#" class="is-prev">&laquo;</a>
+        <a href="#" class="is-next">&raquo;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="slider-wrapper col-md-12">
+  <div class="slider">
+    <div *ngFor="let user of userList; let i = index">
+      <div *ngFor="let article of user.articleList">
+        <input type="radio" name="slider" class="trigger" id="{{i}}" checked="checked" />
+        <div class="slide" (click)="readArticle(article.id)">
+          <figure class="slide-figure">
+            <img style="width:100%" class="slide-img" src="data:image/png;base64,{{article.imagePath}}" />
+            <figcaption class="slide-caption3">
+              <p class="slider-text header-info pull-right" [routerLink]='["/read-article",{articleId:article.id}]' title="Okumaya Git..."><i class="glyphicon glyphicon-search"></i></p>&nbsp;
+              <p class="slider-text header-info pull-right" title="Okunma Sayısı..."><i class="glyphicon glyphicon-book"><b> {{article.readCount}}</b></i></p>
+            </figcaption>
+            <figcaption class="slide-caption2 hidden-xs"><p class="slider-text" style="background-color:transparent"><i><b [innerHTML]="article.content"></b></i></p></figcaption>
+            <figcaption class="slide-caption"><p class="slider-text"><b>{{article.header}}</b><i> - {{user.name}} {{user.surname}}</i></p></figcaption>
+          </figure>
         </div>
       </div>
     </div>
-    <ul class="slider-nav">
-      <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="0">1</label></li>
-      <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="1">2</label></li>
-      <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="2">3</label></li>
-    </ul>
-  </div>-->
-</div>
+  </div>
+  <ul class="slider-nav">
+    <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="0">1</label></li>
+    <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="1">2</label></li>
+    <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="2">3</label></li>
+  </ul>
+</div>-->
 
 <div class="row">
   <div class="col-md-12">
