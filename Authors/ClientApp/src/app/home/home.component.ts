@@ -11,8 +11,6 @@ import * as $ from "jquery";
 export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
-    //$(".screen-box").hide();
-    //$(".row:first").hide();
   }
 
   http: HttpClient;
@@ -32,17 +30,12 @@ export class HomeComponent implements OnInit {
     http.get<any>('api/Home/GetTopAuthorArticle').subscribe(result => {
       if (!result.isNull) {
         this.userList = result.data;
-        $(".screen-box").fadeIn(300);
-        $(".row:first").fadeIn(1000);
-
       } else {
         this.message.Show("error", result.message);
       }
     })
 
     //Sistem adminin eklemiş olduğu son 4 genel yazıyı getirir
-    const myheader2 = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-    let body2 = new HttpParams();
     http.get<any>('api/Home/GetArticleByAdmin').subscribe(result => {
       if (!result.isNull) {
         this.adminArticles = result.data;
@@ -56,12 +49,6 @@ export class HomeComponent implements OnInit {
       }
     })
 
-  }
-
-  animation() {
-
-    $("body .slider-wrapper").fadeOut(0);
-    $("body .slider-wrapper").fadeIn(1000); 
   }
 
 }

@@ -63,7 +63,7 @@ namespace Authors.Controllers
         /// <param name="articleCount"></param>
         /// <returns></returns>
         [HttpGet("[action]")]
-        public IActionResult GetArticleByAdmin(int articleCount = 4)
+        public IActionResult GetArticleByAdmin(int articleCount = 6)
         {
             if (articleCount <= 0)
                 return Json(new { isNull = true, message = "Ana sayfa'da bir hata oluştu. Lütfen site yöneticisine başvurun. :(" });

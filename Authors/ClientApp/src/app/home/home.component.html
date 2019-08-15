@@ -1,60 +1,14 @@
-<!--<div class="main">
-  <div class="page_container">
-    <div id="immersive_slider">
-      <div class="slide" data-blurred="img/slide1_blurred.jpg">
-        <div class="content">
-          <h2><a href="http://www.bucketlistly.com" target="_blank">BucketListly</a></h2>
-          <p>
-            It’s never been easier to watch YouTube on the big screen
-            Send your favorite YouTube videos from your Android phone or tablet to TV with the touch of a button. It’s easy. No wires, no setup, no nothing. Find out more here.
-          </p>
-        </div>
-        <div class="image">
-          <a href="http://www.bucketlistly.com" target="_blank">
-            <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Slider 1">
-          </a>
-        </div>
-      </div>
-      <div class="slide" data-blurred="img/slide2_blurred.jpg">
-        <div class="content">
-          <h2><a href="http://www.bucketlistly.com/apps" target="_blank">BucketListly Apps</a></h2>
-          <p>
-            It’s never been easier to watch YouTube on the big screen
-            Send your favorite YouTube videos from your Android phone or tablet to TV with the touch of a button. It’s easy. No wires, no setup, no nothing. Find out more here.
-          </p>
-        </div>
-        <div class="image">
-          <a href="http://www.bucketlistly.com/apps" target="_blank"> <img src="https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg" alt="Slider 1"></a>
-        </div>
-      </div>
-      <div class="slide" data-blurred="img/slide3_blurred.jpg">
-        <div class="content">
-          <h2><a href="http://www.thepetedesign.com" target="_blank">The Pete Design</a></h2>
-          <p>
-            It’s never been easier to watch YouTube on the big screen
-            Send your favorite YouTube videos from your Android phone or tablet to TV with the touch of a button. It’s easy. No wires, no setup, no nothing. Find out more here.
-          </p>
-        </div>
-        <div class="image">
-          <a href="http://www.thepetedesign.com" target="_blank"><img src="https://inteng-storage.s3.amazonaws.com/images/APRIL/sizes/black_hole_resize_md.jpg" alt="Slider 1"></a>
-        </div>
-      </div>
-
-      <a href="#" class="is-prev">&laquo;</a>
-      <a href="#" class="is-next">&raquo;</a>
-    </div>
-  </div>
-</div>-->
 
 
-<div class="main">
+
+<div class="main slider-main">
   <div class="page_container">
     <div id="immersive_slider">
       <div *ngFor="let user of userList; let i = index">
         <div *ngFor="let article of user.articleList">
-          <div class="slide" data-blurred="img/slide_blurred.jpg">
+          <div class="slide">
             <div class="content">
-              <h2><a href="#" target="_blank">{{article.header}}</a></h2>
+              <h2><a href="#" target="_blank"><b>{{article.header}}</b></a></h2>
               <p>
                 {{article.content}}
               </p>
@@ -74,50 +28,61 @@
 </div>
 
 
-<!--<div class="slider-wrapper col-md-12">
-  <div class="slider">
-    <div *ngFor="let user of userList; let i = index">
-      <div *ngFor="let article of user.articleList">
-        <input type="radio" name="slider" class="trigger" id="{{i}}" checked="checked" />
-        <div class="slide" (click)="readArticle(article.id)">
-          <figure class="slide-figure">
-            <img style="width:100%" class="slide-img" src="data:image/png;base64,{{article.imagePath}}" />
-            <figcaption class="slide-caption3">
-              <p class="slider-text header-info pull-right" [routerLink]='["/read-article",{articleId:article.id}]' title="Okumaya Git..."><i class="glyphicon glyphicon-search"></i></p>&nbsp;
-              <p class="slider-text header-info pull-right" title="Okunma Sayısı..."><i class="glyphicon glyphicon-book"><b> {{article.readCount}}</b></i></p>
-            </figcaption>
-            <figcaption class="slide-caption2 hidden-xs"><p class="slider-text" style="background-color:transparent"><i><b [innerHTML]="article.content"></b></i></p></figcaption>
-            <figcaption class="slide-caption"><p class="slider-text"><b>{{article.header}}</b><i> - {{user.name}} {{user.surname}}</i></p></figcaption>
-          </figure>
-        </div>
-      </div>
-    </div>
-  </div>
-  <ul class="slider-nav">
-    <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="0">1</label></li>
-    <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="1">2</label></li>
-    <li class="slider-nav__item"><label class="slider-nav__label" (click)="animation()" for="2">3</label></li>
-  </ul>
-</div>-->
+
+
+
 
 <div class="row">
-  <div class="col-md-12">
-    <div class="col-md-3 pdgn-25" *ngFor="let value of adminArticles">
-      <div class="card-content">
-        <div class="card-img">
-          <img src="data:image/png;base64,{{value.imagePath}}" alt="">
-          <span class="text-border-black col-xs-12" title="Yazar">Editorün Seçimi</span>
-          <p class="pull-left read-count" title="Okunma"><b class="text-border-black">{{value.readCount}}</b></p>
+
+  <div class="col-xs-12">
+
+    <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let value of adminArticles">
+      <div class="card">
+        <div class="additional">
+          <div class="user-card">
+            <div class="level center">
+              Süre {{value.readTime}} dk
+            </div>
+            <div class="points center">
+              {{value.readCount}} okuma
+            </div>
+            <img width="80" height="80" class="center" style="border-radius: 40px; box-shadow: 0px 0px 10px #1d1e21;" src="data:image/png;base64,{{value.imagePath}}" />
+          </div>
+          <div class="more-info title">
+            <h4 [innerHTML]="value.content"></h4>
+            <div class="stats">
+              <div>
+                <div class="title"></div>
+                <i class=""></i>
+                <div class="value"></div>
+              </div>
+              <div>
+                <div class="title"></div>
+                <i class=""></i>
+                <div class="value"></div>
+              </div>
+              <div>
+                <div class="title"></div>
+                <i class=""></i>
+                <div class="value"></div>
+              </div>
+              <div [routerLink]='["/read-article",{articleId:value.id}]'>
+                <div class="title"></div>
+                <i class="glyphicon glyphicon-arrow-right"></i>
+                <div class="value infinity"></div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card-desc" style="display: inline-grid;">
-          <h3>{{value.header}}</h3>
-          <p [innerHTML]="value.content"></p>
-          <p class="info-ground">Tahmini okuma süresi {{value.readTime}} dakika</p>
-          <a class="btn-card btn-block button-position" [routerLink]='["/read-article",{articleId:value.id}]' title="Tamamını Oku"><b>Oku</b></a>
+        <div class="general">
+          <h1><b>{{value.header}}</b></h1>
+          <span class="more"><b>Yazının içeriği için üzerine gel. </b></span>
         </div>
       </div>
     </div>
+
   </div>
 </div>
+
 
 
