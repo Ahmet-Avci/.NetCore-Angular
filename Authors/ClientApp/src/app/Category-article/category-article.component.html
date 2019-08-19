@@ -1,6 +1,5 @@
-<div class="row">
+<!--<div class="row">
   <div class="col-md-12">
-    <!--<div class="article-area"></div>-->
     <div class="col-md-4 pdgn-25" *ngFor="let value of articleList">
       <div class="card-content">
         <div class="card-img">
@@ -17,4 +16,60 @@
     </div>
     <button class="btn btn-default btn-block t15" (click)="GetAllCategories()">Daha Fazla...</button>
   </div>
+</div>-->
+
+<div class="row">
+
+  <div class="col-xs-12">
+
+    <div class="col-xs-12 col-sm-6 col-md-4 pdgn-25" *ngFor="let value of articleList">
+      <div class="card">
+        <div class="additional">
+          <div class="user-card">
+            <div class="level center">
+              Süre {{value.readTime}} dk
+            </div>
+            <div class="points center">
+              {{value.readCount}} okuma
+            </div>
+            <img width="80" height="80" class="center" style="border-radius: 40px; box-shadow: 0px 0px 10px #1d1e21;" src="data:image/png;base64,{{value.imagePath}}" />
+          </div>
+          <div class="more-info title">
+            <h4 [innerHTML]="value.content"></h4>
+            <div class="stats">
+              <div>
+                <div class="title"></div>
+                <i class=""></i>
+                <div class="value"></div>
+              </div>
+              <div>
+                <div class="title"></div>
+                <i class=""></i>
+                <div class="value"></div>
+              </div>
+              <div>
+                <div class="title"></div>
+                <i class=""></i>
+                <div class="value"></div>
+              </div>
+              <div [routerLink]='["/read-article",{articleId:value.id}]'>
+                <div class="title"></div>
+                <i class="glyphicon glyphicon-arrow-right"></i>
+                <div class="value infinity"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="general">
+          <h2><b>{{value.header}}</b></h2>
+          <span class="more"><b>Yazının içeriği için üzerine gel. </b></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+</div>
+<div class="col-xs-10 col-xs-offset-1">
+  <button class="btn btn-default btn-block t15" (click)="GetAllCategories()">Daha Fazla...</button>
 </div>

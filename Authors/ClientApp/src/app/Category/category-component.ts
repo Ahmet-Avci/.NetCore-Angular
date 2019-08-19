@@ -25,11 +25,12 @@ export class CategoryComponent {
   GetAllCategories() {
     this.http.get<any>("api/Category/GetAllCategory").subscribe(result => {
       if (!result.isNull) {
-        this.categoryList = result.data
+        this.categoryList = result.data;
       } else {
         this.message.Show("error", result.message);
       }
     });
   }
+
 }
 

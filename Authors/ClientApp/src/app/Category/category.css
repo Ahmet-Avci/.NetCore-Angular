@@ -9,12 +9,12 @@
   background-color: #d8d8dab0;
 }
 
-.category-box{
-  padding:15px;
+.category-box {
+  padding: 15px;
 }
 
-.height-110{
-  height:110px
+.height-110 {
+  height: 110px
 }
 
 .btn-default {
@@ -30,5 +30,21 @@
   }
 
 p {
-  font-size:20px;
+  font-size: 20px;
+}
+
+.on-tiny:hover {
+  transform: scale(0.9, 0.9);
+  box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.25), 0px 0px 50px 0px rgba(0,0,0,0.22);
+  transition: 0.5s;
+}
+
+.posit {
+  position:static;
+}
+
+.card-posit {
+  background-color: #fcfcfc;
+  height: 270px;
+  transition: 0.5s;
 }

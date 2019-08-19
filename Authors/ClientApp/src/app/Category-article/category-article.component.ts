@@ -16,6 +16,7 @@ export class CategoryArticleComponent {
   http: HttpClient;
   articleList: ArticleDto[];
   message: AppComponent;
+  readTime = "";
   takeCount = 6;
   skipCount = 0;
   categoryId = 0;
@@ -27,6 +28,7 @@ export class CategoryArticleComponent {
 
     this.GetAllCategories();
   }
+
 
   //Tüm kategorileri getirir
   GetAllCategories() {
@@ -40,6 +42,8 @@ export class CategoryArticleComponent {
         var articleData = [];
         result.data.forEach(x => {
           x.imagePath = atob(x.imagePath);
+          x.readTime = ((x.content.length / 30) / 60).toString().substring(0, 3);
+          x.content = x.content.length <= 120 ? x.content : x.content.substr(0, 120) + "...";
           articleData.push(x);
         })
         if ($(".pdgn-25").length > 0) {
@@ -50,6 +54,7 @@ export class CategoryArticleComponent {
         }
         this.articleList = articleData;
         this.skipCount += result.data.length;
+
       } else {
         this.message.Show("info", "İlgili kategorideki tüm eserler bu kadar :(");
       }

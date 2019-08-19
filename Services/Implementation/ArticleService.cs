@@ -99,7 +99,7 @@ namespace Services.Implementation
             var resultQuery = _authorRepository.GetAll().Join(_articleRepository.GetAll(),
                 author => author.Id,
                 article => article.CreatedBy,
-                (author, article) => new { author, article }).Where(x => x.article.IsShare && x.article.CategoryId == categoryId && x.author.IsActive);
+                (author, article) => new { author, article }).Where(x => x.article.IsShare && x.article.IsActive && x.article.CategoryId == categoryId && x.author.IsActive);
 
             var articleList = _mapper.Map<List<ArticleDto>>(resultQuery.Select(x => x.article).OrderByDescending(x => x.CreatedDate).Skip(skipCount).Take(takeCount).ToList());
             var authorList = _mapper.Map<List<AuthorDto>>(resultQuery.Select(x => x.author).ToList());
@@ -113,7 +113,6 @@ namespace Services.Implementation
             {
                 articleList.Where(z => z.CreatedBy == x.Id).ToList().ForEach(z =>
                   {
-                      z.Content = z.Content.Length > 190 ? string.Concat(z.Content.Substring(0, 190), "...") : z.Content;
                       z.AuthorName = x.Name;
                       z.AuthorSurname = x.Surname;
                   });

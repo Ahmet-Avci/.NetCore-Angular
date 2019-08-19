@@ -15,8 +15,6 @@ export class NavMenuComponent implements OnInit {
     if (document.cookie.substr(10, 5) == "true") {
       $("body").css("background-color", "#15202b")
       $(".navbar-inverse").css("background-color", "#10171e")
-      $(".card-content").css("background-color", "#15202b")
-      $(".card-content").css("box-shadow", "1px 1px 16px black")
       document.cookie = "nightMode=true";
       setTimeout(function () {
         $(".navbar-collapse li").css("background-color", "#15202b")
@@ -142,21 +140,15 @@ export class NavMenuComponent implements OnInit {
       $(".navbar-inverse").css("background-color", "#10171e")
       $(".navbar-collapse li a").css("background-color", "#15202b")
       $(".navbar-collapse li").css("background-color", "#15202b")
-      $(".card-content").css("background-color", "#15202b")
-      $(".card-content").css("box-shadow", "1px 1px 16px black")
       document.cookie = "nightMode=true";
     } else {
       $("body").removeAttr("style");
       $(".navbar-inverse").removeAttr("style");
       $(".navbar-collapse li a").removeAttr("style");
       $(".navbar-collapse li").removeAttr("style");
-      $(".card-content").removeAttr("style");
-      $(".card-content").removeAttr("style");
       document.cookie = "nightMode=false";
     }
   }
-
-
 
 }
 

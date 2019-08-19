@@ -23,6 +23,7 @@ export class MyArticleComponent implements OnInit {
   http: HttpClient;
   message: AppComponent;
   private base64textString: String = "";
+  readTime = "";
 
   @ViewChild(CKEditorComponent) ckEditor: CKEditorComponent;
 
@@ -44,7 +45,8 @@ export class MyArticleComponent implements OnInit {
         this.user = result.data;
         this.user.articleList.forEach(x => {
           x.imagePath = atob(x.imagePath);
-          x.content = x.content.length <= 180 ? x.content : x.content.substr(0, 180) + "...";
+          x.readTime = ((x.content.length / 30) / 60).toString().substring(0, 3);
+          x.content = x.content.length <= 120 ? x.content : x.content.substr(0, 120) + "...";
         });
       } else {
         this.message.Show("error", result.message);
@@ -62,7 +64,7 @@ export class MyArticleComponent implements OnInit {
         var index = this.user.articleList.findIndex(x => x.id == id);
         this.user.articleList.splice(index, 1)
         result.data.imagePath = atob(result.data.imagePath);
-        result.data.content = result.data.content.length <= 180 ? result.data.content : result.data.content.substr(0, 180) + "...";
+        result.data.content = result.data.content.length <= 120 ? result.data.content : result.data.content.substr(0, 120) + "...";
         this.user.articleList.unshift(result.data);
         this.message.Show("success", "Eser yayına alındı.");
       } else {
@@ -81,7 +83,7 @@ export class MyArticleComponent implements OnInit {
         var index = this.user.articleList.findIndex(x => x.id == id);
         this.user.articleList.splice(index, 1)
         result.data.imagePath = atob(result.data.imagePath);
-        result.data.content = result.data.content.length <= 180 ? result.data.content : result.data.content.substr(0, 180) + "...";
+        result.data.content = result.data.content.length <= 120 ? result.data.content : result.data.content.substr(0, 120) + "...";
         this.user.articleList.unshift(result.data);
         this.message.Show("success", "Eser yayından kaldırıldı.");
       } else {
@@ -130,7 +132,7 @@ export class MyArticleComponent implements OnInit {
     body = body.set("ImagePath", btoa(this.base64textString.toString()));
     this.http.post<any>('api/Article/UpdateArticle', body, { headers: myheader }).subscribe(result => {
       if (!result.isNull) {
-        result.data.content = result.data.content.length <= 180 ? result.data.content : result.data.content.substr(0, 180) + "...";
+        result.data.content = result.data.content.length <= 120 ? result.data.content : result.data.content.substr(0, 120) + "...";
         result.data.imagePath = atob(result.data.imagePath);
         var index = this.user.articleList.findIndex(x => x.id == result.data.id);
         this.user.articleList[index] = result.data;

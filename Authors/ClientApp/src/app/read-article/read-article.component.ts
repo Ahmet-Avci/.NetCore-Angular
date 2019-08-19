@@ -29,6 +29,7 @@ export class ReadArticleComponent {
     this.http.post<any>('api/Article/GetArticleById', body, { headers: myheader }).subscribe(result => {
       if (!result.isNull) {
         result.data.imagePath = atob(result.data.imagePath);
+        result.data.createdDate = new Date(result.data.createdDate.toString()).toLocaleDateString()
         this.article = result.data;
       } else {
         this.message.Show("error", result.message);

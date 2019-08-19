@@ -8,9 +8,8 @@
         <div *ngFor="let article of user.articleList">
           <div class="slide">
             <div class="content">
-              <h2><a href="#" target="_blank"><b>{{article.header}}</b></a></h2>
-              <p>
-                {{article.content}}
+              <h2><a [routerLink]='["/read-article",{articleId:article.id}]'><b>{{article.header}}</b></a></h2>
+              <p [innerHTML]="article.content">
               </p>
             </div>
             <div class="image">

@@ -19,6 +19,11 @@ namespace DtoLayer.Dto
         /// </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        /// İlgili kategorideki eser sayısını getirir
+        /// </summary>
+        public int ArticleCount { get; set; }
+
         public List<ArticleDto> Articles { get; set; }
     }
 }

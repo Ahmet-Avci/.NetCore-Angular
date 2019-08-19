@@ -12,11 +12,13 @@ namespace Services.Implementation
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IArticleRepository _articleRepository;
         private readonly IMapper _mapper;
 
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
+        public CategoryService(ICategoryRepository categoryRepository, IArticleRepository articleRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
+            _articleRepository = articleRepository;
             _mapper = mapper;
         }
         
@@ -36,7 +38,12 @@ namespace Services.Implementation
         /// <returns>Liste tipinde categorydto döner</returns>
         public Result<List<CategoryDto>> GetAll()
         {
-            var result = _mapper.Map<List<CategoryEntity>, List<CategoryDto>>(_categoryRepository.Filter(x => !x.IsDeleted).ToList());
+            List<CategoryDto> result = _mapper.Map<List<CategoryEntity>, List<CategoryDto>>(_categoryRepository.Filter(x => !x.IsDeleted).ToList());
+            
+
+            result.ForEach(x => {
+                x.ArticleCount = _articleRepository.Filter(z => z.CategoryId == x.Id && z.IsActive && z.IsShare).Count();
+            });
 
             return result != null && result.Count > 0
                 ? new Result<List<CategoryDto>>(result)

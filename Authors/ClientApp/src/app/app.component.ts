@@ -169,6 +169,7 @@ export class ArticleDto {
   categoryId: number;
   authorName: string;
   authorSurname: string;
+  createdDate: string;
   message: string;
   isError: boolean;
   readTime: string;
@@ -179,6 +180,8 @@ export class CategoryDto {
   name: string;
   Description: string;
   description: string;
+  ArticleCount: number;
+  articleCount: number;
   Image: string;
   image: string;
   id: number;

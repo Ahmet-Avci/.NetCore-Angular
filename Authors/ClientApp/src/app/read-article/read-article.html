@@ -1,10 +1,17 @@
 <div class="row article-background">
   <div class="col-md-12">
-    <div class="card-img">
-      <figure style="position:relative; left:20px;">
-        <img src="data:image/png;base64,{{article.imagePath}}" alt="">
-        <figcaption class="slide-caption"><p class="slider-text"><b>{{article.header}} - {{article.authorName}} {{article.authorSurname}}</b></p></figcaption>
-      </figure>
+    <div class="blog-card">
+      <div class="meta">
+        <img class="photo" src="data:image/png;base64,{{article.imagePath}}" />
+        <ul class="details">
+          <li class="glyphicon glyphicon-glyphicon-pencil">Yazar: <a>{{article.authorName}} {{article.authorSurname}}</a></li><br />
+          <li class="glyphicon glyphicon-glyphicon-calendar">Yazının oluşturulma tarihi: {{article.createdDate}}</li>
+        </ul>
+      </div>
+      <div class="description" style="text-align: center;padding-top: 70px;">
+        <h1 style="font-size: 30px;font-weight: bold;">{{article.header}}</h1><br />
+        <h2 style="font-size: 25px;font-weight: bold;">{{article.authorName}} {{article.authorSurname}}</h2>
+      </div>
     </div>
     <div [innerHTML]="article.content" class="col-md-12 content-text">
     </div>
