@@ -27,7 +27,9 @@ export class HomeComponent implements OnInit {
 
 
     //Yazarlar farklı olmak koşuluyla en çok okunana 3 yazarın 3 eserini getirir
-    http.get<any>('api/Home/GetTopAuthorArticle').subscribe(result => {
+    const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    let body = new HttpParams();
+    http.post<any>('api/Home/GetTopAuthorArticle', null, { headers: myheader }).subscribe(result => {
       if (!result.isNull) {
         this.userList = result.data;
       } else {
@@ -36,7 +38,8 @@ export class HomeComponent implements OnInit {
     })
 
     //Sistem adminin eklemiş olduğu son 4 genel yazıyı getirir
-    http.get<any>('api/Home/GetArticleByAdmin').subscribe(result => {
+    const myheader2 = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    http.post<any>('api/Home/GetArticleByAdmin', null, { headers: myheader2 }).subscribe(result => {
       if (!result.isNull) {
         this.adminArticles = result.data;
         this.adminArticles.forEach(x => {

@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReadArticleComponent } from './read-article/read-article.component';
 import { AdminComponent } from './Admin/admin-component';
+import { HeaderNavComponent } from './header-nav/header-nav-component';
 import { CategoryComponent } from './Category/category-component';
 import { ProfileComponent } from './Profile/profile.component';
 import { CategoryArticleComponent } from './Category-article/category-article.component';
@@ -35,7 +36,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
     AdminComponent,
     CategoryComponent,
     ProfileComponent,
-    CategoryArticleComponent
+    CategoryArticleComponent,
+    HeaderNavComponent
     
   ],
   imports: [
@@ -56,7 +58,8 @@ import { CKEditorModule } from 'ng2-ckeditor';
       { path: 'admin', component: AdminComponent },
       { path: 'category', component: CategoryComponent },
       { path: 'profile', component: ProfileComponent },
-      { path: 'category-article', component: CategoryArticleComponent }
+      { path: 'category-article', component: CategoryArticleComponent },
+      { path: 'header-nav', component: HeaderNavComponent }
     ])
   ],
   providers: [],

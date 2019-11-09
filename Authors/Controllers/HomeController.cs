@@ -37,7 +37,7 @@ namespace Authors.Controllers
         /// </summary>
         /// <param name="authorCount"></param>
         /// <returns></returns>
-        [HttpGet("[action]")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> GetTopAuthorArticle(int authorCount = 3)
         {
             if (authorCount <= 0)
@@ -62,7 +62,7 @@ namespace Authors.Controllers
         /// </summary>
         /// <param name="articleCount"></param>
         /// <returns></returns>
-        [HttpGet("[action]")]
+        [HttpPost("[action]")]
         public IActionResult GetArticleByAdmin(int articleCount = 6)
         {
             if (articleCount <= 0)

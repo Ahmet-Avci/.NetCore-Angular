@@ -1,46 +1,5 @@
 <div class='container col-md-12'>
-  <nav class="navbar navbar-default hidden-md hidden-lg blue-background" style="z-index:3">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" style="background-color:transparent" class="navbar-toggle collapsed white-background" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand soft-text"> <h2 style="bottom: 27px;position: relative;" class="soft-text"><i class="glyphicon glyphicon-pencil"></i></h2></a>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <li [routerLinkActive]='["link-active"]'>
-            <a style="color:white" [routerLink]='["/"]'>Ana Sayfa</a>
-          </li>
-          <li [routerLinkActive]='["link-active"]'>
-            <a style="color:white" [routerLink]='["/category"]'>Kategoriler</a>
-          </li>
-          <li *ngIf="user.id" [routerLinkActive]='["link-active"]'>
-            <a style="color:white" [routerLink]='["/my-article"]'>Yazılarım</a>
-          </li>
-          <li *ngIf="user.id" [routerLinkActive]='["link-active"]'>
-            <a style="color:white" [routerLink]='["/article"]'>Yazı Ekle</a>
-          </li>
-          <li *ngIf="isAdmin" [routerLinkActive]='["link-active"]'>
-            <a style="color:white" [routerLink]='["/admin"]'>Yönetim Paneli</a>
-          </li>
-          <li [routerLinkActive]='["link-active"]'>
-            <a style="color:white" [routerLink]='["/information"]'>Hakkımızda</a>
-          </li>
-          <li [routerLinkActive]='["link-active"]'>
-            <a *ngIf='headState == "Giriş Yap"' id="loginButton" style="color:white" data-toggle="modal" data-target="#loginModal2"><i class="glyphicon glyphicon-log-in"></i> {{headState}}</a>
-            <a *ngIf='headState != "Giriş Yap"' id="loginButton" style="color:white" (click)='Logout()'><i class="glyphicon glyphicon-log-in"></i> {{headState}}</a>
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
+  <header-nav></header-nav>
   <div class="row" style="margin-left: -21px;">
     <div class='col-md-2'>
       <app-nav-menu></app-nav-menu>

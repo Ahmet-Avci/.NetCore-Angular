@@ -1,0 +1,15 @@
+.blue-background {
+  background-color: transparent;
+}
+
+.soft-text {
+  color: rgba(255,255,255,.7);
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}
+
+.navbar-default .navbar-toggle {
+  background-color: #3ca2e0;
+}
