@@ -32,7 +32,7 @@
             <div class="points center">
               {{value.readCount}} okuma
             </div>
-            <img width="80" height="80" class="center" style="border-radius: 40px; box-shadow: 0px 0px 10px #1d1e21;" src="data:image/png;base64,{{value.imagePath}}" />
+            <img width="80" height="80" class="center" style="border-radius: 10px; box-shadow: 0px 0px 10px #1d1e21;" src="data:image/png;base64,{{value.imagePath}}" />
           </div>
           <div class="more-info title">
             <h4 [innerHTML]="value.content"></h4>
@@ -61,8 +61,8 @@
           </div>
         </div>
         <div class="general">
-          <h2><b>{{value.header}}</b></h2>
-          <span class="more"><b>Yazının içeriği için üzerine gel. </b></span>
+          <h3><b style="color:#848484">{{value.header}}</b></h3>
+          <span class="more"><b>...</b></span>
         </div>
       </div>
     </div>

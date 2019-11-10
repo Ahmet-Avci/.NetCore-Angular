@@ -24,7 +24,6 @@ export class NavMenuComponent implements OnInit {
 
   currentState = "Giriş Yap";
   public http: HttpClient;
-  appComponent: AppComponent;
   user: UserDto;
   message: AppComponent;
   userId: number;
@@ -52,6 +51,17 @@ export class NavMenuComponent implements OnInit {
   }
 
   Login(inputMailAddress, inputPassword) {
+
+    if (!this.ValidateMail(inputMailAddress)) {
+      this.message.Show("error", "Mail adresiniz hatalı");
+      return null;
+    };
+
+    if (!this.ValidatePassword(inputPassword)) {
+      this.message.Show("error", "Şifreniz en az 9 haneli olmalı");
+      return null;
+    };
+
     const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     let body = new HttpParams();
     body = body.set('MailAddress', inputMailAddress);
@@ -63,7 +73,7 @@ export class NavMenuComponent implements OnInit {
         result.data.image = atob(result.data.image);
         this.isAdmin = result.data.authorType == UserType.admin.valueOf() ? true : false;
         this.user = result.data;
-        $("#loginModal button:first").click();
+        $(".close").click();
         $("#loginButton i").attr("data-user", JSON.stringify(result.data));
       } else {
         this.message.Show("error", result.message);
@@ -73,6 +83,22 @@ export class NavMenuComponent implements OnInit {
 
   Register() {
     if (this.user.Password == this.user.PasswordRetry) {
+
+      if (!this.ValidateMail(this.user.MailAddress)) {
+        this.message.Show("error", "Mail adresiniz hatalı");
+        return null;
+      };
+
+      if (!this.ValidatePassword(this.user.Password)) {
+        this.message.Show("error", "Şifreniz en az 9 haneli olmalı");
+        return null;
+      };
+
+      if (!this.ValidatePhoneNumber(this.user.PhoneNumber)) {
+        this.message.Show("error", "Lütfen telefon numaranızı doğru giriniz");
+        return null;
+      }
+
       const myheader = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
       let body = new HttpParams();
       body = body.set('MailAddress', this.user.MailAddress);
@@ -85,13 +111,13 @@ export class NavMenuComponent implements OnInit {
         if (!result.isNull) {
           this.Login(this.user.MailAddress, this.user.Password);
           this.message.Show("success", "Hoşgeldin" + " " + result.data.name + " :)");
-          $("#loginModal button:first").click();
+          $(".close").click();
         } else {
           this.message.Show("error", "Kayıt işlemi başarısız. Lütfen bilgilerinizi kontrol ediniz.");
         }
       });
     } else {
-      this.message.Show("error", "Giriş Başarısız");
+      this.message.Show("error", "Şifreler eşleşmiyor");
     }
   }
   
@@ -112,26 +138,23 @@ export class NavMenuComponent implements OnInit {
     });
   }
 
-  AnimateMenu() {
-    $(".main-nav").animate({width: 'toggle'})
+  ValidateMail(mail) {
+    let validValue = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return validValue.test(mail);
   }
 
-  onFileChange(files: FileList) {
-    this.labelImport.nativeElement.innerText = Array.from(files)
-      .map(f => f.name)
-      .join(', ');
-    this.fileToUpload = files.item(0);
-
-    if (this.fileToUpload.name) {
-      var reader = new FileReader();
-      reader.onload = this._handleReaderLoaded.bind(this);
-      reader.readAsBinaryString(this.fileToUpload);
+  ValidatePassword(password) {
+    if (password.length >= 9) {
+      return true;
     }
+    return false;
   }
 
-  _handleReaderLoaded(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    this.base64textString = btoa(binaryString);
+  ValidatePhoneNumber(phoneNumber) {
+    if (phoneNumber.toString().length >= 10 && phoneNumber.toString().length <= 13) {
+      return true;
+    }
+    return false;
   }
 
   ChangeNightMode() {

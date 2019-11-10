@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" style="background-color:transparent" class="navbar-toggle collapsed white-background" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      <button type="button" style="background-color: #f1f1f1;" class="navbar-toggle collapsed white-background" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -33,10 +33,94 @@
           <a  [routerLink]='["/information"]'>Hakkımızda</a>
         </li>
         <li [routerLinkActive]='["link-active"]'>
-          <a *ngIf='headState == "Giriş Yap"' id="loginButton"  data-toggle="modal" data-target="#loginModal2"><i class="glyphicon glyphicon-log-in"></i> {{headState}}</a>
-          <a *ngIf='headState != "Giriş Yap"' id="loginButton"  (click)='Logout()'><i class="glyphicon glyphicon-log-in"></i> {{headState}}</a>
+          <a *ngIf='currentState == "Giriş Yap"' id="loginButton" data-toggle="modal" data-target="#loginModal3"><i class="glyphicon glyphicon-log-in"></i> {{currentState}}</a>
+          <a *ngIf='currentState != "Giriş Yap"' id="loginButton" (click)='Logout()'><i class="glyphicon glyphicon-log-in"></i> {{currentState}}</a>
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+
+<div class="modal fade" id="loginModal3" role="dialog">
+  <div class="modal-dialog modal-xs">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">YERALTINA GIRIS</h4>
+      </div>
+      <div class="modal-body" style="height: 565px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#login">Giriş Yap</a></li>
+          <li><a data-toggle="tab" href="#register">Üye Ol</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="login" class="tab-pane fade in active">
+            <!--Login Area-->
+            <div class="login-form">
+              <div class="main-div">
+                <div class="form-group">
+                  <input type="email" class="form-control" [(ngModel)]="inputMailAddress" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" [(ngModel)]="inputPassword" placeholder="Şifre">
+                </div>
+                <div class="forgot">
+                  <a>Sifreni mi unuttun?</a>
+                </div>
+                <button type="submit" (click)="LoginMobile(inputMailAddress,inputPassword)" class="btn btn-primary">Giriş</button>
+              </div>
+            </div>
+          </div>
+          <div id="register" class="tab-pane fade">
+            <!--Register Area-->
+            <div class="article-form">
+              <div class="main-div">
+                <div class="form-group" style="text-align:center;margin:-40px;">
+                  <img *ngIf="base64textString" class="card-image" style="width: 100px;height: 100px;border-radius: 50px;object-fit: cover;bottom: 40px;position: relative;" src="data:image/png;base64,{{base64textString}}" />
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" [(ngModel)]="user.Name" placeholder="Ad">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" [(ngModel)]="user.Surname" placeholder="Soyad">
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" [(ngModel)]="user.MailAddress" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" [(ngModel)]="user.Password" placeholder="Şifre">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" [(ngModel)]="user.PasswordRetry" placeholder="Şifrenizi tekrar giriniz">
+                </div>
+                <div class="form-group">
+                  <input type="number" class="form-control" [(ngModel)]="user.PhoneNumber" placeholder="Telefon Numaranız">
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-6">
+                    <form novalidate [formGroup]="formImport">
+                      <div class="input-group mb-3">
+                        <span class="custom-file btn btn-success btn-file">
+                          <input type="file" class="custom-file-input" formControlName="importFile" value="Yazı için dosya ekle" id="importFile" (change)="onFileChange($event.target.files)">
+                          <label class="custom-file-label" #labelImport for="importFile"><i class="glyphicon glyphicon-search"></i> Profil Resmi Ekle </label>
+                        </span>
+                        *Dikey dikdörtgen resimler görüntülemeler esnasında problem yaşatabilir
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="forgot col-sm-12">
+                  <br />
+                  <button type="submit" (click)="RegisterMobile(user)" class="btn btn-block btn-primary">Kayıt Ol</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

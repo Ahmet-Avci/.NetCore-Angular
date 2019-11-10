@@ -19,7 +19,7 @@ html, body {
 
 .center {
   position: absolute;
-  top: 50%;
+  top: 19%;
   left: 30%;
   -webkit-transform: translate(-50%, -50%);
 }
@@ -27,13 +27,15 @@ html, body {
 .card {
   width: 298px;
   height: 250px;
-  background-color: #fff;
+  background-color: #848484;
   background: linear-gradient(#f8f8f8, #fff);
   box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
   border-radius: 6px;
   overflow: hidden;
   position: relative;
-  margin: 1.5rem;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
   .card h1 {
@@ -44,7 +46,7 @@ html, body {
     position: absolute;
     width: 90px;
     height: 100%;
-    background-color: #2698dd;
+    background-color: #f2f2f2;
     transition: width 0.4s;
     overflow: hidden;
     z-index: 2;
@@ -79,19 +81,17 @@ html, body {
 
     .card .additional .user-card .level,
     .card .additional .user-card .points {
-      top: 15%;
-      color: #fff;
+      top: 50%;
+      color: #848484;
       text-transform: uppercase;
       font-size: 0.75em;
       font-weight: bold;
-      background: rgba(0,0,0,0.15);
       padding: 0.125rem 0.75rem;
-      border-radius: 100px;
       white-space: nowrap;
     }
 
     .card .additional .user-card .points {
-      top: 85%;
+      top: 42%;
     }
 
     .card .additional .user-card svg {
@@ -107,7 +107,7 @@ html, body {
   }
 
     .card .additional .more-info h4 {
-      color: #fff;
+      color: #848484;
       padding: 15px;
       margin-bottom: 0;
       letter-spacing: 1px;
@@ -119,7 +119,7 @@ html, body {
 
   .card .additional .coords {
     margin: 0 1rem;
-    color: #fff;
+    color: #848484;
     font-size: 1rem;
   }
 
@@ -139,7 +139,7 @@ html, body {
     left: 1rem;
     right: 1rem;
     top: auto;
-    color: #fff;
+    color: #848484;
   }
 
   .card.green .additional .stats {
@@ -198,3 +198,53 @@ html, body {
   position: relative;
 }
 /* End card section */
+
+@media (min-width: 768px) {
+  /* On small screens, convert the nav menu to a vertical sidebar */
+  .main-nav {
+    height: 100%;
+    width: calc(18% - 20px);
+  }
+
+  .navbar {
+    border-radius: 0px;
+    border-width: 0px;
+    height: 100%;
+  }
+
+  .navbar-header {
+    float: none;
+  }
+
+  .navbar-collapse {
+    /*border-top: 1px solid #444;*/
+    padding: 0px;
+  }
+
+  .navbar ul {
+    float: none;
+  }
+
+  .navbar li {
+    float: none;
+    font-size: 15px;
+    margin: 6px;
+  }
+
+    .navbar li a {
+      padding: 10px 16px;
+      border-radius: 4px;
+    }
+
+  .navbar a {
+    /* If a menu item's text is too long, truncate it */
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+/*@media (max-width: 683px) {
+  .card {
+    margin-left: 25%;
+  }*/

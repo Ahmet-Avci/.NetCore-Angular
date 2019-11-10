@@ -29,7 +29,9 @@ html, body {
   border-radius: 6px;
   overflow: hidden;
   position: relative;
-  margin: 1.5rem;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
   .card h1 {

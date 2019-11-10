@@ -17,15 +17,6 @@ li.link-active a:focus {
   box-shadow: 0px 0px 6px #c5e3f6;
 }
 
-.card-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-  object-fit: cover;
-  bottom: 40px;
-  position: relative;
-}
-
 .btn-primary {
   border-radius: 18px;
   background-color: transparent;
