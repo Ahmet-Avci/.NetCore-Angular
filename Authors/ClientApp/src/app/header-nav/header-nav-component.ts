@@ -56,6 +56,7 @@ export class HeaderNavComponent {
     body = body.set('MailAddress', inputMailAddress);
     body = body.set('Password', inputPassword);
     this.http.post<any>('api/Authentication/Login', body, { headers: myheader }).subscribe(result => {
+      this.message.HideShow();
       if (!result.isNull) {
         this.SessionControl();
         $(".close").click();
@@ -93,6 +94,7 @@ export class HeaderNavComponent {
       body = body.set("Image", btoa(this.base64textString.toString()));
       this.http.post<any>('api/Authentication/RegisterUser', body, { headers: myheader }).subscribe(result => {
         if (!result.isNull) {
+          this.message.HideShow();
           this.LoginMobile(this.user.MailAddress, this.user.Password);
           this.message.Show("success", "Hoşgeldin" + " " + result.data.name + " :)");
           $(".close").click();
@@ -138,6 +140,7 @@ export class HeaderNavComponent {
   Logout() {
     this.http.post<boolean>('api/Authentication/Logout', null).subscribe(result => {
       if (result) {
+        this.message.HideShow();
         this.user.id = 0;
         this.isAdmin = false;
         this.user.name = "";

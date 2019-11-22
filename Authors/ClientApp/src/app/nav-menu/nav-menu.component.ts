@@ -68,6 +68,7 @@ export class NavMenuComponent implements OnInit {
     body = body.set('Password', inputPassword);
     this.http.post<any>('api/Authentication/Login', body, { headers: myheader }).subscribe(result => {
       if (!result.isNull) {
+        this.message.HideShow();
         document.getElementById("loginButton").setAttribute("ng-reflect-router-link", "/logout");
         this.currentState = "Çıkış Yap";
         result.data.image = atob(result.data.image);
@@ -125,6 +126,7 @@ export class NavMenuComponent implements OnInit {
   Logout() {
     this.http.post<boolean>('api/Authentication/Logout', null).subscribe(result => {
       if (result) {
+        this.message.HideShow();
         this.user.id = 0;
         this.isAdmin = false;
         this.user.name = "";

@@ -1024,7 +1024,7 @@ a.btn-card {
 .immersive_slider {
   background: #161923;
   max-width: 100%;
-  height: 410px;
+  height: 280px;
   opacity: .9;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1046,7 +1046,7 @@ a.btn-card {
 
     .immersive_slider .is-slide .image {
       float: none;
-      width: 50%;
+      width: 20%;
       padding-left: 10px;
       box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -1096,7 +1096,7 @@ a.btn-card {
 
 .immersive_slider .is-slide .content {
   float: none;
-  width: 50%;
+  width: 80%;
   padding-right: 10px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1206,4 +1206,11 @@ a.btn-card {
 
 .is-prev {
   left: 10px;
+}
+
+@media (min-width: 768px) {
+  /* On small screens, convert the nav menu to a vertical sidebar */
+  .is-container {
+    left: 8px;
+  }
 }

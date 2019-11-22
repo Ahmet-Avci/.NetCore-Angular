@@ -35,7 +35,7 @@ namespace DbLayer.Entity
         /// <summary>
         /// İlgili eserin pasif/aktif bilgisini tutar
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
         /// <summary>
         /// Eserin okunma sayısı

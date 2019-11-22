@@ -99,6 +99,11 @@ export class AppComponent {
     toastr[type](message)
   }
 
+  public HideShow() {
+    $("html").fadeOut(350);
+    $("html").fadeIn(350);
+  }
+
   onFileChange(files: FileList) {
     this.labelImport.nativeElement.innerText = Array.from(files)
       .map(f => f.name)

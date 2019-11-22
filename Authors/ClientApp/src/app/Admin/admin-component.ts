@@ -63,6 +63,7 @@ export class AdminComponent implements OnInit {
     body = body.set("Description", this.category.Description == null ? "" : this.category.Description);
     this.http.post<any>('api/Category/AddCategory', body, { headers: myheader }).subscribe(result => {
       if (!result.isNull) {
+        this.message.HideShow();
         this.message.Show("success", "İşlem Başarılı...");
         this.GetAllCategory();
       } else {
@@ -78,6 +79,7 @@ export class AdminComponent implements OnInit {
       body = body.set("categoryId", categoryId.toString());
       this.http.post<any>('api/Category/RemoveCategory', body, { headers: myheader }).subscribe(result => {
         if (result.data) {
+          this.message.HideShow();
           this.GetAllCategory();
           this.message.Show("success", "İşlem Başarılı...");
         } else {
@@ -93,6 +95,7 @@ export class AdminComponent implements OnInit {
     body = body.set("Name", this.author.Name == null ? "" : this.author.Name);
     body = body.set("PhoneNumber", this.author.PhoneNumber == null ? "" : this.author.PhoneNumber.toString());
     this.http.post<any>('api/Author/GetFilterAuthors', body, { headers: myheader }).subscribe(result => {
+      this.message.HideShow();
       if (!result.isNull) {
         this.userList = result.data;
         this.message.Show("success", "İşlem Başarılı...");
@@ -109,6 +112,7 @@ export class AdminComponent implements OnInit {
     body = body.set("Header", this.article.Header == null ? "" : this.article.Header);
     body = body.set("Content", this.article.Content == null ? "" : this.article.Content);
     this.http.post<any>('api/Article/GetFilterArticle', body, { headers: myheader }).subscribe(result => {
+      this.message.HideShow();
       if (!result.isNull) {
         this.articleList = result.data;
         this.message.Show("success", "İşlem Başarılı...");
@@ -125,6 +129,7 @@ export class AdminComponent implements OnInit {
       let body = new HttpParams();
       body = body.set("userId", userId.toString());
       this.http.post<any>('api/Author/SetPassifeAuthor', body, { headers: myheader }).subscribe(result => {
+        this.message.HideShow();
         if (!result.data) {
           this.GetFilterAuthors()
           this.message.Show("success", "İşlem Başarılı...");
@@ -141,6 +146,7 @@ export class AdminComponent implements OnInit {
       let body = new HttpParams();
       body = body.set("userId", userId.toString());
       this.http.post<any>('api/Author/SetActiveAuthor', body, { headers: myheader }).subscribe(result => {
+        this.message.HideShow();
         if (result.data) {
           this.GetFilterAuthors()
           this.message.Show("success", "İşlem Başarılı...");
@@ -157,6 +163,7 @@ export class AdminComponent implements OnInit {
       let body = new HttpParams();
       body = body.set("articleId", articleId.toString());
       this.http.post<any>('api/Article/SetPassifeArticle', body, { headers: myheader }).subscribe(result => {
+        this.message.HideShow();
         if (!result.data) {
           this.GetFilterArticles()
           this.message.Show("success", "İşlem Başarılı...");
@@ -173,6 +180,7 @@ export class AdminComponent implements OnInit {
       let body = new HttpParams();
       body = body.set("articleId", articleId.toString());
       this.http.post<any>('api/Article/SetActiveArticle', body, { headers: myheader }).subscribe(result => {
+        this.message.HideShow();
         if (result) {
           this.GetFilterArticles()
           this.message.Show("success", "İşlem Başarılı...");
