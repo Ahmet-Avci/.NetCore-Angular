@@ -30,7 +30,7 @@
     "zone.js": "^0.8.19",
     "jquery": "3.5.0",
     "toastr": "2.1.4",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "ng2-ckeditor": "1.2.2"
   },
   "devDependencies": {
